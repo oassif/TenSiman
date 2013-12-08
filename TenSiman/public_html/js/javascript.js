@@ -150,7 +150,6 @@ function startPlay() {
     // Hiding buttons
     document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
-    document.getElementById("progressBar").style.display = "block";
     
 // call for the first video
     order = generateOrder();
