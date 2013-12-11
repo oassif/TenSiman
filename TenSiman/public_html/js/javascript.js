@@ -25,8 +25,8 @@ var counter;
 
 $(document).ready(function()
 {
-    videoSource[0] = 'http://www.youtube.com/embed/fmk-yPiYPCU';//'movies/cut.MOV';
-    videoSource[1] = 'http://www.youtube.com/embed/fmk-yPiYPCU';//'movies/squeeze.MOV';
+    videoSource[0] = 'movies/Thanks.mp4'//'movies/cut.MOV';
+    videoSource[1] = 'movies/Thanks.mp4'//'movies/squeeze.MOV';
     videoSource[2] = 'movies/bond.MOV';
     //videoSource[3]='movies/switch.MOV';
     //videoSource[4]='movies/tight.MOV';
