@@ -3,6 +3,9 @@
  * and open the template in the editor.
  */
 
+var timePerRound = 10;
+var delayBetweenQuestions = 750; // in milliseconds
+
 var i = 0;
 var currVideoId;
 var correctAnswerId;
@@ -22,8 +25,8 @@ var counter;
 
 $(document).ready(function()
 {
-    videoSource[0] = 'movies/cut.MOV';
-    videoSource[1] = 'movies/squeeze.MOV';
+    videoSource[0] = 'http://www.youtube.com/embed/fmk-yPiYPCU';//'movies/cut.MOV';
+    videoSource[1] = 'http://www.youtube.com/embed/fmk-yPiYPCU';//'movies/squeeze.MOV';
     videoSource[2] = 'movies/bond.MOV';
     //videoSource[3]='movies/switch.MOV';
     //videoSource[4]='movies/tight.MOV';
@@ -36,10 +39,10 @@ $(document).ready(function()
 
     // Generate Random number
     //startIndex = Math.floor((Math.random()*videoCount)+1); 
-    
+
     videoCount = videoSource.length;
-    
-    
+
+
     for (var index = 0; index < videoCount; ++index) {
         // video source, right answer, user's answer, time, points
         gameDetails[index] = [videoSource[index], answerArray[index][0], false, 0, 0];
@@ -52,16 +55,15 @@ $(document).ready(function()
     document.getElementById('myVideo').addEventListener('ended', myHandler, false);
 
 });
-    function timer() { 
-        if (count <= 0) { clearInterval(counter); 
-        //counter ended, do something here
-        return; 
+function timer() {
+    if (count <= 0) {
+        continueToNextQuestion(null);
+        return;
     }
-            count=count-1;
-            document.getElementById("timer").innerHTML= count + " secs";
-            
-    }
-     
+    count = count - 1;
+    document.getElementById("timer").innerHTML = count + " secs";
+}
+
 function startGame()
 {
     document.getElementById("answers").style.display = "none";
@@ -73,6 +75,7 @@ function startGame()
 
 function videoPlay(videoNum)
 {
+    
     //alert(i);
     document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
     document.getElementById("myVideo").load();
@@ -102,7 +105,7 @@ function show4possibleAnswers(videoNum) {
     // Showing the answers
     // First, generates Random number for the first answer
     var firstAnswerId = Math.floor((Math.random() * 4));
-    
+
     $("#answer1").text(answerArray[videoNum][firstAnswerId]);
     $("#answer2").text(answerArray[videoNum][(firstAnswerId + 1) % 4]);
     $("#answer3").text(answerArray[videoNum][(firstAnswerId + 2) % 4]);
@@ -114,7 +117,7 @@ function show4possibleAnswers(videoNum) {
     else {
         correctAnswerId = "answer" + (5 - firstAnswerId);
     }
-    
+
     // Show answers
     document.getElementById("answers").style.display = "block";
 }
@@ -150,12 +153,12 @@ function startPlay() {
     // Hiding buttons
     document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
-    
+
 // call for the first video
     order = generateOrder();
     setTimeout(function() {
-        count=30; 
-        counter=setInterval(timer, 1000); //1000 will run it every 1 second 
+        count = timePerRound;
+        counter = setInterval(timer, 1000); //1000 will run it every 1 second 
         videoPlay(order[i]);
     }, 1000);
 }
@@ -187,29 +190,32 @@ function onClick_checkAnswer(object) {
         gameDetails[order[i]][4] = 0;
     }
 
-    document.getElementById(correctAnswerId).style.background = "green";
+    continueToNextQuestion(object);
+}
 
-    
+
+
+function continueToNextQuestion(object) {
+    document.getElementById(correctAnswerId).style.background = "green";
 
     // continte to the next question.
     ++i;
     if (i === videoCount) {
         // If all the questions were showed, end game
+        clearInterval(counter);
         endGame();
     }
     else {
         // Awaits half a second before showing the next question
         setTimeout(function() {
-            document.getElementById(object.id).style.background = "";
+            if (object !== null) {
+                document.getElementById(object.id).style.background = "";
+            }
             document.getElementById(correctAnswerId).style.background = "";
-            count = 30;
+            count = timePerRound;
             videoPlay(order[i]);
-        } ,500);
+        }, delayBetweenQuestions);
     }
-}
-
-function getCorrectId() {
-
 }
 
 function endGame() {
