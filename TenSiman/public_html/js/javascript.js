@@ -21,12 +21,13 @@ var isDemo = true;
 
 var count;
 var counter;
-
+var score;
+var currentVideo;
 
 $(document).ready(function()
 {
-    videoSource[0] = 'movies/Thanks.mp4'//'movies/cut.MOV';
-    videoSource[1] = 'movies/Thanks.mp4'//'movies/squeeze.MOV';
+    videoSource[0] = 'movies/cut.MOV';
+    videoSource[1] = 'movies/squeeze.MOV';
     videoSource[2] = 'movies/bond.MOV';
     //videoSource[3]='movies/switch.MOV';
     //videoSource[4]='movies/tight.MOV';
@@ -44,8 +45,8 @@ $(document).ready(function()
 
 
     for (var index = 0; index < videoCount; ++index) {
-        // video source, right answer, user's answer, time, points
-        gameDetails[index] = [videoSource[index], answerArray[index][0], false, 0, 0];
+        // video source, right answer, user's answer, time, points , t/f answer
+        gameDetails[index] = [videoSource[index], answerArray[index][0], "", 0, 0, false];
     }
 
     //videoPlay(0);
@@ -57,6 +58,10 @@ $(document).ready(function()
 });
 function timer() {
     if (count <= 0) {
+
+        gameDetails[order[i]][4] = 0; // user's score
+        gameDetails[order[i]][3] = 0; // user's time
+        gameDetails[order[i]][2] = "X"; //user's answer
         continueToNextQuestion(null);
         return;
     }
@@ -75,7 +80,7 @@ function startGame()
 
 function videoPlay(videoNum)
 {
-    
+
     //alert(i);
     document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
     document.getElementById("myVideo").load();
@@ -176,20 +181,21 @@ function onClick_checkAnswer(object) {
     //   console.log("selected is: \"" + object.text  + "\"");
     //   console.log("answer is: \"" + answerArray[currVideoId][0] + "\"");
 
-    gameDetails[order[i]][3] = count;
+    gameDetails[order[i]][3] = count; // user's time
+    gameDetails[order[i]][2] = object.text.toString(); // user's answer
+
 
     if (object.text.toString() === answerArray[order[i]][0])//answerArray[currVideoId][0])
     {
-        gameDetails[order[i]][2] = true;
-        //Update score
-        gameDetails[order[i]][4] = count;
+        gameDetails[order[i]][5] = true;// user's answer
+        gameDetails[order[i]][4] = count; // User's score
     }
     else {
         document.getElementById(object.id).style.background = "red";
         // Update score
         gameDetails[order[i]][4] = 0;
     }
-
+    score = score + gameDetails[order[i]][4];
     continueToNextQuestion(object);
 }
 
@@ -218,12 +224,36 @@ function continueToNextQuestion(object) {
     }
 }
 
-function endGame() {
+function endGame1() {
     /*$("#score").text("Your score is: " + numToGuess);
      window.location("#gameOver");*/
     // 
     alert("Game Ended!!");
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
+    }
+}
+
+function endGame() {
+    window.location = "#end";
+var result;
+    for (var index = 1; index < videoCount + 1; ++index) {
+        var firstRow = "row1col" + index;
+        var secondRow = "row2col" + index;
+        var thirdRow = "row3col" + index;
+        
+        // the word
+        document.getElementById(firstRow).innerHTML = gameDetails[index - 1][2];
+
+        // write the user answer
+        if (gameDetails[index - 1][5]) {
+        document.getElementById(secondRow).innerHTML = "<font color=\"green\">"  + gameDetails[index - 1][1] + "</font>";
+        } else {
+        document.getElementById(secondRow).innerHTML = "<font color=\"red\">"  + gameDetails[index - 1][1] + "</font>";
+        } 
+        
+        // the time
+        document.getElementById(thirdRow).innerHTML = gameDetails[index - 1][4];
+        
     }
 }
