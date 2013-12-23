@@ -83,9 +83,9 @@ function videoPlay(videoNum)
 
     //alert(i);
     document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
-   // document.getElementById("myVideo").load();
- //   document.getElementById("myVideo").play();
-    window.plugins.videoPlayer.play("movies/cut.MOV");
+    document.getElementById("myVideo").load();
+    document.getElementById("myVideo").play();
+    //window.plugins.videoPlayer.play("movies/cut.MOV");
 
 
 
