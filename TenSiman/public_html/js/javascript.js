@@ -50,10 +50,9 @@ $(document).ready(function()
     }
 
     //videoPlay(0);
-    document.getElementById("myVideo").setAttribute("src", videoSource[0]);
+   document.getElementById("myVideo").setAttribute("src", videoSource[0]);
+       document.getElementById('myVideo').addEventListener('ended', myHandler, false);
 
-
-    document.getElementById('myVideo').addEventListener('ended', myHandler, false);
 
 });
 function timer() {
@@ -81,12 +80,11 @@ function startGame()
 function videoPlay(videoNum)
 {
 
+
     //alert(i);
     document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
     document.getElementById("myVideo").load();
     document.getElementById("myVideo").play();
-    //window.plugins.videoPlayer.play("movies/cut.MOV");
-
 
 
     // Checks if need to show the translation
@@ -158,7 +156,7 @@ function startPlay() {
     isDemo = false;
     i = 0;
     // Hiding buttons
-    document.getElementById("repeat").style.display = "none";
+ //   document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
 
 // call for the first video
