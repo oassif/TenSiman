@@ -26,7 +26,7 @@ var counter;
 $(document).ready(function()
 {
     videoSource[0] = 'movies/new.gif';
-    videoSource[1] = 'movies/after.gif';
+    videoSource[1] = 'movies/new.gif';
     videoSource[2] = 'movies/long.gif';
     videoSource[3]= 'movies/middle.gif';
     videoSource[4]= 'movies/last.gif';
