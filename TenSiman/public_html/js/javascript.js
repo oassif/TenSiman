@@ -21,48 +21,21 @@ var isDemo = true;
 
 var count;
 var counter;
-var score;
-var currentVideo;
 
-//var buffer = 20; //scroll bar buffer
-//var iframe = document.getElementById('ifm');
-//
-//function pageY(elem) {
-//    return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
-//}
-//
-//function resizeIframe() {
-//    var height = document.documentElement.clientHeight;
-//    height -= pageY(document.getElementById('ifm'))+ buffer ;
-//    height = (height < 0) ? 0 : height;
-//    document.getElementById('ifm').style.height = height + 'px';
-//}
 
 $(document).ready(function()
 {
-//    // .onload doesn't work with IE8 and older.
-//if (iframe.attachEvent) {
-//    iframe.attachEvent("onload", resizeIframe);
-//} else {
-//    iframe.onload=resizeIframe();
-//}
-//
-//window.onresize = resizeIframe;
+    videoSource[0] = 'movies/new.gif';
+    videoSource[1] = 'movies/after.gif';
+    videoSource[2] = 'movies/long.gif';
+    videoSource[3]= 'movies/middle.gif';
+    videoSource[4]= 'movies/last.gif';
     
-    document.getElementById('ifm').setAttribute("height", document.documentElement.clientHeight);
-    document.getElementById('ifm').setAttribute("width", document.documentElement.clientWidth);
-    
-    videoSource[0] = 'movies/cut.MOV';
-    videoSource[1] = 'movies/squeeze.MOV';
-    videoSource[2] = 'movies/bond.MOV';
-    //videoSource[3]='movies/switch.MOV';
-    //videoSource[4]='movies/tight.MOV';
-
-    answerArray[0] = ["cut", "take", "twist", "paste"];
-    answerArray[1] = ["squeeze", "rock", "thanks", "yummy"];
-    answerArray[2] = ["bond", "mother", "father", "home"];
-    //answerArray[3] = ["switch", "flight", "happy", "sad"];
-    //answerArray[4] = ["tight", "hate", "love", "looze"];
+    answerArray[0] = ["חדש", "חתך", "אמצע", "ברית מילה"];
+    answerArray[1] = ["אחרי", "מחר", "אחרון", "עד"];
+    answerArray[2] = ["ארוך", "חדש", "למתוח", "מותח"];
+    answerArray[3] = ["אמצע", "חדש", "חתימה", "חתך"];
+    answerArray[4] = ["אחרון", "לפני", "אחרי", "לחתוך"];
 
     // Generate Random number
     //startIndex = Math.floor((Math.random()*videoCount)+1); 
@@ -71,22 +44,17 @@ $(document).ready(function()
 
 
     for (var index = 0; index < videoCount; ++index) {
-        // video source, right answer, user's answer, time, points , t/f answer
-        gameDetails[index] = [videoSource[index], answerArray[index][0], "", 0, 0, false];
+        // video source, right answer, user's answer, time, points
+        gameDetails[index] = [videoSource[index], answerArray[index][0], false, 0, 0];
     }
 
     //videoPlay(0);
-   document.getElementById("myVideo").setAttribute("src", videoSource[0]);
-       document.getElementById('myVideo').addEventListener('ended', myHandler, false);
-
+  //  document.getElementById("myVideo").setAttribute("src", videoSource[0]);
+    //document.getElementById('myVideo').addEventListener('ended', myHandler, false);
 
 });
 function timer() {
     if (count <= 0) {
-
-        gameDetails[order[i]][4] = 0; // user's score
-        gameDetails[order[i]][3] = 0; // user's time
-        gameDetails[order[i]][2] = "X"; //user's answer
         continueToNextQuestion(null);
         return;
     }
@@ -98,19 +66,18 @@ function startGame()
 {
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
-    setTimeout(function() {
-        videoPlay(i);
-    }, 2000);
+//    setTimeout(function() {
+//        videoPlay(i);
+//    }, 2000);
 }
 
 function videoPlay(videoNum)
 {
-
-
+    
     //alert(i);
     document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
-    document.getElementById("myVideo").load();
-    document.getElementById("myVideo").play();
+//    document.getElementById("myVideo").load();
+//    document.getElementById("myVideo").play();
 
 
     // Checks if need to show the translation
@@ -132,16 +99,28 @@ function show4possibleAnswers(videoNum) {
     // Not Showing the translation
     //document.getElementById("translation").innerHTML = "<H1>&nbsp</H1>";
     document.getElementById("translatedWord").innerHTML = "<H1>&nbsp</H1>";
+    document.getElementById("translatedWord").style.display = "none";
 
     // Showing the answers
     // First, generates Random number for the first answer
     var firstAnswerId = Math.floor((Math.random() * 4));
 
-    $("#answer1").text(answerArray[videoNum][firstAnswerId]);
+    /*$("#answer1").text(answerArray[videoNum][firstAnswerId]);
     $("#answer2").text(answerArray[videoNum][(firstAnswerId + 1) % 4]);
     $("#answer3").text(answerArray[videoNum][(firstAnswerId + 2) % 4]);
-    $("#answer4").text(answerArray[videoNum][(firstAnswerId + 3) % 4]);
-
+    $("#answer4").text(answerArray[videoNum][(firstAnswerId + 3) % 4]);*/
+    document.getElementById("answer1").innerHTML = "<font size=\"5\">" + 
+                                                    answerArray[videoNum][firstAnswerId] +
+                                                    "</font>";
+    document.getElementById("answer2").innerHTML = "<font size=\"5\">" + 
+                                                    answerArray[videoNum][(firstAnswerId + 1) % 4] +
+                                                    "</font>";
+    document.getElementById("answer3").innerHTML = "<font size=\"5\">" + 
+                                                    answerArray[videoNum][(firstAnswerId + 2) % 4] +
+                                                    "</font>";
+    document.getElementById("answer4").innerHTML = "<font size=\"5\">" + 
+                                                    answerArray[videoNum][(firstAnswerId + 3) % 4] +
+                                                    "</font>";
     if (firstAnswerId === 0) {
         correctAnswerId = "answer1";
     }
@@ -182,7 +161,7 @@ function startPlay() {
     isDemo = false;
     i = 0;
     // Hiding buttons
- //   document.getElementById("repeat").style.display = "none";
+    document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
 
 // call for the first video
@@ -196,7 +175,7 @@ function startPlay() {
 
 // randomly decide the order of the videos.
 function generateOrder(numberOfVideos) {
-    var videosOrder = [1, 0, 2];
+    var videosOrder = [1, 0, 2, 4, 3];
 
     // Math.floor((Math.random()*videoCount)+1); 
     return videosOrder;
@@ -207,28 +186,31 @@ function onClick_checkAnswer(object) {
     //   console.log("selected is: \"" + object.text  + "\"");
     //   console.log("answer is: \"" + answerArray[currVideoId][0] + "\"");
 
-    gameDetails[order[i]][3] = count; // user's time
-    gameDetails[order[i]][2] = object.text.toString(); // user's answer
-
+    gameDetails[order[i]][3] = count;
 
     if (object.text.toString() === answerArray[order[i]][0])//answerArray[currVideoId][0])
     {
-        gameDetails[order[i]][5] = true;// user's answer
-        gameDetails[order[i]][4] = count; // User's score
+        gameDetails[order[i]][2] = true;
+        //Update score
+        gameDetails[order[i]][4] = count;
     }
     else {
         document.getElementById(object.id).style.background = "red";
         // Update score
         gameDetails[order[i]][4] = 0;
     }
-    score = score + gameDetails[order[i]][4];
+
     continueToNextQuestion(object);
 }
 
 
 
 function continueToNextQuestion(object) {
-    document.getElementById(correctAnswerId).style.background = "green";
+    document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
+    document.getElementById(correctAnswerId).style.background = "gray";//"green";
+    document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
+    document.getElementById(correctAnswerId).style.background = "gray";//"green";
+    document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
 
     // continte to the next question.
     ++i;
@@ -250,36 +232,12 @@ function continueToNextQuestion(object) {
     }
 }
 
-function endGame1() {
+function endGame() {
     /*$("#score").text("Your score is: " + numToGuess);
      window.location("#gameOver");*/
     // 
     alert("Game Ended!!");
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
-    }
-}
-
-function endGame() {
-    window.location = "#end";
-var result;
-    for (var index = 1; index < videoCount + 1; ++index) {
-        var firstRow = "row1col" + index;
-        var secondRow = "row2col" + index;
-        var thirdRow = "row3col" + index;
-        
-        // the word
-        document.getElementById(firstRow).innerHTML = gameDetails[index - 1][2];
-
-        // write the user answer
-        if (gameDetails[index - 1][5]) {
-        document.getElementById(secondRow).innerHTML = "<font color=\"green\">"  + gameDetails[index - 1][1] + "</font>";
-        } else {
-        document.getElementById(secondRow).innerHTML = "<font color=\"red\">"  + gameDetails[index - 1][1] + "</font>";
-        } 
-        
-        // the time
-        document.getElementById(thirdRow).innerHTML = gameDetails[index - 1][4];
-        
     }
 }
