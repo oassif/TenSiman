@@ -23,17 +23,22 @@ var count;
 var counter;
 
 var buffer = 20; //scroll bar buffer
-var iframe = document.getElementById('ifm');
 
 function pageY(elem) {
     return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
 }
 
 function resizeIframe() {
-    var height = document.documentElement.clientHeight * 0.75;
+    var height = document.documentElement.clientHeight * 0.70;
     height -= pageY(document.getElementById('myVideo')) + buffer;
     height = (height < 0) ? 0 : height;
     document.getElementById('myVideo').style.height = height + 'px';
+}
+function resizeWidthIframe() {
+    var width = document.documentElement.clientWidth * 0.70;
+    width -= pageY(document.getElementById('myVideo')) + buffer;
+    width = (width < 0) ? 0 : width;
+    document.getElementById('myVideo').style.width = width + 'px';
 }
 $(document).ready(function()
 {
@@ -79,6 +84,7 @@ function startGame()
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
     resizeIframe();
+    resizeWidthIframe();
     setTimeout(function() {
         videoPlay(0);
     }, 200);
