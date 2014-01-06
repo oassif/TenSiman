@@ -24,19 +24,19 @@ var counter;
 var score;
 var currentVideo;
 
-//var buffer = 20; //scroll bar buffer
-//var iframe = document.getElementById('ifm');
-//
-//function pageY(elem) {
-//    return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
-//}
-//
-//function resizeIframe() {
-//    var height = document.documentElement.clientHeight;
-//    height -= pageY(document.getElementById('ifm'))+ buffer ;
-//    height = (height < 0) ? 0 : height;
-//    document.getElementById('ifm').style.height = height + 'px';
-//}
+var buffer = 20; //scroll bar buffer
+var iframe = document.getElementById('ifm');
+
+function pageY(elem) {
+    return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
+}
+
+function resizeIframe() {
+    var height = document.documentElement.clientHeight;
+    height -= pageY(document.getElementById('ifm'))+ buffer ;
+    height = (height < 0) ? 0 : height;
+    document.getElementById('ifm').style.height = height + 'px';
+}
 
 $(document).ready(function()
 {

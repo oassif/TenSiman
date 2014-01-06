@@ -22,11 +22,23 @@ var isDemo = true;
 var count;
 var counter;
 
+var buffer = 20; //scroll bar buffer
+var iframe = document.getElementById('ifm');
 
+function pageY(elem) {
+    return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
+}
+
+function resizeIframe() {
+    var height = document.documentElement.clientHeight * 0.75;
+    height -= pageY(document.getElementById('myVideo')) + buffer;
+    height = (height < 0) ? 0 : height;
+    document.getElementById('myVideo').style.height = height + 'px';
+}
 $(document).ready(function()
 {
     videoSource[0] = 'movies/new.gif';
-    videoSource[1] = 'movies/new.gif';
+    videoSource[1] = 'movies/after.gif';
     videoSource[2] = 'movies/long.gif';
     videoSource[3]= 'movies/middle.gif';
     videoSource[4]= 'movies/last.gif';
@@ -66,9 +78,10 @@ function startGame()
 {
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
+    resizeIframe();
     setTimeout(function() {
         videoPlay(0);
-    }, 2000);
+    }, 200);
 }
 
 function videoPlay(videoNum)
@@ -85,12 +98,13 @@ function videoPlay(videoNum)
     if (isDemo) {
         // Showing the translation
         //document.getElementById("translation").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
+        document.getElementById("translatedWord").style.display = "block";
         document.getElementById("translatedWord").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
 
         // Hiding the options
         document.getElementById("answers").style.display = "none";
         
-              if (videoNum != 4) {
+        if (videoNum < 4) {
             videoNum++;
           setTimeout(function() {
              videoPlay(videoNum);
@@ -98,6 +112,7 @@ function videoPlay(videoNum)
         } else {
             
         setTimeout(function() {
+                document.getElementById("translatedWord").style.display = "none";
                 document.getElementById("myVideo").style.display = "none";
                 document.getElementById("repeat").style.display = "block";
           }, 2200);
@@ -257,4 +272,6 @@ function endGame() {
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
     }
+   document.getElementById("myVideo").style.display = "none";
+
 }
