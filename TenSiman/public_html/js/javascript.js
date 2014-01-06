@@ -66,15 +66,16 @@ function startGame()
 {
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
-//    setTimeout(function() {
-//        videoPlay(i);
-//    }, 2000);
+    setTimeout(function() {
+        videoPlay(0);
+    }, 2000);
 }
 
 function videoPlay(videoNum)
 {
     
     //alert(i);
+    document.getElementById("myVideo").style.display = "block";
     document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
 //    document.getElementById("myVideo").load();
 //    document.getElementById("myVideo").play();
@@ -88,11 +89,27 @@ function videoPlay(videoNum)
 
         // Hiding the options
         document.getElementById("answers").style.display = "none";
+        
+              if (videoNum != 4) {
+            videoNum++;
+          setTimeout(function() {
+             videoPlay(videoNum);
+          }, 2200);
+        } else {
+            
+        setTimeout(function() {
+                document.getElementById("myVideo").style.display = "none";
+                document.getElementById("repeat").style.display = "block";
+          }, 2200);
+
+        }
     }
 
     else {
         show4possibleAnswers(videoNum);
     }
+    
+
 }
 
 function show4possibleAnswers(videoNum) {
