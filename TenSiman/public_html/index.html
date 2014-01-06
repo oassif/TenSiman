@@ -34,7 +34,9 @@ and open the template in the editor.
         <div id="game" data-role="page">
 <center>
             <header data-role="header">
-                <h1>Play Game</h1>
+                <span id="title">
+                <h1>נסו לזכור את המילים הבאות</h1>
+                </span>
                 <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>
                 <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>-->
             </header>
@@ -61,7 +63,7 @@ and open the template in the editor.
                     <span id="translatedWord"></span>
                     <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
                     <!-- display should be none, it's block only for debug-->
-                    <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">שחק</a>
+                    <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
                 </div>
                 <br/><br/>
                     <div align="center" id="answers">

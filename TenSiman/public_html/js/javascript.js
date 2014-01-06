@@ -102,6 +102,8 @@ function videoPlay(videoNum)
 
     // Checks if need to show the translation
     if (isDemo) {
+        document.getElementById("title").innerHTML ="נסו לזכור את המילים הבאות";
+
         // Showing the translation
         //document.getElementById("translation").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
         document.getElementById("translatedWord").style.display = "block";
@@ -127,6 +129,8 @@ function videoPlay(videoNum)
     }
 
     else {
+            document.getElementById("title").innerHTML ="בחרו את התשובה הנכונה";
+
         show4possibleAnswers(videoNum);
     }
     
@@ -278,6 +282,13 @@ function endGame() {
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
     }
+   document.getElementById("timer").style.display = "none";
    document.getElementById("myVideo").style.display = "none";
+   document.getElementById("answer1").style.display = "none";
+   document.getElementById("answer2").style.display = "none";
+   document.getElementById("answer3").style.display = "none";
+   document.getElementById("answer4").style.display = "none";
+
+
 
 }
