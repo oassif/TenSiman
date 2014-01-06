@@ -29,13 +29,13 @@ function pageY(elem) {
 }
 
 function resizeIframe() {
-    var height = document.documentElement.clientHeight * 0.70;
+    var height = document.documentElement.clientHeight * 0.65;
     height -= pageY(document.getElementById('myVideo')) + buffer;
     height = (height < 0) ? 0 : height;
     document.getElementById('myVideo').style.height = height + 'px';
 }
 function resizeWidthIframe() {
-    var width = document.documentElement.clientWidth * 0.70;
+    var width = document.documentElement.clientWidth * 0.9;
     width -= pageY(document.getElementById('myVideo')) + buffer;
     width = (width < 0) ? 0 : width;
     document.getElementById('myVideo').style.width = width + 'px';
