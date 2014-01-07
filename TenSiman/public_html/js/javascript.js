@@ -14,14 +14,12 @@ var videoSource = new Array();
 var videoCount = 0;
 var answerArray = [6];
 var startIndex;
-
 var gameDetails = new Array();
-
 var isDemo = true;
 
 var count;
 var counter;
-
+var score = 0;
 var buffer = 20; //scroll bar buffer
 
 function pageY(elem) {
@@ -48,15 +46,14 @@ $(document).ready(function()
     videoSource[3]= 'movies/middle.gif';
     videoSource[4]= 'movies/last.gif';
     
-    answerArray[0] = ["חדש", "חתך", "אמצע", "ברית מילה"];
-    answerArray[1] = ["אחרי", "מחר", "אחרון", "עד"];
-    answerArray[2] = ["ארוך", "חדש", "למתוח", "מותח"];
-    answerArray[3] = ["אמצע", "חדש", "חתימה", "חתך"];
+    answerArray[0] = ["חדש", "חתך", "אמצע", "חצה"];
+    answerArray[1] = ["אחרי", "מחר", "אחרון", "אמצע"];
+    answerArray[2] = ["ארוך", "חדש", "למתוח", "אחרי"];
+    answerArray[3] = ["אמצע", "חדש", "אחרי", "חתך"];
     answerArray[4] = ["אחרון", "לפני", "אחרי", "לחתוך"];
 
     // Generate Random number
     //startIndex = Math.floor((Math.random()*videoCount)+1); 
-
     videoCount = videoSource.length;
 
 
@@ -87,22 +84,25 @@ function startGame()
     resizeWidthIframe();
     setTimeout(function() {
         videoPlay(0);
-    }, 200);
+    }, 100);
 }
 
 function videoPlay(videoNum)
 {
     
     //alert(i);
-    document.getElementById("myVideo").style.display = "block";
-    document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
+
 //    document.getElementById("myVideo").load();
 //    document.getElementById("myVideo").play();
 
 
     // Checks if need to show the translation
     if (isDemo) {
-        document.getElementById("title").innerHTML ="נסו לזכור את המילים הבאות";
+         document.getElementById("title").innerHTML ="נסו לזכור את המילים הבאות"; 
+        document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
+        document.getElementById("myVideo").style.display = "block";
+ 
+          
 
         // Showing the translation
         //document.getElementById("translation").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
@@ -111,12 +111,13 @@ function videoPlay(videoNum)
 
         // Hiding the options
         document.getElementById("answers").style.display = "none";
-        
+
+                 
         if (videoNum < 4) {
             videoNum++;
           setTimeout(function() {
              videoPlay(videoNum);
-          }, 2200);
+          }, 2300);
         } else {
             
         setTimeout(function() {
@@ -129,8 +130,9 @@ function videoPlay(videoNum)
     }
 
     else {
-            document.getElementById("title").innerHTML ="בחרו את התשובה הנכונה";
-
+        document.getElementById("myVideo").style.display = "block";
+        document.getElementById("myVideo").setAttribute("src", videoSource[videoNum]);
+        document.getElementById("title").innerHTML ="בחרו את התשובה הנכונה";
         show4possibleAnswers(videoNum);
     }
     
@@ -241,7 +243,8 @@ function onClick_checkAnswer(object) {
         // Update score
         gameDetails[order[i]][4] = 0;
     }
-
+    
+    score += gameDetails[order[i]][4];
     continueToNextQuestion(object);
 }
 
@@ -278,7 +281,12 @@ function endGame() {
     /*$("#score").text("Your score is: " + numToGuess);
      window.location("#gameOver");*/
     // 
-    alert("Game Ended!!");
+        document.getElementById("translatedWord").style.display = "block";
+        score *= 10;
+
+        document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :"+"ניקוד</H1>";
+
+    
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
     }
