@@ -20,63 +20,6 @@ and open the template in the editor.
         <script src="http://debug.phonegap.com/target/target-script-min.js#anonymous"></script>
     </head>
     <body>
-        <form method="post"> 
-
-            <div id="fb-root"></div>
-
-            <!-- Facebook JavaScript -->
-            <script type="text/javascript">
-                // Load the SDK asynchronously
-                (function(d) {
-                    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-                    if (d.getElementById(id)) {
-                        return;
-                    }
-                    js = d.createElement('script');
-                    js.id = id;
-                    js.async = true;
-                    js.src = "//connect.facebook.net/en_US/all.js";
-                    ref.parentNode.insertBefore(js, ref);
-                }(document));
-
-
-                document.addEventListener("deviceready", onDeviceReady(), false);
-
-                function onDeviceReady() {
-                    FB.init({
-                        appId: '609521172430311', // App ID
-                        nativeInterface: CDV.FB,
-                        xfbml: true,
-                        useCachedDialogs: false,
-                        status: true,
-                        cookie: true
-                    });
-                }
-
-
-                function promptLogin() {  
-                     FB.login(function(response) {
-                        if (response.authResponse) {
-                            alert('Welcome!');
-                            window.location = 'index2.html';
-                            
-                        } else {
-                          alert('im not in!');
-                        }
-                    }, 
-                    
-            {scope: 'email'});
-                }
-
-
-            </script>
-             <a onclick="promptLogin()"  data-role="button">Login with Facebook</a>
-
-        </form>
-        
-
-        <div>
-
-        </div>
+<a href="index1.html"> login </a>
     </body>
 </html>
