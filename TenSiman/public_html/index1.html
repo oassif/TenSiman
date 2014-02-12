@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
@@ -49,7 +55,6 @@
 
 
                 function promptLogin() {
-                    FB.init();
                     FB.login(function(response) {
                         if (response.authResponse) {
                             alert('im in!');
@@ -72,4 +77,3 @@
         </div>
     </body>
 </html>
-
