@@ -55,7 +55,9 @@ and open the template in the editor.
 
 
                 function promptLogin() {
+                    
                     FB.login(function(response) {
+                        FB.init();
                         if (response.authResponse) {
                             alert('im in!');
                             window.location = 'index2.html';
