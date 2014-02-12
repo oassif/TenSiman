@@ -1,95 +1,72 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
-        <link rel="stylesheet" type="text/css" href="css\TenSiman.css">
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
-        <script type="text/javascript" src="js\javascript.js"></script>
-    </head>
-    <body>
-        <!-- Main Page -->
-        <div id="main" data-role="page">
-<center>
-            <header data-role="header">
-                <h1>TenSiman</h1>
-                <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>-->
-                <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>
-            </header>
-            <div data-role="content" id="login_pagecontent">
-                <br/><br/><br/>
-                <br/><br/>
-                        <input type="button" name="Confirm" id="play_game" value="שחק" data-theme="e" onClick="startGame();" />
-                <br/>
-            </div>
-                </center>
-        </div>
-        <!-- Game Page -->
-        <div id="game" data-role="page">
-<center>
-            <header data-role="header">
-                <span id="title">
-                <h1>נסו לזכור את המילים הבאות</h1>
-                </span>
-                <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>
-                <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>-->
-            </header>
+<head></head>
+<body>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '609521172430311',
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
+  });
 
-                
-                <img id="myVideo" src=""  style="display: block;">
-                <div align="center" id="translation">
-                    <!--<input type="button" id="repeat" onclick="showVideos();" style="display: none">-->
-                    <!--<button-->
-                    <span id="translatedWord"></span>
-                    <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
-                    <!-- display should be none, it's block only for debug-->
-                    <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
-                </div>
-                <br/><br/>
-                    <div align="center" id="answers">
-                <table width="100%">
-                    <tr>
-                        <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
-                        <td width="10%"></td>
-                        <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
-                    </tr>
-                    <tr>
-                        <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
-                        <td width="10%"></td>
-                        <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
-                    </tr>
-                </table>
-                </div>
-                
-                <!--
-                <ul data-role="listview" id="answers">
+  // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+  // for any authentication related change, such as login, logout or session refresh. This means that
+  // whenever someone who was previously logged out tries to log in again, the correct case below 
+  // will be handled. 
+  FB.Event.subscribe('auth.authResponseChange', function(response) {
+    // Here we specify what we do with the response anytime this event occurs. 
+    if (response.status === 'connected') {
+      // The response object is returned with a status field that lets the app know the current
+      // login status of the person. In this case, we're handling the situation where they 
+      // have logged in to the app.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // In this case, the person is logged into Facebook, but not into the app, so we call
+      // FB.login() to prompt them to do so. 
+      // In real-life usage, you wouldn't want to immediately prompt someone to login 
+      // like this, for two reasons:
+      // (1) JavaScript created popup windows are blocked by most browsers unless they 
+      // result from direct interaction from people using the app (such as a mouse click)
+      // (2) it is a bad experience to be continually prompted to login upon page load.
+      FB.login();
+    } else {
+      // In this case, the person is not logged into Facebook, so we call the login() 
+      // function to prompt them to do so. Note that at this stage there is no indication
+      // of whether they are logged into the app. If they aren't then they'll see the Login
+      // dialog right after they log in to Facebook. 
+      // The same caveats as above apply to the FB.login() call here.
+      FB.login();
+    }
+  });
+  };
 
-                    <li>
-                        <a data-role="button" id="answer1" onclick="onClick_checkAnswer(this);">Answer1</a> 
-                    </li>
-                    <li>
-                        <a data-role="button" id="answer2" onclick="onClick_checkAnswer(this);">Answer2</a> 
-                        <!--<input type="button" name="answer2" id="answer2" value="Confirm" onClick="checkAnswer(value);" />-->
-                 <!--   </li>
-                    <li>
-                        <a data-role="button" id="answer3" onclick="onClick_checkAnswer(this);">Answer3</a> 
-                        <!--<input type="button" name="answer3" id="answer3" value="Confirm" onClick="checkAnswer(value);" />-->
-                 <!--   </li>
-                    <li>
-                        <a data-role="button" id="answer4" onclick="onClick_checkAnswer(this);">Answer4</a> 
-                    </li>
-                </ul>-->
-                <br>
-                <center><span id="timer"></span></center>
-                <br>
-            </div>
-                </td></tr></table></center>
-        </div>
-    </body>
+  // Load the SDK asynchronously
+  (function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+  }(document));
+
+  // Here we run a very simple test of the Graph API after login is successful. 
+  // This testAPI() function is only called in those cases. 
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Good to see you, ' + response.name + '.');
+    });
+  }
+</script>
+
+<!--
+  Below we include the Login Button social plugin. This button uses the JavaScript SDK to
+  present a graphical Login button that triggers the FB.login() function when clicked. -->
+
+<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+<a href="index1.html"> login </a>
+
+</body>
 </html>
