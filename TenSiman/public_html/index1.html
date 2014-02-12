@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
@@ -40,7 +34,7 @@ and open the template in the editor.
                 }(document));
 
 
-                document.addEventListener("deviceready", onDeviceReady(), false);
+                document.addEventListener("deviceready", onDeviceReady(), true);
 
                 function onDeviceReady() {
                     FB.init({
@@ -55,9 +49,16 @@ and open the template in the editor.
 
 
                 function promptLogin() {
+                    FB.init({
+                        appId: '609521172430311', // App ID
+                        nativeInterface: CDV.FB,
+                        xfbml: true,
+                        useCachedDialogs: false,
+                        status: true,
+                        cookie: true
+                    });
                     
                     FB.login(function(response) {
-                        FB.init();
                         if (response.authResponse) {
                             alert('im in!');
                             window.location = 'index2.html';
