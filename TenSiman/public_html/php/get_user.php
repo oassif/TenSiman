@@ -62,13 +62,14 @@ if (mysql_num_rows($result) > 0) {
 ?>
 
 <?php
+
   // Remember to copy files from the SDK's src/ directory to a
   // directory in your application on the server, such as php-sdk/
   require_once('php-sdk/facebook.php');
 
   $config = array(
-    'appId' => 'YOUR_APP_ID',
-    'secret' => 'YOUR_APP_SECRET',
+    'appId' => '609521172430311',
+    'secret' => 'dcdf15e280478a7278f17d838e100596',
     'allowSignedRequest' => false // optional but should be set to false for non-canvas apps
   );
 
@@ -106,7 +107,6 @@ if (mysql_num_rows($result) > 0) {
       echo 'Please <a href="' . $login_url . '">login.</a>';
 
     }
-
   ?>
 
   </body>

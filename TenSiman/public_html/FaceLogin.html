@@ -1,0 +1,50 @@
+<html>
+    <head>
+                        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <!-- cordova -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <!-- cordova facebook plugin -->
+        <script type="text/javascript" src="cdv-plugin-fb-connect.js"></script>
+        <!-- facebook js sdk -->
+        <script type="text/javascript" src="facebook-js-sdk.js"></script>
+        <script src="http://debug.phonegap.com/target/target-script-min.js#anonymous"></script>
+        
+        
+                <script src="js/before.js"></script>
+    </head>
+<body>
+<div id="fb-root"></div>
+
+<a href="login.html"> login </a>
+
+       <!--Facebook Javascript SDK-->
+        <div id="fb-root"></div>
+        <script src="js/after.js"></script>
+
+ <section data-role="page" id="pageLogin" data-theme="a">
+
+            <header data-role="header" data-position="fixed">
+                <h1><a href="http://showsomething.aws.af.cm"><img src="img/logo_trans.png" alt="ShowSomething"></a></h1>
+            </header>
+
+            <div data-role="content">
+
+                <div class="centered-container">
+                    <div id="welcomeDiv" class="centered-content centered-text">
+                        <h3>Welcome to ShowSomething!<br>Please log in with your Facebook account.</h3>
+                        <!--Facebook login button-->
+                        <a href="javascript: loginFacebookUser();"><img src="img/facebook_login_button.png" alt="Facebook Login" style="width: 270px;"></a>
+                    </div>
+                </div>
+            </div>
+     
+
+
+                
+
+</body>
+</html>

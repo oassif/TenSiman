@@ -33,10 +33,9 @@
                     ref.parentNode.insertBefore(js, ref);
                 }(document));
 
+              document.addEventListener("deviceready", onDeviceReady(), false);
 
-//                document.addEventListener("deviceready", onDeviceReady(), false);
-
-                function onDeviceReady() {
+               function onDeviceReady() {
                     FB.init({
                         appId: '609521172430311', // App ID
                         nativeInterface: CDV.FB,
@@ -49,19 +48,19 @@
 
 
                 function promptLogin() {
-                 /**   FB.init({
+                  FB.init({
                         appId: '609521172430311', // App ID
                         nativeInterface: CDV.FB,
                         xfbml: true,
                         useCachedDialogs: false,
                         status: true,
                         cookie: true
-                    });*/
+                    });
                     
                     FB.login(function(response) {
                         if (response.authResponse) {
                             alert('im in!');
-                            window.location = 'index2.html';
+                            window.location = 'game.html';
                         } else {
                           alert('im not in!');
                         }
