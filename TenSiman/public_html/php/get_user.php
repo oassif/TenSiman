@@ -19,16 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 // array for JSON response
 $response = array();
-
+//mysql_connect('localhost', 'stavoren.stavoren', 'stavoren.stavore') or die (mysql_error());
+//mysql_select_database('stavoren') or die (mysql_error());
 // include db connect class
 require_once __DIR__ . '/db_connect.php';
-
+echo "ffff";
 // connecting to db
 $db = new DB_CONNECT();
-
+echo "aaaa";
 //SQL query
 $result = mysql_query("SELECT * FROM `Users`") or die(mysql_error());
-
+echo "ffff";
 // check for empty result
 if (mysql_num_rows($result) > 0) {
     
@@ -60,54 +61,3 @@ if (mysql_num_rows($result) > 0) {
     echo json_encode($response);
 }
 ?>
-
-<?php
-
-  // Remember to copy files from the SDK's src/ directory to a
-  // directory in your application on the server, such as php-sdk/
-  require_once('php-sdk/facebook.php');
-
-  $config = array(
-    'appId' => '609521172430311',
-    'secret' => 'dcdf15e280478a7278f17d838e100596',
-    'allowSignedRequest' => false // optional but should be set to false for non-canvas apps
-  );
-
-  $facebook = new Facebook($config);
-  $user_id = $facebook->getUser();
-?>
-<html>
-  <head></head>
-  <body>
-
-  <?php
-    if($user_id) {
-
-      // We have a user ID, so probably a logged in user.
-      // If not, we'll get an exception, which we handle below.
-      try {
-
-        $user_profile = $facebook->api('/me','GET');
-        echo "Name: " . $user_profile['name'];
-
-      } catch(FacebookApiException $e) {
-        // If the user is logged out, you can have a 
-        // user ID even though the access token is invalid.
-        // In this case, we'll get an exception, so we'll
-        // just ask the user to login again here.
-        $login_url = $facebook->getLoginUrl(); 
-        echo 'Please <a href="' . $login_url . '">login.</a>';
-        error_log($e->getType());
-        error_log($e->getMessage());
-      }   
-    } else {
-
-      // No user, print a link for the user to login
-      $login_url = $facebook->getLoginUrl();
-      echo 'Please <a href="' . $login_url . '">login.</a>';
-
-    }
-  ?>
-
-  </body>
-</html>
