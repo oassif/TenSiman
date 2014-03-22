@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+var currentPlayerId = 0;
 var timePerRound = 10;
 var delayBetweenQuestions = 750; // in milliseconds
 
@@ -38,6 +38,7 @@ function resizeWidthIframe() {
     width = (width < 0) ? 0 : width;
     document.getElementById('myVideo').style.width = width + 'px';
 }
+
 $(document).ready(function()
 {
     refreshMatchups();
@@ -70,13 +71,14 @@ $(document).ready(function()
 
 function refreshMatchups() {
     var htmlCode = "";
+    alert("ref match up player" + currentPlayerId);
     
     // Getting the user status and current matchups
     $.ajax({
-    url: 'http://stavoren.milab.idc.ac.il/php/getMatchupPageContent_New_DB.php',
+    url: 'http://stavoren.milab.idc.ac.il/public_html/php/getMatchupPageContent_New_DB.php',
     method: 'POST',
     data: { 
-        userId: 1, // TODO: change Hardcoded value for the user Oren Assif
+        userId: currentPlayerId, // TODO: change Hardcoded value for the user Oren Assif
     },
     success: function (data) {
         var jason = JSON.parse(data);
@@ -113,10 +115,9 @@ function buildPlayerBar(userData) {
 }
 
 function buildMatchesTable(matchesData) {
-        
+    alert("matchDate" + matchesData[0]["rivalName"]);    
     var table = document.getElementById("matchups_table");
     var numOfMatchups = matchesData.length;
-
 
     var index;
     //table.innerHTML = "";
@@ -126,14 +127,15 @@ function buildMatchesTable(matchesData) {
         var textValue = "";
         var buttonProperty = "";
         
+        // Todo: see if it's the first player or sceond player and according to it decide.
         // Decide button
         if (matchesData[index]["gameStatus"] === "0") {
             text = "תן סימן";
-            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["rivalId"] + ")\"";
+            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["macthId"] + ")\"";
         }
         else if (matchesData[index]["gameStatus"] === "1") {
-            text = "תורך";
-            buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameID"] + ")\"";
+            text = "תורך!!!";
+            buttonProperty = "onClick=\"playTurn(" + matchesData[index]["macthId"] + ")\"";
         }
         else if (matchesData[index]["gameStatus"] === "2") {
             text = "המתן";
@@ -206,6 +208,7 @@ function startGame()
 {
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
+    alert("player" + currentPlayerId);
     resizeIframe();
     resizeWidthIframe();
     setTimeout(function() {
@@ -431,26 +434,28 @@ alert("Update Sent");
    document.getElementById("answer3").style.display = "none";
    document.getElementById("answer4").style.display = "none";
 
-
-
+   window.location = "#matchups";
+   refreshMatchups();
 }
 
-function refreshFriendsZone(userId, toInvite) {
+function refreshFriendsZone(userId, toInvite, temp) {
     var htmlCode = "";
     
+    window.location = "#friends";
+    alert("player" + currentPlayerId);
+
     // Getting the user status and current matchups
     $.ajax({
     url: 'http://stavoren.milab.idc.ac.il/php/getMatchupPageContent_New_DB.php',
     method: 'POST',
     data: { 
-        userId: userId, // TODO: change Hardcoded value for the user Oren Assif
+        userId: userId,
     },
     success: function (data) {
         var jason = JSON.parse(data);
         if (jason.success == 1) {
         //    buildFriendsBar(jason.matches);
             buildFriendsTable(jason.matches, toInvite);
-
         }
     },
     error: function () {
@@ -497,7 +502,7 @@ function buildFriendsBar(matchup) {
 function buildFriendsTable(matchesData, toInvite) {
    
    document.getElementById("friends_bar").style.display = "block";
-   document.getElementById("matchups_tableNew").style.display = "none";
+  // document.getElementById("matchups_tableNew").style.display = "none";
    document.getElementById("friends_table").innerHTML = "";
 
     var table = document.getElementById("friends_table");
@@ -528,15 +533,24 @@ function buildFriendsTable(matchesData, toInvite) {
     }
 }
 
-function startGameWithNewPlayer(userId) {
+/**
+ * Create new MatchUp between 2 users who never played before.
+ * Sets the currentGameId to NULL.
+ * Calls to createNewGame(matchId) - which create the current live game id.
+ * This function is called after clicking on "שחק" in "צור משחק חדש".
+ * @param {type} rivalId
+ * @returns {undefined}
+ */
+function startGameWithNewPlayer(rivalId) {
     
+    alert("player" + currentPlayerId);
     alert("startGameWithNewPlayer");
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/sendNewMatchup.php',
             method: 'POST',
             data: { 
-                myUserId: 1, 
-                playerUserId: userId //$("#name").val(),
+                myUserId: currentPlayerId, 
+                playerUserId: rivalId //$("#name").val(),
             },
             success: function (data) {
                 var jason = JSON.parse(data);
@@ -552,10 +566,16 @@ function startGameWithNewPlayer(userId) {
     });
 }
 
-
-function createNewGame(matchId) {
-    
-    alert("createNewGame");
+/**
+ * Create a new live Game.
+ * Choose 5 videos, Create 5 sections, Create new live Game that holds the 
+ * 5 sections. 
+ * 
+ * return the matchId and a section array containing the videos and possible answers. 
+ * @param {type} matchId
+ * @returns {undefined}
+ */
+function createNewGame(matchId) {   
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/createNewGame.php',
             method: 'POST',
@@ -575,4 +595,86 @@ function createNewGame(matchId) {
               alert("error in match");
              }
     });
+}
+
+function playTurn(match_id) {
+        
+     $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/playTurn.php',
+            method: 'POST',
+            data: { 
+                matchId: match_id,
+            },
+            success: function (data) {
+                var jason = JSON.parse(data);
+                if (jason.success === 1) {
+                    alert("ok");
+                    var gameId = jason.data;
+                    videoArray = jason.sections;
+                    startGame();    
+                }
+            },
+            error: function () {
+              alert("error in match");
+             }
+        });
+}
+
+
+
+//    FB.api('/me', function(response) {
+//        console.log('Good to see you, ' + response.name + '.');
+//
+//       response.name
+//       response.username 
+//       response.id 
+//       response.email
+//  
+//       
+//
+//    });
+//    
+
+ function signUp() {
+         var email = "stav@gmail.com:";
+         var firstName = "stav";
+         var LastName = "moskovich";
+         var facebookId = "1378982912";
+         var imgUrl= "https://graph.facebook.com/stav.moskovich/picture/";
+         var gender = "F";
+         var birthDay = "29.9.1989";
+         
+     $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/signUp.php',
+            method: 'POST',
+            data: { 
+                email: email,
+                userFirstName: firstName,
+                userLastName: LastName,
+                userFacebookId: facebookId,
+                imgUrl: imgUrl,
+                userGender: gender,
+                userBirthday: birthDay,
+            },
+            
+            success: function (data) {
+                var jason = JSON.parse(data);
+                if (jason.success === 1) {
+                    alert("ok");
+                    currentPlayerId = jason.userId;
+                    window.location = "#matchups";
+                    refreshMatchups();
+                }
+            },
+            error: function () {
+              alert("error in match");
+             }
+        });
+
+}
+
+function login(facebookId) {
+    currentPlayerId = facebookId;
+    window.location = "#matchups";
+    refreshMatchups();
 }

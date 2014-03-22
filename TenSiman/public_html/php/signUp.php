@@ -27,19 +27,26 @@ require_once __DIR__ . '/db_connect.php';
 //connecting to db
 $db = new DB_CONNECT();
 
-if (isset($_REQUEST["userId"]) && isset($_REQUEST["userName"])) {
+if (isset($_REQUEST["email"]) &&  isset($_REQUEST["userFirstName"]) && isset($_REQUEST["userLastName"]) && 
+        isset($_REQUEST["userFacebookId"]) && isset($_REQUEST["imgUrl"]) && isset($_REQUEST["userGender"]) 
+        && isset($_REQUEST["userBirthday"])) {
 
     //array for JSON response 
     $response = array();
-    $myUserId = $_REQUEST['myUserId'];
-    $rivalId = $_REQUEST['playerUserId'];
+    $email = $_REQUEST['email'];
+    $userFirstName = $_REQUEST['userFirstName'];
+    $userLastName = $_REQUEST['userLastName'];
+    $userFacebookId = $_REQUEST['userFacebookId'];
+    $imgUrl = $_REQUEST['imgUrl'];
+    $userGender = $_REQUEST['userGender'];
+    $userBirthday = $_REQUEST['userBirthday'];
+
+    
     
 
-$sql = "INSERT INTO `Matchups` (`player1`, `player2`, `scoreP1`, `scoreP2`, `lastUpdate`, `currGameId`, `lastGameId`) VALUES ('$myUserId', '$rivalId', '0', '0', '2013-01-01 01:00:00', NULL, NULL)";    
+$sql ="INSERT INTO `Users` (`Email`, `FirstName`, `LastName`, `Level`, `Score`, `facebookId`, `imgURL`, `gender`, `birthday`) VALUES ('$email', '$userFirstName', '$userLastName', '0', '0', '$userFacebookId', '$imgUrl', '$userGender', '$userBirthday')";
 $resultMatchup = mysql_query($sql);
 $idMatchup = mysql_insert_id();
-
-
 
 //// check if row inserted or not
     if ($resultMatchup) {

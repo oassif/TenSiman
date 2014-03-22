@@ -1,16 +1,210 @@
-<!DOCTYPE html>
+
+<!DOCTYPE HTML>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+	ZeroFour 2.5 by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+	<head>
+		<title>HackIDC - April 2014</title>
+		<LINK REL="SHORTCUT ICON" HREF="images/toico.ico" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta property="og:title" content="HackIDC" />
+		<meta property="og:type" content="video.movie" />
+		<meta property="og:url" content="http://www.hackidc.com" />
+		<meta property="og:image" content="http://www.hackidc.com/images/herzl.png" />
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800" rel="stylesheet" type="text/css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="http://hackidc.com/js/skel-panels.min.js"></script>
+		<script src="http://hackidc.com/js/config.js"></script>
+		<script src="http://hackidc.com/js/skel.min.js"></script>
+		<script src="http://hackidc.com/js/jquery.dropotron.min.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+		</noscript>
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
+		<!--[if lte IE 7]><link rel="stylesheet" href="css/ie7.css" /><![endif]-->
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		  ga('create', 'UA-48155897-1', 'hackidc.com');
+		  ga('send', 'pageview');
+		
+		</script>
+		<script type="text/javascript">
+			<!--
+			if (screen.width <= 700) {
+			document.location = "mobile/index.html";
+			}
+			//-->
+		</script>
+		<script type="text/javascript">
+		function displaydate()
+			{
+			var end = new Date("March 10, 2014 23:59:59");
+			var endms = end.getTime();
+			var now = new Date();
+			var nowms = now.getTime();
+			var result = Math.ceil((endms - nowms) / 86400000);
+			var tenthdigit = Math.floor(result / 10);
+			var onesdigit = result % 10;
+			if (result < 0) { 
+				tenthdigit=0;
+				onesdigit=0;
+			}
+			var name1 = "images/count/" + tenthdigit + ".png";
+			var name2 = "images/count/" + onesdigit + ".png";
+			document.getElementById('tenth').src = name1;
+			document.getElementById('ones').src = name2;
+			}
+		</script>
+	</head>
+	<body class="homepage" onload="displaydate()">
+		<!-- Header Wrapper -->
+			<div id="header-wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="12u">
+							<!-- Header -->
+								<header id="header">
+									<div class="inner">
+									
+										<!-- Logo -->
+											<h1><a href="index.html" id="logo"><img src="images/logo.png"></a></h1>
+										
+										<!-- Nav -->
+											<nav id="nav">
+												<ul>
+													<li class="current_page_item"><a href="index.html">Home</a></li>
+													<li>
+														<a href="sponsors.html"><span>Sponsors</span></a>
+													</li>
+													<li>
+														<a href="about.html"><span>About HackIDC</span></a>
+														<ul>
+															<li><a href="schedule.html">Schedule</a></li>
+															<li><a href="prizes.html">Prizes</a></li>
+															<li><a href="terms.html">Terms & Conditions</a></li>
+															<li><a href="faq.html">FAQ</a></li>
+															<li><a href="organizers.html">The Organizers</a></li>
+														</ul>
+													</li>
+													<li><a href="contact.html">Contact us</a></li>
+													<li><a href="signup.html">Sign up</a></li>
+													<li>
+													<a href="https://twitter.com/HackIDC" class="fa fa-twitter solo" target="_blank"><span>Twitter</span></a>
+													<a href="https://www.facebook.com/HackIDC" class="fa fa-facebook solo" target="_blank"><span>Facebook</span></a>
+													</li>
+												</ul>
+											</nav>
+									
+									</div>
+								</header>
+
+							<!-- Banner -->
+								<div id="banner">
+								<br><br>
+									<h1><strong><img src="images/clock.png"> 48 Hours&nbsp;&nbsp;&nbsp;&nbsp;
+									<img src="images/Trophy.png"> 15,000&#8362; Prizes&nbsp;&nbsp;&nbsp;&nbsp;
+									<img src="images/moon.png"> 0 Sleep<br></strong></h1>
+									<h3><strong>April 16<sup>th</sup>-18<sup>th</sup> 2014</h3><strong>
+									<h3><strong>Registration is over!<br><br>
+												Thanks to everyone who registered!
+									<br><br><strong></h3><h4>Missed it? We'll be back next year</h4>
+								</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		<!-- Main Wrapper -->
+			<div id="main-wrapper">
+				<div class="main-wrapper-style1">
+					<div class="inner">
+				
+						<!-- Feature 1 -->
+							<section class="container box-feature1">
+								<div class="row">
+									<div class="12u">
+										<header class="first major">
+											<h2>HackIDC is proudly sponsored by:</h2>	
+										</header>
+									</div>
+								</div>
+								<div class="row">
+									<div class="4u">
+										<section>
+											<a href="http://www.sears.co.il" target="_blank"><span class="image image-full">
+											<img src="images/sears.png" alt="" /></span></a>
+										</section>
+									</div>
+									<div class="4u">
+										<section>
+											<a href="http://www.microsoft.com/he-il/" target="_blank"><span class="image image-full"><img src="images/microsoft.png" alt="" /></span></a>	
+										</section>
+									</div>
+									<div class="4u">
+										<section>
+											<a href="http://www.hp.co.il" target="_blank"><span class="image image-full"><img src="images/hp.png" alt="" /></span></a>
+										</section>
+									</div>
+								</div>
+							</section>
+
+					</div>
+				</div>
+				<div class="main-wrapper-style2">
+				
+					<div class="inner">
+						<!-- Feature 2 -->
+							<section class="container box-feature2">
+								<div class="row" style="width:900px; margin:0 auto;">
+								<img src="images/blank.png" alt="" />
+									<a href="http://www.cisco.co.il" target="_blank"><img src="images/cisco.png" alt="" /> </a>
+									<a href="http://www.nice.com" target="_blank"><img src="images/nice.png" alt="" /> </a>
+									<a href="http://www.sap.co.il" target="_blank"><img src="images/sap.png" alt="" /> </a>
+									</div>
+									<div class="row" style="width:650px; margin:0 auto;">
+									<a href="http://www.vmware.com" target="_blank"><img src="images/vmware.png" alt="" /> </a>
+									<a href="http://www.redhat.com" target="_blank"><img src="images/redhat.png" alt="" /></a>
+									
+								
+								</div>
+							</section>
+						</div>
+				</div>
+				<div class="main-wrapper-style3">
+					<div class="inner">
+						<div class="container">
+							<div class="row" style="width:1100px; margin:0 auto;">
+								<a href="http://www.checkpoint.com" target="_blank"><img src="images/check.png" alt="" /> </a>
+								<a href="http://www.ebay.com" target="_blank"><img src="images/ebay.png" alt="" /> </a>
+								<a href="http://www.espresso-club.co.il" target="_blank"><img src="images/eclub.png" alt="" /> </a>
+								<a href="http://www.monosevich.com" target="_blank"><img src="images/law.png" alt="" /> </a>
+								</div>
+								<div class="row" style="width:1000px; margin:0 auto;">
+								<a href="http://www.herzliya.muni.il/?CategoryID=804" target="_blank"><img src="images/herz.png" alt="" /></a>
+								<a href="http://www.herzliya.muni.il/?CategoryID=812" target="_blank"><img src="images/herz2.png" alt="" /></a>
+								<a href="http://www.yogaflow.co.il" target="_blank"><img src="images/yoga.png" title="רונית ביגר - מורה מוסמכת ליוגה&#13;052-6472188&#13;ronit@yogaflow.co.il" /> </a>
+								<a href="sponsors.html"><img src="images/freespace.png" alt="" /></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				<div id="copyright">
+					&copy; HackIDC. All rights reserved | <a href="mailto:contact@hackidc.com">Contact us</a> | Design: <a href="http://html5up.net/">HTML5 UP</a>
+				</div>
+			</div>			
+	</body>
 </html>

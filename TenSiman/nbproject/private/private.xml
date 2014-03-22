@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>public_html/php/sendNewMatchup.php</url>
+            <bookmark id="1">
+                <name/>
+                <line>0</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/smoskovich/Documents/GitHub/TENSIMAN/TenSiman/public_html/php/sendNewMatchup.php</file>
+            <file>file:/C:/Users/smoskovich/Documents/GitHub/TENSIMAN/TenSiman/public_html/php/createNewGame.php</file>
+            <file>file:/C:/Users/smoskovich/Documents/GitHub/TENSIMAN/TenSiman/public_html/js/javascript.js</file>
+            <file>file:/C:/Users/smoskovich/Documents/GitHub/TENSIMAN/TenSiman/public_html/index.html</file>
+        </group>
     </open-files>
 </project-private>
