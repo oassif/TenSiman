@@ -50,8 +50,9 @@ $idMatchup = mysql_insert_id();
 
 //// check if row inserted or not
     if ($resultMatchup) {
+        $row = mysql_fetch_array($resultMatchup);
         $response["success"] = 1; 
-        $response["data"] = $idMatchup;
+        $response["userId"] = $idMatchup;
         echo json_encode($response);
     } else {
 //error

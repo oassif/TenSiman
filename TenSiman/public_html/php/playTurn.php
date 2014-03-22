@@ -32,16 +32,18 @@ if (isset($_REQUEST["matchId"])) {
 //    //array for JSON response 
 //    $response = array();
    $matchId = $_REQUEST['matchId'];
+//    
+//    // Get the current game id
+//    $sql ="SELECT * FROM `Matchups` WHERE id ='$matchId'";
+//    $result = mysql_query($sql);
+//    $currGameId = NULL;
+//    if (mysql_num_rows($result) > 0) {
+//        $row = mysql_fetch_array($result);
+//        $currGameId = $row["currGameId"];
+//    }
+//    
+    $currGameId = $matchId;
     
-    // Get the current game id
-    $sql ="SELECT * FROM `Matchups` WHERE id ='$matchId'";
-    $result = mysql_query($sql);
-    $currGameId = NULL;
-    if (mysql_num_rows($result) > 0) {
-        $row = mysql_fetch_array($result);
-        $currGameId = $row["currGameId"];
-    }
-        
     // Get the sectiond ids
     $sql ="SELECT * FROM `Games_new` WHERE id ='$currGameId'";
     $result = mysql_query($sql);

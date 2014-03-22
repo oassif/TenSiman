@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 // TODO: change all $_GET to $_POST
 
 // Save the given LiveGame id
-$userId = $_POST['userId'];
+$userId = $_REQUEST['userId'];
 
 //include db connect class
 require_once __DIR__ . '/db_connect.php';
@@ -29,11 +29,12 @@ require_once __DIR__ . '/db_connect.php';
 $db = new DB_CONNECT();
 
 // Checking that value exists
-if (isset($_POST["userId"])) {
+if (isset($_REQUEST["userId"])) {
     
      // TODO: try to get the live game (might fail so need to handle error - wrond id or invalid id)
-     $result = mysql_query("SELECT * FROM Users WHERE id=$userId");
-    $result2 = mysql_query("SELECT scoreP1 AS userScore,
+    $result = mysql_query("SELECT * FROM Users WHERE id=$userId");
+    $result2 = mysql_query("SELECT g.id As matchId,
+                                   scoreP1 AS userScore,
                                    scoreP2 AS rivalScore,
                                    status AS gameStatus,
                                    g.id AS LiveGameId,
@@ -95,6 +96,7 @@ if (mysql_num_rows($result2) > 0) {
     while ($row = mysql_fetch_array($result2)) {
         // temp chat array
         $match = array();
+        $match["matchId"] = $row["matchId"];
         $match["userScore"] = $row["userScore"];
         $match["rivalScore"] = $row["rivalScore"];
         if ($row["gameStatus"] == 4) {
@@ -178,7 +180,7 @@ if (mysql_num_rows($result) > 0) {
     } else {
 //error
         $response["success"] = 0;
-        $response["message"] = "Error";
+        $response["message"] = "Error!!!!!!";
 
 // echo no users JSON
         echo json_encode($response);
