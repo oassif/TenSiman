@@ -115,7 +115,6 @@ function buildPlayerBar(userData) {
 }
 
 function buildMatchesTable(matchesData) {
-    alert("matchDate" + matchesData[0]["rivalName"]);    
     var table = document.getElementById("matchups_table");
     var numOfMatchups = matchesData.length;
 
@@ -131,11 +130,12 @@ function buildMatchesTable(matchesData) {
         // Decide button
         if (matchesData[index]["gameStatus"] === "0") {
             text = "תן סימן";
-            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["macthId"] + ")\"";
+            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["LiveGameId"] + ")\"";
         }
         else if (matchesData[index]["gameStatus"] === "1") {
             text = "תורך!!!";
-            buttonProperty = "onClick=\"playTurn(" + matchesData[index]["macthId"] + ")\"";
+            alert("your turn:" + matchesData[index]["LiveGameId"]);
+            buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameId"] + ")\"";
         }
         else if (matchesData[index]["gameStatus"] === "2") {
             text = "המתן";
@@ -206,9 +206,12 @@ function createNewLiveGame(matchUpId)
 
 function startGame()
 {
+    currVideoId = 0;
+    isDemo = true;
+    document.getElementById("play").style.display = "block";
+    document.getElementById("translatedWord").style.display = "block";
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
-    alert("player" + currentPlayerId);
     resizeIframe();
     resizeWidthIframe();
     setTimeout(function() {
@@ -265,6 +268,8 @@ function show4possibleAnswers(videoNum) {
     document.getElementById("translatedWord").innerHTML = "<H1>&nbsp</H1>";
     document.getElementById("translatedWord").style.display = "none";
 
+    resetButtons();
+   
     // Showing the answers
     // First, generates Random number for the first answer
     var firstAnswerId = Math.floor((Math.random() * 4));
@@ -294,10 +299,7 @@ function show4possibleAnswers(videoNum) {
 
 function myHandler() {
 
-    // Start a timer to answer once the video ended
-    //setTimeout(function(){endGame();}, 4000);
-
-
+alert("im called");
     if (isDemo) {
         ++currVideoId;
         if (currVideoId === videoCount) {
@@ -394,11 +396,6 @@ function endGame() {
     /*$("#score").text("Your score is: " + numToGuess);
      window.location("#gameOver");*/
     // 
-        document.getElementById("translatedWord").style.display = "block";
-        score *= 10;
-
-        document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :"+"ניקוד</H1>";
-
 
 // 3.2.2014 - JSON post
 //function post() {
@@ -423,7 +420,8 @@ function endGame() {
 //    }
 alert("Update Sent");
 
-    
+   
+   
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
     }
@@ -434,8 +432,34 @@ alert("Update Sent");
    document.getElementById("answer3").style.display = "none";
    document.getElementById("answer4").style.display = "none";
 
+        document.getElementById("translatedWord").style.display = "block";
+        score *= 10;
+
+        document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :"+"ניקוד</H1>";
+        
    window.location = "#matchups";
    refreshMatchups();
+}
+/**
+ * Reset the 4 button of possible answers and the timer.
+ * @param {type} matchup
+ * @returns {undefined}
+ */
+function resetButtons() {
+    
+   document.getElementById("timer").style.display = "block";
+   document.getElementById("answer1").style.display = "block";
+   document.getElementById("answer2").style.display = "block";
+   document.getElementById("answer3").style.display = "block";
+   document.getElementById("answer4").style.display = "block";
+   
+    document.getElementById("answer1").style.background = "";
+    document.getElementById("answer2").style.background = "";
+    document.getElementById("answer3").style.background = "";
+    document.getElementById("answer4").style.background = "";
+
+
+    
 }
 
 function refreshFriendsZone(userId, toInvite, temp) {
@@ -556,7 +580,7 @@ function startGameWithNewPlayer(rivalId) {
                 var jason = JSON.parse(data);
                 if (jason.success === 1) { 
                     var matchId = jason.data;
-                    alert(matchId);
+                    alert("MatchId: " + matchId);
                     createNewGame(matchId);
                 }
             },
@@ -597,19 +621,19 @@ function createNewGame(matchId) {
     });
 }
 
-function playTurn(match_id) {
+function playTurn(game_id) {
         
+     alert("gameid " +game_id);
      $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/playTurn.php',
             method: 'POST',
             data: { 
-                matchId: match_id,
+                gameId: game_id,
             },
             success: function (data) {
                 var jason = JSON.parse(data);
                 if (jason.success === 1) {
                     alert("ok");
-                    var gameId = jason.data;
                     videoArray = jason.sections;
                     startGame();    
                 }
