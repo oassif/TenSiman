@@ -70,6 +70,7 @@ $(document).ready(function()
 });
 
 function refreshMatchups() {
+    login();
     var htmlCode = "";
     alert("ref match up player" + currentPlayerId);
     
@@ -581,7 +582,7 @@ function startGameWithNewPlayer(rivalId) {
                 if (jason.success === 1) { 
                     var matchId = jason.data;
                     alert("MatchId: " + matchId);
-                    createNewGame(matchId);
+                    //createNewGame(matchId);
                 }
             },
             error: function () {
@@ -599,7 +600,8 @@ function startGameWithNewPlayer(rivalId) {
  * @param {type} matchId
  * @returns {undefined}
  */
-function createNewGame(matchId) {   
+function createNewGame(matchId) {  
+    alert("createNewGame");
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/createNewGame.php',
             method: 'POST',
@@ -608,12 +610,16 @@ function createNewGame(matchId) {
             },
             success: function (data) {
                 var jason = JSON.parse(data);
-                if (jason.success === 1) { 
+                if (jason.success === 1) {
+                    alert("succes");
                     var matchId = jason.data;
-                    alert(matchId);
+                    alert("createNewGamw with " + matchId);
                     videoArray = jason.sections;
                     startGame();    
+                } else {
+                    alert("fail");
                 }
+                
             },
             error: function () {
               alert("error in match");
@@ -697,11 +703,11 @@ function playTurn(game_id) {
 
 }
 
-function login(facebookId) {
-    currentPlayerId = facebookId;
-    window.location = "#matchups";
-    refreshMatchups();
-}
+//function login(facebookId) {
+//    currentPlayerId = facebookId;
+//    window.location = "#matchups";
+//    refreshMatchups();
+//}
 
  if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
                 alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
@@ -779,6 +785,8 @@ function login(facebookId) {
                         function(response) {
                             if (response.session) {
                                 alert('logged in!!!');
+                                    currentPlayerId = 2;
+                                    window.location = "#matchups";
                             } else {
                                 alert('not logged in');
                             }
