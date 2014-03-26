@@ -779,8 +779,14 @@ function playTurn(game_id) {
                         alert('logged in!!!');
                         var uid = response.authResponse.userID;
                         var accessToken = response.authResponse.accessToken;
+
                         alert("id: " + uid);
                         currentPlayerId = uid;
+                        
+                        FB.api('/me', {fields: 'id'}, function(response) {
+                             alert(response);
+                         });
+
                         
                         
 //              $.ajax({
