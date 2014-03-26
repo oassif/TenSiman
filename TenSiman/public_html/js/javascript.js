@@ -785,43 +785,15 @@ function playTurn(game_id) {
                         
                         FB.api('/me', {fields: 'id'}, function(response) {
                              alert(response);
-                         });
-
-                        
-                        
-//              $.ajax({
-//                url: 'http://stavoren.milab.idc.ac.il/public_html/php/signUp.php',
-//                method: 'POST',
-//                 data: { 
-//                email: email,
-//                userFirstName: firstName,
-//                userLastName: LastName,
-//                userFacebookId: facebookId,
-//                imgUrl: imgUrl,
-//                userGender: gender,
-//                userBirthday: birthDay,
-//            },
-//            
-//            success: function (data) {
-//                var jason = JSON.parse(data);
-//                if (jason.success === 1) {
-//                    alert("ok");
-//                    currentPlayerId = jason.userId;
-//                    window.location = "#matchups";
-//                    refreshMatchups();
-//                }
-//            },
-//            error: function () {
-//              alert("error in match");
-//             }
-//        });
-//                        
+                         });                       
+                         
                         window.location = "#matchups";
                         refreshMatchups();
                     } else {
                         alert('not logged in');
                     }
                 });
+
             } 
             var friendIDs = [];
             var fdata;
@@ -867,6 +839,14 @@ function playTurn(game_id) {
                             } else {
                                 alert('not logged in');
                             }
+                            
+                       if (response.authResponse) {
+                             alert('logged in');
+                             fbId = response.authResponse.userId;
+                                alert("user id is "+fbId);
+                    } else {
+                         alert('not logged in');
+                    }
                         },
                         {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
                 );
