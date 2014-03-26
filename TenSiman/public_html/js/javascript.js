@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+var NUMBER_SECTIONS = 5;
 var currentPlayerId = 0;
 var timePerRound = 10;
 var delayBetweenQuestions = 750; // in milliseconds
@@ -10,12 +11,11 @@ var currVideoId = 0;
 var correctAnswerId;
 var order;
 var videoArray;
-var videoCount = 0;
+var videoCount = NUMBER_SECTIONS;
 var answerArray = [6];
 var startIndex;
 var gameDetails = new Array();
 var isDemo = true;
-var NUMBER_SECTIONS = 5;
 
 var count;
 var counter;
@@ -72,21 +72,21 @@ $(document).ready(function()
 //    videoSource[3]= 'movies/middle.gif';
 //    videoSource[4]= 'movies/last.gif';
     
-    answerArray[0] = ["חדש", "חתך", "אמצע", "חצה"];
+/*    answerArray[0] = ["חדש", "חתך", "אמצע", "חצה"];
     answerArray[1] = ["אחרי", "מחר", "אחרון", "אמצע"];
     answerArray[2] = ["ארוך", "חדש", "למתוח", "אחרי"];
     answerArray[3] = ["אמצע", "חדש", "אחרי", "חתך"];
     answerArray[4] = ["אחרון", "לפני", "אחרי", "לחתוך"];
-    
+  */
     // Generate Random number
     videoCount = NUMBER_SECTIONS;
 
-
+/*
     for (var index = 0; index < videoCount; ++index) {
         // video source, right answer, user's answer, time, points
         gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
     }
-
+*/
     //videoPlay(0);
   //  document.getElementById("myVideo").setAttribute("src", videoSource[0]);
     //document.getElementById('myVideo').addEventListener('ended', myHandler, false);
@@ -625,6 +625,7 @@ function startGameWithNewPlayer(rivalId) {
  * @returns {undefined}
  */
 function createNewGame(matchId) {  
+    alert("TESSSST");
     alert("createNewGame");
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/createNewGame.php',
@@ -639,6 +640,7 @@ function createNewGame(matchId) {
                     var matchId = jason.data;
                     alert("createNewGamw with " + matchId);
                     videoArray = jason.sections;
+                    createGameDetails();
                     startGame();    
                 } else {
                     alert("fail");
@@ -649,6 +651,37 @@ function createNewGame(matchId) {
               alert("error in match");
              }
     });
+}
+
+/***
+ * Added by Oren 26/4/2014
+ * Modification:
+ * None
+ * 
+ * Info:
+ * Uses the data that comes from createNewGame.php to create the GameDetails array
+ * @returns {undefined}
+ */
+function createGameDetails() {
+    
+    alert("test1");
+    // building an array of answers. The right answer is ALWAYS in index 0
+    for (var index = 0; index < videoCount; ++index) {
+alert("test2");
+        var wrongOptions = videoArray[index]["wrongOptions"].split(":");
+        /*answerArray[index][0] = videoArray[index]["rightAnswer"];
+        answerArray[index][1] = wrongOptions[0];
+        answerArray[index][2] = wrongOptions[1];
+        answerArray[index][3] = wrongOptions[2];*/
+        answerArray[index] = [videoArray[index]["rightAnswer"], wrongOptions[0], wrongOptions[1], wrongOptions[2]];
+        alert(answerArray[index][0]);
+    }
+    
+    for (var index = 0; index < videoCount; ++index) {
+        alert("test3");
+        // video source, right answer, user's answer, time, points
+        gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
+    }
 }
 
 function playTurn(game_id) {
