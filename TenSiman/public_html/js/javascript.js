@@ -13,7 +13,7 @@ var videoArray;
 var videoCount = 0;
 var answerArray = [6];
 var startIndex;
-var gameDetails = new Array()
+var gameDetails = new Array();
 var isDemo = true;
 var NUMBER_SECTIONS = 5;
 
@@ -741,6 +741,8 @@ function playTurn(game_id) {
                 FB.getLoginStatus(function(response) {
                     if (response.status == 'connected') {
                         alert('logged in!!!');
+                        currentPlayerId = 2;
+                        window.location = "#matchups";
                     } else {
                         alert('not logged in');
                     }
@@ -786,8 +788,7 @@ function playTurn(game_id) {
                         function(response) {
                             if (response.session) {
                                 alert('logged in!!!');
-                                    currentPlayerId = 2;
-                                    window.location = "#matchups";
+
                             } else {
                                 alert('not logged in');
                             }
