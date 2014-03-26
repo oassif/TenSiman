@@ -868,7 +868,7 @@ function playTurn(game_id) {
                                 alert('not logged in');
                             }
                         },
-                        {scope: "email"}
+                        {scope: "email, id"}
                 );
             }
 
