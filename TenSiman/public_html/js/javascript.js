@@ -774,7 +774,7 @@ function playTurn(game_id) {
                 FB.getLoginStatus(function(response) {
                     if (response.status == 'connected') {
                         alert('logged in!!!');
-                        currentPlayerId = 2;
+                        currentPlayerId = response.id;
                         window.location = "#matchups";
                         refreshMatchups();
                     } else {
