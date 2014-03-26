@@ -792,7 +792,10 @@ function playTurn(game_id) {
                     } else {
                         alert('not logged in');
                     }
-                });
+                }
+              ,{scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
+
+                        );
 
             } 
             var friendIDs = [];
