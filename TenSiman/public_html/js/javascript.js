@@ -70,7 +70,7 @@ $(document).ready(function()
 });
 
 function refreshMatchups() {
-    login();
+    //login();
     var htmlCode = "";
     alert("ref match up player" + currentPlayerId);
     
@@ -582,7 +582,7 @@ function startGameWithNewPlayer(rivalId) {
                 if (jason.success === 1) { 
                     var matchId = jason.data;
                     alert("MatchId: " + matchId);
-                    //createNewGame(matchId);
+                    createNewGame(matchId);
                 }
             },
             error: function () {
