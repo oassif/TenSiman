@@ -249,7 +249,7 @@ function videoPlay(videoNum)
     
     // Checks if need to show the translation
     if (isDemo) {
-         document.getElementById("title").innerHTML ="נסו לזכור את המילים הבאות"; 
+        document.getElementById("title").innerHTML ="נסו לזכור את המילים הבאות"; 
         document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
         document.getElementById("myVideo").style.display = "block";  
 
@@ -264,6 +264,7 @@ function videoPlay(videoNum)
         if (videoNum < 4) {
             videoNum++;
           setTimeout(function() {
+             document.getElementById("myVideo").setAttribute("src", "");
              videoPlay(videoNum);
           }, 2300);
         } else {
@@ -278,6 +279,7 @@ function videoPlay(videoNum)
     }
 
     else {
+        document.getElementById("myVideo").setAttribute("src", "");
         document.getElementById("myVideo").style.display = "block";
         document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
         document.getElementById("title").innerHTML ="בחרו את התשובה הנכונה";
