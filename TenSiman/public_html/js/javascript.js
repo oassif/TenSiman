@@ -822,7 +822,7 @@ function playTurn(game_id) {
                         alert('not logged in');
                     }
                 });
-            }
+            } 
             var friendIDs = [];
             var fdata;
             function me() {
@@ -868,7 +868,7 @@ function playTurn(game_id) {
                                 alert('not logged in');
                             }
                         },
-                        {scope: "email, basic_info"}
+                        {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
                 );
             }
 
