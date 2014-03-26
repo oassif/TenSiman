@@ -743,6 +743,7 @@ function playTurn(game_id) {
                         alert('logged in!!!');
                         currentPlayerId = 2;
                         window.location = "#matchups";
+                        refreshMatchups();
                     } else {
                         alert('not logged in');
                     }
