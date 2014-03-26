@@ -64,8 +64,9 @@ $(document).ready(function()
             FB.Event.subscribe('auth.statusChange', function(response) {
                 alert('auth.statusChange event');
             });
-            
-    refreshMatchups();
+    
+    getLoginStatus();
+ //   refreshMatchups();
 //    videoSource[0] = 'movies/new.gif';
 //    videoSource[1] = 'movies/after.gif';
 //    videoSource[2] = 'movies/long.gif';
@@ -777,6 +778,35 @@ function playTurn(game_id) {
                     if (response.status == 'connected') {
                         alert('logged in!!!');
                         currentPlayerId = response.id;
+                        
+                        
+//              $.ajax({
+//                url: 'http://stavoren.milab.idc.ac.il/public_html/php/signUp.php',
+//                method: 'POST',
+//                 data: { 
+//                email: email,
+//                userFirstName: firstName,
+//                userLastName: LastName,
+//                userFacebookId: facebookId,
+//                imgUrl: imgUrl,
+//                userGender: gender,
+//                userBirthday: birthDay,
+//            },
+//            
+//            success: function (data) {
+//                var jason = JSON.parse(data);
+//                if (jason.success === 1) {
+//                    alert("ok");
+//                    currentPlayerId = jason.userId;
+//                    window.location = "#matchups";
+//                    refreshMatchups();
+//                }
+//            },
+//            error: function () {
+//              alert("error in match");
+//             }
+//        });
+//                        
                         window.location = "#matchups";
                         refreshMatchups();
                     } else {

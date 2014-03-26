@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 }
-$name = $_POST['value'];
 
 //include db connect class
 require_once __DIR__ . '/db_connect.php';
@@ -24,23 +23,25 @@ require_once __DIR__ . '/db_connect.php';
 //connecting to db
 $db = new DB_CONNECT();
 
-if (isset($_POST["liveGameId"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])) {
+if (isset($_REQUEST["facbookId"])) {
 
-    //array for JSON response
+    $facbookId = $_REQUEST["facbookId"];
     $response = array();
-    $liveGameId = $_POST['liveGameId'];
-    $answer1 = $_POST['answer1'];
-    $answer2 = $_POST['answer2'];
 
+    $resultFa = mysql_query("SELECT * FROM Users WHERE facebookId=$facebookId");
+    $userId = -1;
+    if (mysql_num_rows($resultFa) > 0) {
+        $row = mysql_fetch_array($resultFa);
+        $userId = $row['Id'] ;
+     }
     
-    $result = mysql_query("UPDATE LiveGame SET AnswerPlayer2 = '$answer1', AnswerPlayer1= '$answer2' WHERE id=$liveGameId");
-
-
 //// check if row inserted or not
     if ($result) {
         $response["success"] = 1;
-        $response["message"] = "User successfully updated.";
+        $response["userId"] = $userId;
         echo json_encode($response);
+    
+        
     } else {
 //error
         $response["success"] = 0;
