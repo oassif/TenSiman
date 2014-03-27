@@ -777,7 +777,7 @@ function playTurn(game_id) {
                 FB.getLoginStatus(function(response) {
                     if (response.status == 'connected') {
                         alert('logged in!!!');
-                        uid = response.authResponse.userID;
+                        uid = response.authResponse.userId;
                         accessToken = response.authResponse.accessToken;
 
                         alert("id: " + uid);
