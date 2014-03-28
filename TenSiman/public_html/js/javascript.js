@@ -22,6 +22,10 @@ var counter;
 var score = 0;
 var buffer = 20; //scroll bar buffer
 
+var currentGameId = -1;
+var turn = 0
+var player = 0
+
 function pageY(elem) {
     return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
 }
@@ -142,6 +146,10 @@ function buildPlayerBar(userData) {
 
 function buildMatchesTable(matchesData) {
     var table = document.getElementById("matchups_table");
+    if (table) {
+        table.parentNode.removeChild(table);
+    }
+
     var numOfMatchups = matchesData.length;
 
     var index;
@@ -421,19 +429,13 @@ function continueToNextQuestion(object) {
 }
 
 function endGame() {
-    /*$("#score").text("Your score is: " + numToGuess);
-     window.location("#gameOver");*/
-    // 
-
-// 3.2.2014 - JSON post
-//function post() {
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateLiveGame.php',
         method: 'POST',
         data: {
-            liveGameId: 1,
-            answer1: gameDetails[0], //$("#name").val(),
-            answer2: gameDetails[1]
+            gameId: currentGameId,
+            player: player, //$("#name").val(),
+            turn: turn
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -445,14 +447,11 @@ function endGame() {
         }
     });
     $("#text").val("");
-//    }
-    alert("Update Sent");
-
-
 
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
     }
+
     document.getElementById("timer").style.display = "none";
     document.getElementById("myVideo").style.display = "none";
     document.getElementById("answer1").style.display = "none";
@@ -462,7 +461,6 @@ function endGame() {
 
     document.getElementById("translatedWord").style.display = "block";
     score *= 10;
-
     document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
 
     window.location = "#matchups";
@@ -504,7 +502,7 @@ function refreshFriendsZone(userId, toInvite, temp) {
             fdata = response.data;
             friends = response.data;
             var friendIDs = [];
-            
+
             for (var k = 0; k < friends.length && k < 200; k++) {
                 var friend = friends[k];
                 friendIDs[k] = friend.id;
@@ -649,15 +647,19 @@ function createNewGame(matchId) {
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/createNewGame.php',
         method: 'POST',
         data: {
-            matchId: matchId
+            matchId: matchId,
+            currentPlayerId: currentPlayerId,
         },
         success: function(data) {
             var jason = JSON.parse(data);
             if (jason.success === 1) {
                 alert("succes");
-                var matchId = jason.data;
-                alert("createNewGamw with " + matchId);
+                currentGameId = jason.currentGame;
+                player = jason.player;
+                turn = jason.turn;
+                //               alert("createNewGamw with " + currentGameId);
                 videoArray = jason.sections;
+
                 createGameDetails();
                 startGame();
             } else {
@@ -710,12 +712,17 @@ function playTurn(game_id) {
         method: 'POST',
         data: {
             gameId: game_id,
+            currentPlayerId: currentPlayerId,
         },
         success: function(data) {
             var jason = JSON.parse(data);
             if (jason.success === 1) {
                 alert("ok");
+                currentGameId = game_id;
+                player = jason.player;
+                turn = jason.turn;
                 videoArray = jason.sections;
+                createGameDetails();
                 startGame();
             }
         },
