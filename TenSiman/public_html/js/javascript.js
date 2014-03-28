@@ -725,7 +725,16 @@ function playTurn(game_id) {
 //    });
 //    
 
-function signUp(firstName, lastName, facebookId, imgUrl, email) {
+/**
+ * Insert new user to the User's table and set the current player id to be 
+ * @param {type} firstName
+ * @param {type} LastName
+ * @param {type} facebookId
+ * @param {type} imgUrl
+ * @param {type} email
+ * @returns {undefined}
+ */
+function signUp(firstName, LastName, facebookId, imgUrl, email) {
 //    var email = "stav@gmail.com:";
 //    var firstName = "stav";
 //    var LastName = "moskovich";
@@ -762,16 +771,6 @@ function signUp(firstName, lastName, facebookId, imgUrl, email) {
 
 }
 
-//function login(facebookId) {
-//    currentPlayerId = facebookId;
-//    window.location = "#matchups";
-//    refreshMatchups();
-//}
-
-/*function getSession() {
- alert("session: " + JSON.stringify(FB.getSession()));
- }
- */
 function getLoginStatus() {
     FB.getLoginStatus(function(response) {
         if (response.status == 'connected') {
@@ -782,6 +781,7 @@ function getLoginStatus() {
                     facebookId: fbId,
                 },
                 success: function(data) {
+                    alert("connected!")
                     var jason = JSON.parse(data);
                     if (jason.success === 1) {
                         currentPlayerId = jason.userId;
@@ -859,6 +859,7 @@ function login() {
                             if (jason.success === 1) {
                                 currentPlayerId = jason.userId;
 
+                                // New user should signUp first:
                                 if (currentPlayerId == -1) {
                                     FB.api('/me', function(response) {
                                         alert("Name: " + response.name + "\nFirst name: " + response.first_name + "ID: " + response.id);
@@ -867,7 +868,7 @@ function login() {
 
                                     });
                                 }
-
+                                
                                 window.location = "#matchups";
                                 refreshMatchups();
                             }
