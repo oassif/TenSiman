@@ -774,6 +774,7 @@ function signUp(firstName, LastName, facebookId, imgUrl, email) {
 function getLoginStatus() {
     FB.getLoginStatus(function(response) {
         if (response.status == 'connected') {
+            fbId = response.authResponse.userId;
             $.ajax({
                 url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
                 method: 'POST',
@@ -800,8 +801,8 @@ function getLoginStatus() {
     , {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
 
     );
-
 }
+
 var friendIDs = [];
 var fdata;
 function me() {
@@ -825,6 +826,7 @@ function me() {
             var index = 1;
 
             friendIDs[k] = friend.id;
+
             //friendsInfo[k] = friend;
         }
         console.log("friendId's: " + friendIDs);
@@ -862,13 +864,13 @@ function login() {
                                 // New user should signUp first:
                                 if (currentPlayerId == -1) {
                                     FB.api('/me', function(response) {
-                                        alert("Name: " + response.name + "\nFirst name: " + response.first_name + "ID: " + response.id);
+                                        alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
                                         var img_link = "http://graph.facebook.com/" + response.id + "/picture";
-                                        signUp(response.first_name, response.lastName, response.id, img_link, response.email);
+                                        signUp(response.first_name, response.last_name, response.id, img_link);
 
                                     });
                                 }
-                                
+
                                 window.location = "#matchups";
                                 refreshMatchups();
                             }
