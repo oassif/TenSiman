@@ -146,9 +146,7 @@ function buildPlayerBar(userData) {
 
 function buildMatchesTable(matchesData) {
     var table = document.getElementById("matchups_table");
-    if (table) {
-        table.parentNode.removeChild(table);
-    }
+    table.innerHTML = "";
 
     var numOfMatchups = matchesData.length;
 
@@ -430,7 +428,7 @@ function continueToNextQuestion(object) {
 
 function endGame() {
     $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateLiveGame.php',
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
         method: 'POST',
         data: {
             gameId: currentGameId,
