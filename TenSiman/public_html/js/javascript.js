@@ -502,7 +502,13 @@ function refreshFriendsZone(userId, toInvite, temp) {
         } else {
             var data = document.getElementById('data');
             fdata = response.data;
-            friendsId = response.data;
+            friends = response.data;
+            friendsId = new array();
+            
+            for (var k = 0; k < friends.length && k < 200; k++) {
+                var friend = friends[k];
+                friendIDs[k] = friend.id;
+            }
 
             // Getting the user status and current matchups
             //friendsId = [1378982912, 583269662];
@@ -729,12 +735,7 @@ function playTurn(game_id) {
  * @param {type} email
  * @returns {undefined}
  */
-function signUp(firstName, LastName, facebookId, imgUrl, email) {
-//    var email = "stav@gmail.com:";
-//    var firstName = "stav";
-//    var LastName = "moskovich";
-//    var facebookId = "1378982912";
-//    var imgUrl = "https://graph.facebook.com/stav.moskovich/picture/";
+function signUp(email, firstName, LastName, facebookId, imgUrl) {
     var gender = "F";
     var birthDay = "29.9.1989";
 
