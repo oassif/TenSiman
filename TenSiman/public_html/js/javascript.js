@@ -496,26 +496,37 @@ function refreshFriendsZone(userId, toInvite, temp) {
     window.location = "#friends";
     alert("player" + currentPlayerId);
 
-    // Getting the user status and current matchups
-    $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/php/getMatchupPageContent_New_DB.php',
-        method: 'POST',
-        data: {
-            userId: userId,
-        },
-        success: function(data) {
-            var jason = JSON.parse(data);
-            if (jason.success == 1) {
-                //    buildFriendsBar(jason.matches);
-                buildFriendsTable(jason.matches, toInvite);
-            }
-        },
-        error: function() {
-            alert("error");
+    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+        if (response.error) {
+            alert(JSON.stringify(response.error));
+        } else {
+            var data = document.getElementById('data');
+            fdata = response.data;
+            friendsId = response.data;
+
+            // Getting the user status and current matchups
+            //friendsId = [1378982912, 583269662];
+            $.ajax({
+                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+                method: 'POST',
+                data: {
+                    facebookFriends: friendsId,
+                },
+                success: function(data) {
+                    alert("connected!")
+                    var jason = JSON.parse(data);
+                    if (jason.success === 1) {
+                        alert("ok!");
+                        buildFriendsTable(jason.matches, false);
+                    }
+                },
+                error: function() {
+                    alert("error in login");
+                }
+            });
+
         }
     });
-
-
     document.getElementById("friends_table").innerHTML = "";
 
 }
@@ -546,9 +557,7 @@ function buildFriendsBar(matchup) {
     button_col2.appendChild(invite_button);
     row.appendChild(button_col);
     row.appendChild(button_col2);
-
     table.appendChild(row);
-
 }
 
 function buildFriendsTable(matchesData, toInvite) {
@@ -711,20 +720,6 @@ function playTurn(game_id) {
 }
 
 
-
-//    FB.api('/me', function(response) {
-//        console.log('Good to see you, ' + response.name + '.');
-//
-//       response.name
-//       response.username 
-//       response.id 
-//       response.email
-//  
-//       
-//
-//    });
-//    
-
 /**
  * Insert new user to the User's table and set the current player id to be 
  * @param {type} firstName
@@ -866,7 +861,7 @@ function login() {
                                     FB.api('/me', function(response) {
                                         alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
                                         var img_link = "http://graph.facebook.com/" + response.id + "/picture";
-                                        signUp(response.first_name, response.last_name, response.id, img_link);
+                                        signUp(response.email, response.first_name, response.last_name, response.id, img_link);
 
                                     });
                                 }
