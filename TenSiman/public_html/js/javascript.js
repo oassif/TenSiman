@@ -41,55 +41,55 @@ function resizeWidthIframe() {
 
 $(document).ready(function()
 {
-    
-     if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
-                alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-            if (typeof CDV == 'undefined')
-                alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-            if (typeof FB == 'undefined')
-                alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
-            FB.Event.subscribe('auth.login', function(response) {
-                alert('auth.login event');
-            });
+    if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
+        alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+    if (typeof CDV == 'undefined')
+        alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+    if (typeof FB == 'undefined')
+        alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
-            FB.Event.subscribe('auth.logout', function(response) {
-                alert('auth.logout event');
-            });
+    FB.Event.subscribe('auth.login', function(response) {
+        alert('auth.login event');
+    });
 
-            FB.Event.subscribe('auth.sessionChange', function(response) {
-                alert('auth.sessionChange event');
-            });
+    FB.Event.subscribe('auth.logout', function(response) {
+        alert('auth.logout event');
+    });
 
-            FB.Event.subscribe('auth.statusChange', function(response) {
-                alert('auth.statusChange event');
-            });
-    
+    FB.Event.subscribe('auth.sessionChange', function(response) {
+        alert('auth.sessionChange event');
+    });
+
+    FB.Event.subscribe('auth.statusChange', function(response) {
+        alert('auth.statusChange event');
+    });
+
     getLoginStatus();
- //   refreshMatchups();
+    //   refreshMatchups();
 //    videoSource[0] = 'movies/new.gif';
 //    videoSource[1] = 'movies/after.gif';
 //    videoSource[2] = 'movies/long.gif';
 //    videoSource[3]= 'movies/middle.gif';
 //    videoSource[4]= 'movies/last.gif';
-    
-/*    answerArray[0] = ["חדש", "חתך", "אמצע", "חצה"];
-    answerArray[1] = ["אחרי", "מחר", "אחרון", "אמצע"];
-    answerArray[2] = ["ארוך", "חדש", "למתוח", "אחרי"];
-    answerArray[3] = ["אמצע", "חדש", "אחרי", "חתך"];
-    answerArray[4] = ["אחרון", "לפני", "אחרי", "לחתוך"];
-  */
+
+    /*    answerArray[0] = ["חדש", "חתך", "אמצע", "חצה"];
+     answerArray[1] = ["אחרי", "מחר", "אחרון", "אמצע"];
+     answerArray[2] = ["ארוך", "חדש", "למתוח", "אחרי"];
+     answerArray[3] = ["אמצע", "חדש", "אחרי", "חתך"];
+     answerArray[4] = ["אחרון", "לפני", "אחרי", "לחתוך"];
+     */
     // Generate Random number
     videoCount = NUMBER_SECTIONS;
 
-/*
-    for (var index = 0; index < videoCount; ++index) {
-        // video source, right answer, user's answer, time, points
-        gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
-    }
-*/
+    /*
+     for (var index = 0; index < videoCount; ++index) {
+     // video source, right answer, user's answer, time, points
+     gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
+     }
+     */
     //videoPlay(0);
-  //  document.getElementById("myVideo").setAttribute("src", videoSource[0]);
+    //  document.getElementById("myVideo").setAttribute("src", videoSource[0]);
     //document.getElementById('myVideo').addEventListener('ended', myHandler, false);
 
 });
@@ -98,24 +98,24 @@ function refreshMatchups() {
     //login();
     var htmlCode = "";
     alert("ref match up player" + currentPlayerId);
-    
+
     // Getting the user status and current matchups
     $.ajax({
-    url: 'http://stavoren.milab.idc.ac.il/public_html/php/getMatchupPageContent_New_DB.php',
-    method: 'POST',
-    data: { 
-        userId: currentPlayerId, // TODO: change Hardcoded value for the user Oren Assif
-    },
-    success: function (data) {
-        var jason = JSON.parse(data);
-        if (jason.success == 1) {
-            buildPlayerBar(jason.user);
-            buildMatchesTable(jason.matches);
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getMatchupPageContent_New_DB.php',
+        method: 'POST',
+        data: {
+            userId: currentPlayerId, // TODO: change Hardcoded value for the user Oren Assif
+        },
+        success: function(data) {
+            var jason = JSON.parse(data);
+            if (jason.success == 1) {
+                buildPlayerBar(jason.user);
+                buildMatchesTable(jason.matches);
+            }
+        },
+        error: function() {
+            alert("error");
         }
-    },
-    error: function () {
-      alert("error");
-     }
     });
     document.getElementById("matchups_table").innerHTML = "";
     document.getElementById("friends_bar").style.display = "none";
@@ -124,20 +124,20 @@ function refreshMatchups() {
 
 function buildPlayerBar(userData) {
     var barDiv = document.getElementById("playerBar");
-        barDiv.innerHTML = "<table width=\"100%\"><tr>" +
-                        "<td><img src=\"" + userData["imgURL"] + "\" />&nbsp" + userData["fullName"] + "</td>" +
-                        "<td>רמה " + userData["level"] + "</td>" +
-                        "<td>נקודות: " + userData["score"] + "</td>" +
-                        "<td></td>" +
-                        "</tr></table>";
-    /* LTR OLD VERSION
     barDiv.innerHTML = "<table width=\"100%\"><tr>" +
-                        "<td>" + userData["score"] + "נקודות:</td>" +
-                        "<td>" + userData["rank"] + "רמה:</td>" +
-                        "<td>" + userData["fullName"] + "</td>" +
-                        "<td><img src=\"" + userData["imgURL"] + "\" /></td>" +
-                        "</tr></table>";
-    */    
+            "<td><img src=\"" + userData["imgURL"] + "\" />&nbsp" + userData["fullName"] + "</td>" +
+            "<td>רמה " + userData["level"] + "</td>" +
+            "<td>נקודות: " + userData["score"] + "</td>" +
+            "<td></td>" +
+            "</tr></table>";
+    /* LTR OLD VERSION
+     barDiv.innerHTML = "<table width=\"100%\"><tr>" +
+     "<td>" + userData["score"] + "נקודות:</td>" +
+     "<td>" + userData["rank"] + "רמה:</td>" +
+     "<td>" + userData["fullName"] + "</td>" +
+     "<td><img src=\"" + userData["imgURL"] + "\" /></td>" +
+     "</tr></table>";
+     */
 }
 
 function buildMatchesTable(matchesData) {
@@ -147,11 +147,11 @@ function buildMatchesTable(matchesData) {
     var index;
     //table.innerHTML = "";
     for (index = 0; index < numOfMatchups; ++index) {
-        
+
         var text = ""; // This
         var textValue = "";
         var buttonProperty = "";
-        
+
         // Todo: see if it's the first player or sceond player and according to it decide.
         // Decide button
         if (matchesData[index]["gameStatus"] === "0") {
@@ -176,16 +176,16 @@ function buildMatchesTable(matchesData) {
             text = "תן סימן " + matchesData[index]["gameStatus"];
             buttonProperty = "createNewGame(" + matchesData[index]["rivalId"] + ")";
         }
-        
+
         $("#matchups_tableNew").append("<tr align=\"center\">" +
-                                            "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                                            "<td>אני<br/>" + matchesData[index]["userScore"] + "</td>" +
-                                            "<td>:</td><td>" +
-                                            "<td>"+ matchesData[index]["rivalName"] + "<br />" + matchesData[index]["rivalScore"] + "</td>" +
-                                            "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
-                                                 "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+                "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                "<td>אני<br/>" + matchesData[index]["userScore"] + "</td>" +
+                "<td>:</td><td>" +
+                "<td>" + matchesData[index]["rivalName"] + "<br />" + matchesData[index]["rivalScore"] + "</td>" +
+                "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
+                "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
     }
-    
+
 }
 
 function timer() {
@@ -197,29 +197,29 @@ function timer() {
     document.getElementById("timer").innerHTML = count + " secs";
 }
 
-function createNewLiveGame(matchUpId) 
+function createNewLiveGame(matchUpId)
 {
     // TODO: for a new game send liveGameId = 0, else send the live game Id;
     // * might need to chek in the server that the game id related to the user and that it's his turn
     $.ajax({
-    url: 'http://stavoren.milab.idc.ac.il/php/getLiveGameData.php',
-    method: 'POST',
-    data: { 
-        liveGameId: 0,
-        matchUpId: matchUpId // currently hard coded, but should be decided be the 2 players playing
-    },
-    success: function (data) {
-        var jason = JSON.parse(data);
-        if (jason.success == 1) {   
+        url: 'http://stavoren.milab.idc.ac.il/php/getLiveGameData.php',
+        method: 'POST',
+        data: {
+            liveGameId: 0,
+            matchUpId: matchUpId // currently hard coded, but should be decided be the 2 players playing
+        },
+        success: function(data) {
+            var jason = JSON.parse(data);
+            if (jason.success == 1) {
+            }
+        },
+        error: function() {
+            alert("error");
         }
-    },
-    error: function () {
-      alert("error");
-     }
     });
-    
+
     // TODO: set the video's array and other values once we'll have them
-    
+
     // TODO: might need to change something here:
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
@@ -247,12 +247,12 @@ function startGame()
 
 function videoPlay(videoNum)
 {
-    
+
     // Checks if need to show the translation
     if (isDemo) {
-        document.getElementById("title").innerHTML ="נסו לזכור את המילים הבאות"; 
+        document.getElementById("title").innerHTML = "נסו לזכור את המילים הבאות";
         document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
-        document.getElementById("myVideo").style.display = "block";  
+        document.getElementById("myVideo").style.display = "block";
 
         // Showing the translation
         document.getElementById("translatedWord").style.display = "block";
@@ -261,20 +261,20 @@ function videoPlay(videoNum)
         // Hiding the options
         document.getElementById("answers").style.display = "none";
 
-                 
+
         if (videoNum < 4) {
             videoNum++;
-          setTimeout(function() {
-             document.getElementById("myVideo").setAttribute("src", "");
-             videoPlay(videoNum);
-          }, 2300);
+            setTimeout(function() {
+                document.getElementById("myVideo").setAttribute("src", "");
+                videoPlay(videoNum);
+            }, 2300);
         } else {
-            
-        setTimeout(function() {
+
+            setTimeout(function() {
                 document.getElementById("translatedWord").style.display = "none";
                 document.getElementById("myVideo").style.display = "none";
                 document.getElementById("repeat").style.display = "block";
-          }, 2200);
+            }, 2200);
 
         }
     }
@@ -283,10 +283,10 @@ function videoPlay(videoNum)
         document.getElementById("myVideo").setAttribute("src", "");
         document.getElementById("myVideo").style.display = "block";
         document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
-        document.getElementById("title").innerHTML ="בחרו את התשובה הנכונה";
+        document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
         show4possibleAnswers(videoNum);
     }
-    
+
 
 }
 
@@ -297,29 +297,29 @@ function show4possibleAnswers(videoNum) {
     document.getElementById("translatedWord").style.display = "none";
 
     resetButtons();
-   
+
     // Showing the answers
     // First, generates Random number for the first answer
     var firstAnswerId = Math.floor((Math.random() * 4));
-    document.getElementById("answer1").innerHTML = "<font size=\"5\">" + 
-                                                    answerArray[videoNum][firstAnswerId] +
-                                                    "</font>";
-    document.getElementById("answer2").innerHTML = "<font size=\"5\">" + 
-                                                    answerArray[videoNum][(firstAnswerId + 1) % 4] +
-                                                    "</font>";
-    document.getElementById("answer3").innerHTML = "<font size=\"5\">" + 
-                                                    answerArray[videoNum][(firstAnswerId + 2) % 4] +
-                                                    "</font>";
-    document.getElementById("answer4").innerHTML = "<font size=\"5\">" + 
-                                                    answerArray[videoNum][(firstAnswerId + 3) % 4] +
-                                                    "</font>";
+    document.getElementById("answer1").innerHTML = "<font size=\"5\">" +
+            answerArray[videoNum][firstAnswerId] +
+            "</font>";
+    document.getElementById("answer2").innerHTML = "<font size=\"5\">" +
+            answerArray[videoNum][(firstAnswerId + 1) % 4] +
+            "</font>";
+    document.getElementById("answer3").innerHTML = "<font size=\"5\">" +
+            answerArray[videoNum][(firstAnswerId + 2) % 4] +
+            "</font>";
+    document.getElementById("answer4").innerHTML = "<font size=\"5\">" +
+            answerArray[videoNum][(firstAnswerId + 3) % 4] +
+            "</font>";
     if (firstAnswerId === 0) {
         correctAnswerId = "answer1";
     }
     else {
         correctAnswerId = "answer" + (5 - firstAnswerId);
     }
-    
+
     // Show answers
     document.getElementById("answers").style.display = "block";
 }
@@ -327,7 +327,7 @@ function show4possibleAnswers(videoNum) {
 
 function myHandler() {
 
-alert("im called");
+    alert("im called");
     if (isDemo) {
         ++currVideoId;
         if (currVideoId === videoCount) {
@@ -386,7 +386,7 @@ function onClick_checkAnswer(object) {
         // Update score
         gameDetails[order[currVideoId]][4] = 0;
     }
-    
+
     score += gameDetails[order[currVideoId]][4];
     continueToNextQuestion(object);
 }
@@ -427,46 +427,46 @@ function endGame() {
 
 // 3.2.2014 - JSON post
 //function post() {
-        $.ajax({
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateLiveGame.php',
-            method: 'POST',
-            data: { 
-                liveGameId: 1, 
-                answer1: gameDetails[0], //$("#name").val(),
-                answer2: gameDetails[1] 
-            },
-            success: function (data) {
-                var jason = JSON.parse(data);
-                if (jason.success == 1) {   
-                }
-            },
-            error: function () {
-              alert("error");
-             }
-         });
-         $("#text").val("");
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateLiveGame.php',
+        method: 'POST',
+        data: {
+            liveGameId: 1,
+            answer1: gameDetails[0], //$("#name").val(),
+            answer2: gameDetails[1]
+        },
+        success: function(data) {
+            var jason = JSON.parse(data);
+            if (jason.success == 1) {
+            }
+        },
+        error: function() {
+            alert("error");
+        }
+    });
+    $("#text").val("");
 //    }
-alert("Update Sent");
+    alert("Update Sent");
 
-   
-   
+
+
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
     }
-   document.getElementById("timer").style.display = "none";
-   document.getElementById("myVideo").style.display = "none";
-   document.getElementById("answer1").style.display = "none";
-   document.getElementById("answer2").style.display = "none";
-   document.getElementById("answer3").style.display = "none";
-   document.getElementById("answer4").style.display = "none";
+    document.getElementById("timer").style.display = "none";
+    document.getElementById("myVideo").style.display = "none";
+    document.getElementById("answer1").style.display = "none";
+    document.getElementById("answer2").style.display = "none";
+    document.getElementById("answer3").style.display = "none";
+    document.getElementById("answer4").style.display = "none";
 
-        document.getElementById("translatedWord").style.display = "block";
-        score *= 10;
+    document.getElementById("translatedWord").style.display = "block";
+    score *= 10;
 
-        document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :"+"ניקוד</H1>";
-        
-   window.location = "#matchups";
-   refreshMatchups();
+    document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
+
+    window.location = "#matchups";
+    refreshMatchups();
 }
 /**
  * Reset the 4 button of possible answers and the timer.
@@ -474,114 +474,114 @@ alert("Update Sent");
  * @returns {undefined}
  */
 function resetButtons() {
-    
-   document.getElementById("timer").style.display = "block";
-   document.getElementById("answer1").style.display = "block";
-   document.getElementById("answer2").style.display = "block";
-   document.getElementById("answer3").style.display = "block";
-   document.getElementById("answer4").style.display = "block";
-   
+
+    document.getElementById("timer").style.display = "block";
+    document.getElementById("answer1").style.display = "block";
+    document.getElementById("answer2").style.display = "block";
+    document.getElementById("answer3").style.display = "block";
+    document.getElementById("answer4").style.display = "block";
+
     document.getElementById("answer1").style.background = "";
     document.getElementById("answer2").style.background = "";
     document.getElementById("answer3").style.background = "";
     document.getElementById("answer4").style.background = "";
 
 
-    
+
 }
 
 function refreshFriendsZone(userId, toInvite, temp) {
     var htmlCode = "";
-    
+
     window.location = "#friends";
     alert("player" + currentPlayerId);
 
     // Getting the user status and current matchups
     $.ajax({
-    url: 'http://stavoren.milab.idc.ac.il/php/getMatchupPageContent_New_DB.php',
-    method: 'POST',
-    data: { 
-        userId: userId,
-    },
-    success: function (data) {
-        var jason = JSON.parse(data);
-        if (jason.success == 1) {
-        //    buildFriendsBar(jason.matches);
-            buildFriendsTable(jason.matches, toInvite);
+        url: 'http://stavoren.milab.idc.ac.il/php/getMatchupPageContent_New_DB.php',
+        method: 'POST',
+        data: {
+            userId: userId,
+        },
+        success: function(data) {
+            var jason = JSON.parse(data);
+            if (jason.success == 1) {
+                //    buildFriendsBar(jason.matches);
+                buildFriendsTable(jason.matches, toInvite);
+            }
+        },
+        error: function() {
+            alert("error");
         }
-    },
-    error: function () {
-      alert("error");
-     }
     });
-    
+
 
     document.getElementById("friends_table").innerHTML = "";
 
 }
 
 function buildFriendsBar(matchup) {
-   document.getElementById("matchups_table").style.display = "none";
-   document.getElementById("friends_bar").innerHTML = "";
+    document.getElementById("matchups_table").style.display = "none";
+    document.getElementById("friends_bar").innerHTML = "";
 
-  var table = document.getElementById("friends_bar");    
-  var play_button = document.createElement("button");
-  var invite_button = document.createElement("button");
-  
-  var textPlay = document.createTextNode(text = "שחק עם חברים");
-  var textInvite = document.createTextNode(text = "הזמן חברים");
-  
-  var onclick = document.createAttribute(on)
-   
-  play_button.appendChild(textInvite);
-  invite_button.appendChild(textPlay);
-  
-  play_button.setAttribute("onClick", buildFriendsTable(matchup, false));
-  invite_button.onClick = buildFriendsTable(matchup, true);
-  
-  var row = document.createElement("tr");
-  var button_col = document.createElement("td");
-  button_col.appendChild(play_button);
-  var button_col2 = document.createElement("td");
-  button_col2.appendChild(invite_button);
-          row.appendChild(button_col);
-        row.appendChild(button_col2);
-        
-  table.appendChild(row);
-    
+    var table = document.getElementById("friends_bar");
+    var play_button = document.createElement("button");
+    var invite_button = document.createElement("button");
+
+    var textPlay = document.createTextNode(text = "שחק עם חברים");
+    var textInvite = document.createTextNode(text = "הזמן חברים");
+
+    var onclick = document.createAttribute(on)
+
+    play_button.appendChild(textInvite);
+    invite_button.appendChild(textPlay);
+
+    play_button.setAttribute("onClick", buildFriendsTable(matchup, false));
+    invite_button.onClick = buildFriendsTable(matchup, true);
+
+    var row = document.createElement("tr");
+    var button_col = document.createElement("td");
+    button_col.appendChild(play_button);
+    var button_col2 = document.createElement("td");
+    button_col2.appendChild(invite_button);
+    row.appendChild(button_col);
+    row.appendChild(button_col2);
+
+    table.appendChild(row);
+
 }
 
 function buildFriendsTable(matchesData, toInvite) {
-   
-   document.getElementById("friends_bar").style.display = "block";
-  // document.getElementById("matchups_tableNew").style.display = "none";
-   document.getElementById("friends_table").innerHTML = "";
+
+    document.getElementById("friends_bar").style.display = "block";
+    // document.getElementById("matchups_tableNew").style.display = "none";
+    document.getElementById("friends_table").innerHTML = "";
 
     var table = document.getElementById("friends_table");
 
     var numOfMatchups = matchesData.length;
     /*alert(numOfMatchups);
-    alert(table.innerHTML);*/
+     alert(table.innerHTML);*/
     var index;
     for (index = 0; index < numOfMatchups; ++index) {
-        
+
         var text = "";
         var buttonProperty = "";
-        
+
         // Decide button
         if (toInvite) {
             text = "הזמן"
-            
-        }else {
-           text = "שחק"
-           buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
+
+        } else {
+            text = "שחק"
+            buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
 
         }
-        
-           $("#friends_table").append("<tr align=\"center\">" +
-                                            "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                                            "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
-                                                 "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+
+        $("#friends_table").append("<tr align=\"center\">" +
+                "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
+                "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
     }
 }
 
@@ -594,27 +594,27 @@ function buildFriendsTable(matchesData, toInvite) {
  * @returns {undefined}
  */
 function startGameWithNewPlayer(rivalId) {
-    
+
     alert("player" + currentPlayerId);
     alert("startGameWithNewPlayer");
-        $.ajax({
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/sendNewMatchup.php',
-            method: 'POST',
-            data: { 
-                myUserId: currentPlayerId, 
-                playerUserId: rivalId //$("#name").val(),
-            },
-            success: function (data) {
-                var jason = JSON.parse(data);
-                if (jason.success === 1) { 
-                    var matchId = jason.data;
-                    alert("MatchId: " + matchId);
-                    createNewGame(matchId);
-                }
-            },
-            error: function () {
-              alert("error in match");
-             }
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/sendNewMatchup.php',
+        method: 'POST',
+        data: {
+            myUserId: currentPlayerId,
+            playerUserId: rivalId //$("#name").val(),
+        },
+        success: function(data) {
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                var matchId = jason.data;
+                alert("MatchId: " + matchId);
+                createNewGame(matchId);
+            }
+        },
+        error: function() {
+            alert("error in match");
+        }
     });
 }
 
@@ -627,32 +627,32 @@ function startGameWithNewPlayer(rivalId) {
  * @param {type} matchId
  * @returns {undefined}
  */
-function createNewGame(matchId) {  
+function createNewGame(matchId) {
     alert("TESSSST");
     alert("createNewGame");
-        $.ajax({
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/createNewGame.php',
-            method: 'POST',
-            data: { 
-                matchId: matchId
-            },
-            success: function (data) {
-                var jason = JSON.parse(data);
-                if (jason.success === 1) {
-                    alert("succes");
-                    var matchId = jason.data;
-                    alert("createNewGamw with " + matchId);
-                    videoArray = jason.sections;
-                    createGameDetails();
-                    startGame();    
-                } else {
-                    alert("fail");
-                }
-                
-            },
-            error: function () {
-              alert("error in match");
-             }
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/createNewGame.php',
+        method: 'POST',
+        data: {
+            matchId: matchId
+        },
+        success: function(data) {
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                alert("succes");
+                var matchId = jason.data;
+                alert("createNewGamw with " + matchId);
+                videoArray = jason.sections;
+                createGameDetails();
+                startGame();
+            } else {
+                alert("fail");
+            }
+
+        },
+        error: function() {
+            alert("error in match");
+        }
     });
 }
 
@@ -666,20 +666,20 @@ function createNewGame(matchId) {
  * @returns {undefined}
  */
 function createGameDetails() {
-    
+
     alert("test1");
     // building an array of answers. The right answer is ALWAYS in index 0
     for (var index = 0; index < videoCount; ++index) {
-alert("test2");
+        alert("test2");
         var wrongOptions = videoArray[index]["wrongOptions"].split(":");
         /*answerArray[index][0] = videoArray[index]["rightAnswer"];
-        answerArray[index][1] = wrongOptions[0];
-        answerArray[index][2] = wrongOptions[1];
-        answerArray[index][3] = wrongOptions[2];*/
+         answerArray[index][1] = wrongOptions[0];
+         answerArray[index][2] = wrongOptions[1];
+         answerArray[index][3] = wrongOptions[2];*/
         answerArray[index] = [videoArray[index]["rightAnswer"], wrongOptions[0], wrongOptions[1], wrongOptions[2]];
         alert(answerArray[index][0]);
     }
-    
+
     for (var index = 0; index < videoCount; ++index) {
         alert("test3");
         // video source, right answer, user's answer, time, points
@@ -688,26 +688,26 @@ alert("test2");
 }
 
 function playTurn(game_id) {
-        
-     alert("gameid " +game_id);
-     $.ajax({
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/playTurn.php',
-            method: 'POST',
-            data: { 
-                gameId: game_id,
-            },
-            success: function (data) {
-                var jason = JSON.parse(data);
-                if (jason.success === 1) {
-                    alert("ok");
-                    videoArray = jason.sections;
-                    startGame();    
-                }
-            },
-            error: function () {
-              alert("error in match");
-             }
-        });
+
+    alert("gameid " + game_id);
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/playTurn.php',
+        method: 'POST',
+        data: {
+            gameId: game_id,
+        },
+        success: function(data) {
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                alert("ok");
+                videoArray = jason.sections;
+                startGame();
+            }
+        },
+        error: function() {
+            alert("error in match");
+        }
+    });
 }
 
 
@@ -725,41 +725,40 @@ function playTurn(game_id) {
 //    });
 //    
 
- function signUp() {
-         var email = "stav@gmail.com:";
-         var firstName = "stav";
-         var LastName = "moskovich";
-         var facebookId = "1378982912";
-         var imgUrl= "https://graph.facebook.com/stav.moskovich/picture/";
-         var gender = "F";
-         var birthDay = "29.9.1989";
-         
-     $.ajax({
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/signUp.php',
-            method: 'POST',
-            data: { 
-                email: email,
-                userFirstName: firstName,
-                userLastName: LastName,
-                userFacebookId: facebookId,
-                imgUrl: imgUrl,
-                userGender: gender,
-                userBirthday: birthDay,
-            },
-            
-            success: function (data) {
-                var jason = JSON.parse(data);
-                if (jason.success === 1) {
-                    alert("ok");
-                    currentPlayerId = jason.userId;
-                    window.location = "#matchups";
-                    refreshMatchups();
-                }
-            },
-            error: function () {
-              alert("error in match");
-             }
-        });
+function signUp(firstName, lastName, facebookId, imgUrl, email) {
+//    var email = "stav@gmail.com:";
+//    var firstName = "stav";
+//    var LastName = "moskovich";
+//    var facebookId = "1378982912";
+//    var imgUrl = "https://graph.facebook.com/stav.moskovich/picture/";
+    var gender = "F";
+    var birthDay = "29.9.1989";
+
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/signUp.php',
+        method: 'POST',
+        data: {
+            email: email,
+            userFirstName: firstName,
+            userLastName: LastName,
+            userFacebookId: facebookId,
+            imgUrl: imgUrl,
+            userGender: gender,
+            userBirthday: birthDay,
+        },
+        success: function(data) {
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                alert("ok");
+                currentPlayerId = jason.userId;
+                window.location = "#matchups";
+                refreshMatchups();
+            }
+        },
+        error: function() {
+            alert("error in match");
+        }
+    });
 
 }
 
@@ -769,140 +768,171 @@ function playTurn(game_id) {
 //    refreshMatchups();
 //}
 
-            /*function getSession() {
-             alert("session: " + JSON.stringify(FB.getSession()));
-             }
-             */
-            function getLoginStatus() {
-                FB.getLoginStatus(function(response) {
-                    if (response.status == 'connected') {
-                        alert('logged in!!!');
-                        uid = response.authResponse.userId;
-                        accessToken = response.authResponse.accessToken;
-
-                        alert("id: " + uid);
-                        currentPlayerId = uid;
-                        
-                        FB.api('/me', {fields: 'id'}, function(response) {
-                             alert(response);
-                         });                       
-                         
+/*function getSession() {
+ alert("session: " + JSON.stringify(FB.getSession()));
+ }
+ */
+function getLoginStatus() {
+    FB.getLoginStatus(function(response) {
+        if (response.status == 'connected') {
+            $.ajax({
+                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
+                method: 'POST',
+                data: {
+                    facebookId: fbId,
+                },
+                success: function(data) {
+                    var jason = JSON.parse(data);
+                    if (jason.success === 1) {
+                        currentPlayerId = jason.userId;
                         window.location = "#matchups";
                         refreshMatchups();
-                    } else {
-                        alert('not logged in');
                     }
+                },
+                error: function() {
+                    alert("error in login");
                 }
-              ,{scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
+            });
+        } else {
+            alert('not logged in');
+        }
+    }
+    , {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
 
-                        );
+    );
 
-            } 
-            var friendIDs = [];
-            var fdata;
-            function me() {
-                FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-                    if (response.error) {
-                        alert(JSON.stringify(response.error));
-                    } else {
-                        var data = document.getElementById('data');
-                        fdata = response.data;
-                        console.log("fdata: " + fdata);
-                        response.data.forEach(function(item) {
-                            var d = document.createElement('div');
-                            d.innerHTML = "<img src=" + item.picture + "/>" + item.name;
-                            data.appendChild(d);
-                        });
-                    }
-                    var friends = response.data;
-                    console.log(friends.length);
-                    for (var k = 0; k < friends.length && k < 200; k++) {
-                        var friend = friends[k];
-                        var index = 1;
+}
+var friendIDs = [];
+var fdata;
+function me() {
+    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+        if (response.error) {
+            alert(JSON.stringify(response.error));
+        } else {
+            var data = document.getElementById('data');
+            fdata = response.data;
+            console.log("fdata: " + fdata);
+            response.data.forEach(function(item) {
+                var d = document.createElement('div');
+                d.innerHTML = "<img src=" + item.picture + "/>" + item.name;
+                data.appendChild(d);
+            });
+        }
+        var friends = response.data;
+        console.log(friends.length);
+        for (var k = 0; k < friends.length && k < 200; k++) {
+            var friend = friends[k];
+            var index = 1;
 
-                        friendIDs[k] = friend.id;
-                        //friendsInfo[k] = friend;
-                    }
-                    console.log("friendId's: " + friendIDs);
-                });
-            }
+            friendIDs[k] = friend.id;
+            //friendsInfo[k] = friend;
+        }
+        console.log("friendId's: " + friendIDs);
+    });
+}
 
-            function logout() {
-                FB.logout(function(response) {
-                    alert('logged out');
-                });
-            }
+function logout() {
+    FB.logout(function(response) {
+        alert('logged out');
+    });
+}
 
-            function login() {
-                FB.login(
-                        function(response) {
-                            if (response.session) {
-                                alert('logged in!!!');
+function login() {
+    FB.login(
+            function(response) {
+                if (response.session) {
+                    alert('logged in!!!');
+                }
 
-                            } else {
-                                alert('not logged in');
-                            }
-                            
-                       if (response.authResponse) {
-                             alert('logged in');
-                             fbId = response.authResponse.userId;
-                                alert("user id is "+fbId);
-                    } else {
-                         alert('not logged in');
-                    }
+                if (response.authResponse) {
+                    fbId = response.authResponse.userId;
+                    alert("user id is " + fbId);
+
+                    $.ajax({
+                        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
+                        method: 'POST',
+                        data: {
+                            facebookId: fbId,
                         },
-                        {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
-                );
-            }
+                        success: function(data) {
+                            var jason = JSON.parse(data);
+                            if (jason.success === 1) {
+                                currentPlayerId = jason.userId;
 
+                                if (currentPlayerId == -1) {
+                                    FB.api('/me', function(response) {
+                                        alert("Name: " + response.name + "\nFirst name: " + response.first_name + "ID: " + response.id);
+                                        var img_link = "http://graph.facebook.com/" + response.id + "/picture";
+                                        signUp(response.first_name, response.lastName, response.id, img_link, response.email);
 
-            function facebookWallPost() {
-                console.log('Debug 1');
-                var params = {
-                    method: 'feed',
-                    name: 'Facebook Dialogs',
-                    link: 'https://developers.facebook.com/docs/reference/dialogs/',
-                    picture: 'http://fbrell.com/f8.jpg',
-                    caption: 'Reference Documentation',
-                    description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-                };
-                console.log(params);
-                FB.ui(params, function(obj) {
-                    console.log(obj);
-                });
-            }
+                                    });
+                                }
 
-            function publishStoryFriend() {
-                randNum = Math.floor(Math.random() * friendIDs.length);
-
-                var friendID = friendIDs[randNum];
-                if (friendID == undefined) {
-                    alert('please click the me button to get a list of friends first');
-                } else {
-                    console.log("friend id: " + friendID);
-                    console.log('Opening a dialog for friendID: ', friendID);
-                    var params = {
-                        method: 'feed',
-                        to: friendID.toString(),
-                        name: 'Facebook Dialogs',
-                        link: 'https://developers.facebook.com/docs/reference/dialogs/',
-                        picture: 'http://fbrell.com/f8.jpg',
-                        caption: 'Reference Documentation',
-                        description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-                    };
-                    FB.ui(params, function(obj) {
-                        console.log(obj);
+                                window.location = "#matchups";
+                                refreshMatchups();
+                            }
+                        },
+                        error: function() {
+                            alert("error in login");
+                        }
                     });
+                } else {
+                    alert('not logged in');
                 }
-            }
+            },
+            {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
+    );
+}
 
-            document.addEventListener('deviceready', function() {
-                try {
-                    alert('Device is ready! Make sure you set your app_id below this alert.');
-                    FB.init({appId: "609521172430311", nativeInterface: CDV.FB, useCachedDialogs: false});
-                    document.getElementById('data').innerHTML = "";
-                    getLoginStatus();
-                } catch (e) {
-                    alert(e);
-                }
-            }, false);
+
+function facebookWallPost() {
+    console.log('Debug 1');
+    var params = {
+        method: 'feed',
+        name: 'Facebook Dialogs',
+        link: 'https://developers.facebook.com/docs/reference/dialogs/',
+        picture: 'http://fbrell.com/f8.jpg',
+        caption: 'Reference Documentation',
+        description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+    };
+    console.log(params);
+    FB.ui(params, function(obj) {
+        console.log(obj);
+    });
+}
+
+function publishStoryFriend() {
+    randNum = Math.floor(Math.random() * friendIDs.length);
+
+    var friendID = friendIDs[randNum];
+    if (friendID == undefined) {
+        alert('please click the me button to get a list of friends first');
+    } else {
+        console.log("friend id: " + friendID);
+        console.log('Opening a dialog for friendID: ', friendID);
+        var params = {
+            method: 'feed',
+            to: friendID.toString(),
+            name: 'Facebook Dialogs',
+            link: 'https://developers.facebook.com/docs/reference/dialogs/',
+            picture: 'http://fbrell.com/f8.jpg',
+            caption: 'Reference Documentation',
+            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+        };
+        FB.ui(params, function(obj) {
+            console.log(obj);
+        });
+    }
+}
+
+document.addEventListener('deviceready', function() {
+    try {
+        alert('Device is ready! Make sure you set your app_id below this alert.');
+        FB.init({appId: "609521172430311", nativeInterface: CDV.FB, useCachedDialogs: false});
+        document.getElementById('data').innerHTML = "";
+        getLoginStatus();
+    } catch (e) {
+        alert(e);
+    }
+}, false);
+
