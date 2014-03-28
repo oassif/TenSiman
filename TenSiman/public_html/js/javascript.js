@@ -503,7 +503,7 @@ function refreshFriendsZone(userId, toInvite, temp) {
             var data = document.getElementById('data');
             fdata = response.data;
             friends = response.data;
-            friendsId = new array();
+            var friendIDs = [];
             
             for (var k = 0; k < friends.length && k < 200; k++) {
                 var friend = friends[k];
@@ -516,7 +516,7 @@ function refreshFriendsZone(userId, toInvite, temp) {
                 url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
                 method: 'POST',
                 data: {
-                    facebookFriends: friendsId,
+                    facebookFriends: friendIDs,
                 },
                 success: function(data) {
                     alert("connected!")
