@@ -145,7 +145,7 @@ function buildPlayerBar(userData) {
 }
 
 function buildMatchesTable(matchesData) {
-    var table = document.getElementById("matchups_table");
+    var table = document.getElementById("matchups_tableNew");
     table.innerHTML = "";
 
     var numOfMatchups = matchesData.length;
@@ -485,7 +485,13 @@ function resetButtons() {
 
 
 }
-
+/**
+ * Build the Friends List.
+ * @param {type} userId
+ * @param {type} toInvite
+ * @param {type} temp
+ * @returns {undefined}
+ */
 function refreshFriendsZone(userId, toInvite, temp) {
     var htmlCode = "";
 
@@ -501,7 +507,7 @@ function refreshFriendsZone(userId, toInvite, temp) {
             friends = response.data;
             var friendIDs = [];
 
-            for (var k = 0; k < friends.length && k < 200; k++) {
+            for (var k = 0; k < friends.length; k++) {
                 var friend = friends[k];
                 friendIDs[k] = friend.id;
             }
@@ -512,6 +518,7 @@ function refreshFriendsZone(userId, toInvite, temp) {
                 url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
                 method: 'POST',
                 data: {
+                    userId: currentPlayerId,
                     facebookFriends: friendIDs,
                 },
                 success: function(data) {
@@ -655,7 +662,6 @@ function createNewGame(matchId) {
                 currentGameId = jason.currentGame;
                 player = jason.player;
                 turn = jason.turn;
-                //               alert("createNewGamw with " + currentGameId);
                 videoArray = jason.sections;
 
                 createGameDetails();
