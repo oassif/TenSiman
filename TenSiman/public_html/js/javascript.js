@@ -114,7 +114,7 @@ function refreshMatchups() {
 }
 
 function ref() {
-        $.ajax({
+    $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getMatchupPageContent_New_DB.php',
         method: 'POST',
         data: {
@@ -131,7 +131,7 @@ function ref() {
             //alert("error");
         }
     });
-    
+
 }
 
 function buildPlayerBar(userData) {
@@ -532,47 +532,48 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-//    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-//        if (response.error) {
-//            //alert(JSON.stringify(response.error));
-//        } else {
-//            var data = document.getElementById('data');
-//            fdata = response.data;
-//            friends = response.data;
-//            var friendIDs = [];
-//
-//            for (var k = 0; k < friends.length; k++) {
-//                var friend = friends[k];
-//                friendIDs[k] = friend.id;
-//            }
+    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+        if (response.error) {
+            //alert(JSON.stringify(response.error));
+        } else {
+            var data = document.getElementById('data');
+            fdata = response.data;
+            friends = response.data;
+            var friendIDs = [];
 
-    // Getting the user status and current matchups
-    friendIDs = [659746939, 848234613 ,1157420811, 644771584];
-    $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-        method: 'POST',
-        data: {
-            userId: currentPlayerId,
-            facebookFriends: friendIDs,
-        },
-        success: function(data) {
-            //alert("connected!")
-            var jason = JSON.parse(data);
-            if (jason.success === 1) {
-                //alert("ok!");
-                buildFriendsTable(jason.matches, false);
+            for (var k = 0; k < friends.length; k++) {
+                var friend = friends[k];
+                friendIDs[k] = friend.id;
             }
-        },
-        error: function() {
-            //alert("error in login");
+
+            // Getting the user status and current matchups
+            // friendIDs = [659746939, 848234613 ,1157420811, 644771584];
+            $.ajax({
+                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+                method: 'POST',
+                data: {
+                    userId: currentPlayerId,
+                    facebookFriends: friendIDs,
+                },
+                success: function(data) {
+                    //alert("connected!")
+                    var jason = JSON.parse(data);
+                    if (jason.success === 1) {
+                        //alert("ok!");
+                        buildFriendsTable(jason.matches, false);
+                    }
+                },
+                error: function() {
+                    //alert("error in login");
+                }
+            });
+
         }
+        document.getElementById("friends_table").innerHTML = "";
+
     });
-
-//        }
-//    });
-    document.getElementById("friends_table").innerHTML = "";
-
 }
+
 
 function buildFriendsBar(matchup) {
     document.getElementById("matchups_table").style.display = "none";
@@ -681,7 +682,7 @@ function startGameWithNewPlayer(rivalId) {
  */
 function createNewGame(matchId) {
     //alert("TESSSST");
-   // alert("createNewGame" + matchId);
+    // alert("createNewGame" + matchId);
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/createNewGame.php',
         method: 'POST',
@@ -984,12 +985,12 @@ document.addEventListener('deviceready', function() {
     }
 }, false);
 
-
 function loginFromWeb() {
     currentPlayerId = 86;
-    
-    
+
+
     window.location = "#matchups";
     refreshMatchups();
 }
+
 
