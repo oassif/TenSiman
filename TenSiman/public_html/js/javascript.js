@@ -387,9 +387,15 @@ function generateOrder(numberOfVideos) {
 }
 
 // on click of the answers
+/* Last updated 02/04/2014
+*  Changed to integrate with updateUserAnswer after each section
+*
+*/ 
 function onClick_checkAnswer(object) {
 
-    gameDetails[order[currVideoId]][3] = count;
+//    gameDetails[order[currVideoId]][3] = count;
+    // Saving user's answer
+    gameDetails[order[currVideoId]][3] = object.text.toString();
 
     if (object.text.toString() === answerArray[order[currVideoId]][0])//answerArray[currVideoId][0])
     {
@@ -402,6 +408,25 @@ function onClick_checkAnswer(object) {
         // Update score
         gameDetails[order[currVideoId]][4] = 0;
     }
+    
+    alert(gameDetails[order[currVideoId]]);
+    
+    /*$.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateUserAnswer.php',
+        method: 'POST',
+        data: { 
+            section: gameDetails[order[currVideoId]],
+            player: player
+        },
+        success: function (data) {
+            var jason = JSON.parse(data);
+            if (jason.success == 1) {  
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });*/
 
     score += gameDetails[order[currVideoId]][4];
     continueToNextQuestion(object);
@@ -712,8 +737,11 @@ function createGameDetails() {
 
     for (var index = 0; index < videoCount; ++index) {
         //alert("test3");
-        // video source, right answer, user's answer, time, points
-        gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
+//        // video source, right answer, user's answer, time, points
+//        gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
+        
+        // sectiodId, right answer, answered right? , user's Answer, score
+        gameDetails[index] = [videoArray[index]["sectionId"], answerArray[index][0], false, "", 0];
     }
 }
 
