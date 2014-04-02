@@ -4,19 +4,19 @@ works with FaceBook
 <!DOCTYPE html>
 <html> 
     <head>
-        
+
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css\TenSiman.css">
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
-        
+
         <script type="text/javascript" src="js\javascript.js"></script>
         <script type="text/javascript" src="js\login.js"></script>
-        
+
         <script type="text/javascript" src="cordova.js"></script>
-                <!-- cordova facebook plugin -->
+        <!-- cordova facebook plugin -->
         <script type="text/javascript" src="cdv-plugin-fb-connect.js"></script>
         <!-- facebook js sdk -->
         <script type="text/javascript" src="facebook-js-sdk.js"></script>
@@ -27,40 +27,39 @@ works with FaceBook
         <div id="fb-root"></div>
         <!-- Main Page -->
         <div id="main" data-role="page">
-<center>
-            <header data-role="header">
-                <h1>TenSiman</h1>
-                <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>-->
-                <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>
-            </header>
-            <div data-role="content" id="login_pagecontent">
-                <br/><br/><br/>
-                <br/><br/>
-                
-                
-                        <button id="imgFBLogin" onClick="signUp();">הרשם</button>
-                        <button id="imgFBLogin" onClick="getFriends();">התחבר</button>
-                        <a href="login.html"> facebook </a>
-                                <button onclick="login()">Login</button>
-        <button onclick="me()">Me</button>
-        <!--<button onclick="getSession()">Get session</button>-->
-        <button onclick="getLoginStatus()">Get login</button>
-        <button onclick="logout()">Logout</button>
-        <button onclick="facebookWallPost()">facebookWallPost</button>
-        <button onclick="publishStoryFriend()">friendstory</button>
+            <center>
+                <header data-role="header">
+                    <h1>TenSiman</h1>
+                    <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>-->
+                    <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>
+                </header>
+                <div data-role="content" id="login_pagecontent">
+                    <br/><br/><br/>
+                    <br/><br/>
 
-        <div id="data">loading ...</div>
 
-        <!--<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
-        <div id="fb-root"></div>
-        
-                <br/>
-            </div>
-                </center>
+                    <!--                    <button id="imgFBLogin" onClick="signUp();">הרשם</button>-->
+                    <button id="imgFBLogin" onClick="loginFromWeb();">התחבר</button>
+                    <!--                    <button onclick="login()">Login</button>-->
+                    <!--        <button onclick="me()">Me</button>
+                            <button onclick="getSession()">Get session</button>-->
+                    <button onclick="getLoginStatus()">התחבר</button>
+                    <button onclick="logout()">Logout</button>
+                    <!--        <button onclick="facebookWallPost()">facebookWallPost</button>
+                            <button onclick="publishStoryFriend()">friendstory</button>-->
+
+                    <!--<div id="data">loading ...</div>-->
+
+                    <!--<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
+                    <div id="fb-root"></div>
+
+                    <br/>
+                </div>
+            </center>
         </div>
-        
-        
-                <!-- Main Page -->
+
+
+        <!-- Main Page -->
         <div id="matchups" data-role="page">
             <header data-role="header">
                 <h1>תן סימן</h1>
@@ -68,74 +67,74 @@ works with FaceBook
             </header>
             <div data-role="content" id="matchups_pagecontent">
                 <div id="playerBar" dir="rtl">
-                    
+
                 </div>
                 <br/><br/>
                 <div id="matchups_table_content" dir="rtl" align="center">
                     <table width="80%" id="matchups_tableNew"></table>
                     <br />----<br />
                     <table width="80%" id="matchups_table"></table>
-                    
+
                 </div>
                 <br/><br/>
             </div>
-            
-                                    <br/><br/>
+
+            <br/><br/>
             <footer data-role="footer"> 
                 <div data-role="navbar">
-		<ul>
-                    <li><a href=""><font size="4">איזור מומחה</font></a></li>
-                    <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
-                        <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(1, false);">צור משחק  חדש</a></li>
+                    <ul>
+                        <li><a href=""><font size="4">איזור מומחה</font></a></li>
+                        <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
+                        <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(true);">צור משחק  חדש</a></li>
                         <li><a href="#"><font size="4">היכל התהילה</font></a></li>
-		</ul>
+                    </ul>
                 </div>
             </footer> 
         </div>
-        
-         <!-- friends Page -->
+
+        <!-- friends Page -->
         <div id="friends" data-role="page">
-            
-                 <div data-role="content" id="friends_zone">
+
+            <div data-role="content" id="friends_zone">
                 <div id="friends_zone_content" dir="rtl" align="center">
                     <table width="80%" id="friends_bar">
                         <tr>
-                            <td><a data-role="button" id="playWithFrineds" onclick="refreshFriendsZone(1, false);">play with friends</a></td>
-                            <td><a data-role="button" id="inviteFrineds" onclick="refreshFriendsZone(1, true);">Invite friends</a></td>
+                            <td><a data-role="button" id="playWithFrineds" onclick="refreshFriendsZone(true);">play with friends</a></td>
+                            <td><a data-role="button" id="inviteFrineds" onclick="refreshFriendsZone(false);">Invite friends</a></td>
 
                         </tr>
                     </table>
-                                        <br /> <br />
+                    <br /> <br />
                     <table width="80%" id="friends_table"></table>
-                    
+
                 </div>
                 <br/><br/>
             </div>
             <footer data-role="footer"> 
                 <div data-role="navbar">
-		<ul>
-                    <li><a href=""><font size="4">איזור מומחה</font></a></li>
-                    <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
+                    <ul>
+                        <li><a href=""><font size="4">איזור מומחה</font></a></li>
+                        <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
                         <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(1, false);">צור משחק  חדש</a></li>
                         <li><a href="#"><font size="4">היכל התהילה</font></a></li>
-		</ul>
+                    </ul>
                 </div>
             </footer> 
-            
+
         </div>
-        
+
         <!-- Game Page -->
         <div id="game" data-role="page">
-<center>
-            <header data-role="header">
-                <span id="title">
-                <h1>נסו לזכור את המילים הבאות</h1>
-                </span>
-                <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>
-                <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>-->
-            </header>
+            <center>
+                <header data-role="header">
+                    <span id="title">
+                        <h1>נסו לזכור את המילים הבאות</h1>
+                    </span>
+                    <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>
+                    <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>-->
+                </header>
 
-                
+
                 <img id="myVideo" src=""  style="display: block;">
                 <div align="center" id="translation">
                     <!--<input type="button" id="repeat" onclick="showVideos();" style="display: none">-->
@@ -147,27 +146,27 @@ works with FaceBook
                 </div>
                 <br/><br/>
                 <div align="center" id="answers">
-                <table width="100%">
-                    <tr>
-                        <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
-                        <td width="10%"></td>
-                        <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
-                    </tr>
-                    <tr>
-                        <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
-                        <td width="10%"></td>
-                        <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
-                    </tr>
-                </table>
+                    <table width="100%">
+                        <tr>
+                            <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
+                            <td width="10%"></td>
+                            <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
+                        </tr>
+                        <tr>
+                            <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
+                            <td width="10%"></td>
+                            <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
+                        </tr>
+                    </table>
                 </div>
-                
+
                 <br>
                 <center><span id="timer"></span></center>
                 <br>
-           <!-- </div>
-                </td></tr></table></center>-->
-        </div>
-        
+                <!-- </div>
+                     </td></tr></table></center>-->
+                </div>
 
-    </body>
-</html>
+
+                </body>
+                </html>

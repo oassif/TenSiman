@@ -47,29 +47,31 @@ $(document).ready(function()
 {
 
     if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
-        alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-    if (typeof CDV == 'undefined')
-        alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-    if (typeof FB == 'undefined')
-        alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+        //alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+        if (typeof CDV == 'undefined')
+            //alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+            if (typeof FB == 'undefined')
+                //alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
-    FB.Event.subscribe('auth.login', function(response) {
-        alert('auth.login event');
-    });
+                FB.Event.subscribe('auth.login', function(response) {
+                    //alert('auth.login event');
+                });
 
     FB.Event.subscribe('auth.logout', function(response) {
-        alert('auth.logout event');
+        //alert('auth.logout event');
     });
 
     FB.Event.subscribe('auth.sessionChange', function(response) {
-        alert('auth.sessionChange event');
+        //alert('auth.sessionChange event');
     });
 
     FB.Event.subscribe('auth.statusChange', function(response) {
-        alert('auth.statusChange event');
+        //alert('auth.statusChange event');
     });
 
+
     getLoginStatus();
+
     //   refreshMatchups();
 //    videoSource[0] = 'movies/new.gif';
 //    videoSource[1] = 'movies/after.gif';
@@ -101,10 +103,18 @@ $(document).ready(function()
 function refreshMatchups() {
     //login();
     var htmlCode = "";
-    alert("ref match up player" + currentPlayerId);
+    //alert("ref match up player" + currentPlayerId);
 
     // Getting the user status and current matchups
-    $.ajax({
+    ref();
+    setInterval(ref, 10000);
+    document.getElementById("matchups_table").innerHTML = "";
+    document.getElementById("friends_bar").style.display = "none";
+
+}
+
+function ref() {
+        $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getMatchupPageContent_New_DB.php',
         method: 'POST',
         data: {
@@ -118,12 +128,10 @@ function refreshMatchups() {
             }
         },
         error: function() {
-            alert("error");
+            //alert("error");
         }
     });
-    document.getElementById("matchups_table").innerHTML = "";
-    document.getElementById("friends_bar").style.display = "none";
-
+    
 }
 
 function buildPlayerBar(userData) {
@@ -145,6 +153,8 @@ function buildPlayerBar(userData) {
 }
 
 function buildMatchesTable(matchesData) {
+
+    // Clean the table
     var table = document.getElementById("matchups_tableNew");
     table.innerHTML = "";
 
@@ -162,11 +172,11 @@ function buildMatchesTable(matchesData) {
         // Decide button
         if (matchesData[index]["gameStatus"] === "0") {
             text = "תן סימן";
-            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["LiveGameId"] + ")\"";
+            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["matchupId"] + ")\"";
         }
         else if (matchesData[index]["gameStatus"] === "1") {
-            text = "תורך!!!";
-            alert("your turn:" + matchesData[index]["LiveGameId"]);
+            text = "תורך";
+            //alert("your turn:" + matchesData[index]["LiveGameId"]);
             buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameId"] + ")\"";
         }
         else if (matchesData[index]["gameStatus"] === "2") {
@@ -220,7 +230,7 @@ function createNewLiveGame(matchUpId)
             }
         },
         error: function() {
-            alert("error");
+            //alert("error");
         }
     });
 
@@ -333,7 +343,7 @@ function show4possibleAnswers(videoNum) {
 
 function myHandler() {
 
-    alert("im called");
+    //alert("im called");
     if (isDemo) {
         ++currVideoId;
         if (currVideoId === videoCount) {
@@ -441,7 +451,7 @@ function endGame() {
             }
         },
         error: function() {
-            alert("error");
+            //alert("error");
         }
     });
     $("#text").val("");
@@ -492,50 +502,49 @@ function resetButtons() {
  * @param {type} temp
  * @returns {undefined}
  */
-function refreshFriendsZone(userId, toInvite, temp) {
+function refreshFriendsZone(toInvite) {
     var htmlCode = "";
-
     window.location = "#friends";
-    alert("player" + currentPlayerId);
+    //alert("player" + currentPlayerId);
 
-    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-        if (response.error) {
-            alert(JSON.stringify(response.error));
-        } else {
-            var data = document.getElementById('data');
-            fdata = response.data;
-            friends = response.data;
-            var friendIDs = [];
+//    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+//        if (response.error) {
+//            //alert(JSON.stringify(response.error));
+//        } else {
+//            var data = document.getElementById('data');
+//            fdata = response.data;
+//            friends = response.data;
+//            var friendIDs = [];
+//
+//            for (var k = 0; k < friends.length; k++) {
+//                var friend = friends[k];
+//                friendIDs[k] = friend.id;
+//            }
 
-            for (var k = 0; k < friends.length; k++) {
-                var friend = friends[k];
-                friendIDs[k] = friend.id;
+    // Getting the user status and current matchups
+    friendIDs = [659746939, 848234613 ,1157420811, 644771584];
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+        method: 'POST',
+        data: {
+            userId: currentPlayerId,
+            facebookFriends: friendIDs,
+        },
+        success: function(data) {
+            //alert("connected!")
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                //alert("ok!");
+                buildFriendsTable(jason.matches, false);
             }
-
-            // Getting the user status and current matchups
-            //friendsId = [1378982912, 583269662];
-            $.ajax({
-                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-                method: 'POST',
-                data: {
-                    userId: currentPlayerId,
-                    facebookFriends: friendIDs,
-                },
-                success: function(data) {
-                    alert("connected!")
-                    var jason = JSON.parse(data);
-                    if (jason.success === 1) {
-                        alert("ok!");
-                        buildFriendsTable(jason.matches, false);
-                    }
-                },
-                error: function() {
-                    alert("error in login");
-                }
-            });
-
+        },
+        error: function() {
+            //alert("error in login");
         }
     });
+
+//        }
+//    });
     document.getElementById("friends_table").innerHTML = "";
 
 }
@@ -578,8 +587,8 @@ function buildFriendsTable(matchesData, toInvite) {
     var table = document.getElementById("friends_table");
 
     var numOfMatchups = matchesData.length;
-    /*alert(numOfMatchups);
-     alert(table.innerHTML);*/
+    /*//alert(numOfMatchups);
+     //alert(table.innerHTML);*/
     var index;
     for (index = 0; index < numOfMatchups; ++index) {
 
@@ -613,8 +622,8 @@ function buildFriendsTable(matchesData, toInvite) {
  */
 function startGameWithNewPlayer(rivalId) {
 
-    alert("player" + currentPlayerId);
-    alert("startGameWithNewPlayer");
+    //alert("player" + currentPlayerId);
+    //alert("startGameWithNewPlayer");
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/sendNewMatchup.php',
         method: 'POST',
@@ -626,12 +635,12 @@ function startGameWithNewPlayer(rivalId) {
             var jason = JSON.parse(data);
             if (jason.success === 1) {
                 var matchId = jason.data;
-                alert("MatchId: " + matchId);
+                //alert("MatchId: " + matchId);
                 createNewGame(matchId);
             }
         },
         error: function() {
-            alert("error in match");
+            //alert("error in match");
         }
     });
 }
@@ -646,8 +655,8 @@ function startGameWithNewPlayer(rivalId) {
  * @returns {undefined}
  */
 function createNewGame(matchId) {
-    alert("TESSSST");
-    alert("createNewGame");
+    //alert("TESSSST");
+   // alert("createNewGame" + matchId);
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/createNewGame.php',
         method: 'POST',
@@ -658,7 +667,7 @@ function createNewGame(matchId) {
         success: function(data) {
             var jason = JSON.parse(data);
             if (jason.success === 1) {
-                alert("succes");
+                //alert("succes");
                 currentGameId = jason.currentGame;
                 player = jason.player;
                 turn = jason.turn;
@@ -667,12 +676,12 @@ function createNewGame(matchId) {
                 createGameDetails();
                 startGame();
             } else {
-                alert("fail");
+                //alert("fail");
             }
 
         },
         error: function() {
-            alert("error in match");
+            //alert("error in match");
         }
     });
 }
@@ -688,21 +697,21 @@ function createNewGame(matchId) {
  */
 function createGameDetails() {
 
-    alert("test1");
+    //alert("test1");
     // building an array of answers. The right answer is ALWAYS in index 0
     for (var index = 0; index < videoCount; ++index) {
-        alert("test2");
+        //alert("test2");
         var wrongOptions = videoArray[index]["wrongOptions"].split(":");
         /*answerArray[index][0] = videoArray[index]["rightAnswer"];
          answerArray[index][1] = wrongOptions[0];
          answerArray[index][2] = wrongOptions[1];
          answerArray[index][3] = wrongOptions[2];*/
         answerArray[index] = [videoArray[index]["rightAnswer"], wrongOptions[0], wrongOptions[1], wrongOptions[2]];
-        alert(answerArray[index][0]);
+        //alert(answerArray[index][0]);
     }
 
     for (var index = 0; index < videoCount; ++index) {
-        alert("test3");
+        //alert("test3");
         // video source, right answer, user's answer, time, points
         gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
     }
@@ -710,7 +719,7 @@ function createGameDetails() {
 
 function playTurn(game_id) {
 
-    alert("gameid " + game_id);
+    //alert("gameid " + game_id);
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/playTurn.php',
         method: 'POST',
@@ -721,7 +730,7 @@ function playTurn(game_id) {
         success: function(data) {
             var jason = JSON.parse(data);
             if (jason.success === 1) {
-                alert("ok");
+                //alert("ok");
                 currentGameId = game_id;
                 player = jason.player;
                 turn = jason.turn;
@@ -731,7 +740,7 @@ function playTurn(game_id) {
             }
         },
         error: function() {
-            alert("error in match");
+            //alert("error in match");
         }
     });
 }
@@ -765,14 +774,14 @@ function signUp(email, firstName, LastName, facebookId, imgUrl) {
         success: function(data) {
             var jason = JSON.parse(data);
             if (jason.success === 1) {
-                alert("ok");
+                //alert("ok");
                 currentPlayerId = jason.userId;
                 window.location = "#matchups";
                 refreshMatchups();
             }
         },
         error: function() {
-            alert("error in match");
+            //alert("error in match");
         }
     });
 
@@ -789,12 +798,13 @@ function getLoginStatus() {
                     facebookId: fbId,
                 },
                 success: function(data) {
-                    alert("connected!")
+                    //alert("connected!")
                     var jason = JSON.parse(data);
                     if (jason.success === 1) {
                         currentPlayerId = jason.userId;
                         window.location = "#matchups";
                         refreshMatchups();
+                        alert(currentPlayerId);
                     }
                 },
                 error: function() {
@@ -802,7 +812,7 @@ function getLoginStatus() {
                 }
             });
         } else {
-            alert('not logged in');
+            login();
         }
     }
     , {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
@@ -815,7 +825,7 @@ var fdata;
 function me() {
     FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
         if (response.error) {
-            alert(JSON.stringify(response.error));
+            //alert(JSON.stringify(response.error));
         } else {
             var data = document.getElementById('data');
             fdata = response.data;
@@ -842,7 +852,7 @@ function me() {
 
 function logout() {
     FB.logout(function(response) {
-        alert('logged out');
+        //alert('logged out');
     });
 }
 
@@ -850,12 +860,12 @@ function login() {
     FB.login(
             function(response) {
                 if (response.session) {
-                    alert('logged in!!!');
+                    //alert('logged in!!!');
                 }
 
                 if (response.authResponse) {
                     fbId = response.authResponse.userId;
-                    alert("user id is " + fbId);
+                    //alert("user id is " + fbId);
 
                     $.ajax({
                         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
@@ -871,7 +881,7 @@ function login() {
                                 // New user should signUp first:
                                 if (currentPlayerId == -1) {
                                     FB.api('/me', function(response) {
-                                        alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
+                                        //alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
                                         var img_link = "http://graph.facebook.com/" + response.id + "/picture";
                                         signUp(response.email, response.first_name, response.last_name, response.id, img_link);
 
@@ -883,11 +893,11 @@ function login() {
                             }
                         },
                         error: function() {
-                            alert("error in login");
+                            //alert("error in login");
                         }
                     });
                 } else {
-                    alert('not logged in');
+                    //alert('not logged in');
                 }
             },
             {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
@@ -916,7 +926,7 @@ function publishStoryFriend() {
 
     var friendID = friendIDs[randNum];
     if (friendID == undefined) {
-        alert('please click the me button to get a list of friends first');
+        //alert('please click the me button to get a list of friends first');
     } else {
         console.log("friend id: " + friendID);
         console.log('Opening a dialog for friendID: ', friendID);
@@ -937,12 +947,21 @@ function publishStoryFriend() {
 
 document.addEventListener('deviceready', function() {
     try {
-        alert('Device is ready! Make sure you set your app_id below this alert.');
+        //alert('Device is ready! Make sure you set your app_id below this //alert.');
         FB.init({appId: "609521172430311", nativeInterface: CDV.FB, useCachedDialogs: false});
         document.getElementById('data').innerHTML = "";
         getLoginStatus();
     } catch (e) {
-        alert(e);
+        //alert(e);
     }
 }, false);
+
+
+function loginFromWeb() {
+    currentPlayerId = 86;
+    
+    
+    window.location = "#matchups";
+    refreshMatchups();
+}
 
