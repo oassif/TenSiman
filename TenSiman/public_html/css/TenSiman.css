@@ -37,3 +37,7 @@ button.answer {
     height: 20px !important;
 }
 
+img.profile {
+    border: solid black thin;
+    border-radius: 100px;
+}

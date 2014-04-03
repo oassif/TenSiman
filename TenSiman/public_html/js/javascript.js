@@ -198,7 +198,7 @@ function buildMatchesTable(matchesData) {
                 "<td>אני<br/>" + matchesData[index]["userScore"] + "</td>" +
                 "<td>:</td><td>" +
                 "<td>" + matchesData[index]["rivalName"] + "<br />" + matchesData[index]["rivalScore"] + "</td>" +
-                "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
+                "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
                 "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
     }
 
@@ -462,6 +462,10 @@ function continueToNextQuestion(object) {
     }
 }
 
+/***
+* Ending the user's turn, after he played is turn in the game.
+
+ * @returns {undefined} */
 function endGame() {
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
