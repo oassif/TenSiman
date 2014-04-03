@@ -248,6 +248,9 @@ function createNewLiveGame(matchUpId)
 
 function startGame()
 {
+    // Setting video element to "" so the video won't jump when clicking "start game" while demo is running
+    document.getElementById("myVideo").setAttribute("src", "");
+    
     currVideoId = 0;
     isDemo = true;
     document.getElementById("play").style.display = "block";
@@ -409,9 +412,7 @@ function onClick_checkAnswer(object) {
         gameDetails[order[currVideoId]][4] = 0;
     }
     
-    alert(gameDetails[order[currVideoId]]);
-    
-    /*$.ajax({
+    $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateUserAnswer.php',
         method: 'POST',
         data: { 
@@ -426,7 +427,7 @@ function onClick_checkAnswer(object) {
         error: function () {
             alert("error");
         }
-    });*/
+    });
 
     score += gameDetails[order[currVideoId]][4];
     continueToNextQuestion(object);
