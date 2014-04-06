@@ -411,7 +411,7 @@ function onClick_checkAnswer(object) {
         // Update score
         gameDetails[order[currVideoId]][4] = 0;
     }
-    
+    alert("UpdateUserAnswer");
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateUserAnswer.php',
         method: 'POST',
@@ -421,7 +421,8 @@ function onClick_checkAnswer(object) {
         },
         success: function (data) {
             var jason = JSON.parse(data);
-            if (jason.success == 1) {  
+            if (jason.success == 1) { 
+                alert("seuccess!");
             }
         },
         error: function () {
@@ -467,6 +468,7 @@ function continueToNextQuestion(object) {
 
  * @returns {undefined} */
 function endGame() {
+    alert("Game Ended");
     $.ajax({
         //url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/endTurn.php',
