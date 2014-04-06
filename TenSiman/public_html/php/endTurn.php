@@ -22,36 +22,62 @@ require_once __DIR__ . '/db_connect.php';
  
 //connecting to db
 $db = new DB_CONNECT();
-if (isset($_REQUEST["section"]) && isset($_REQUEST["player"])) {
+if (isset($_REQUEST["currentGameId"]) && isset($_REQUEST["player"]) && isset($_REQUEST["turn"])) {
  
     // NOTE: "player" referenced by the value of '1' or '2' to P1 or P2
     
     //array for JSON response
     $response = array();
+    $currentGameId = $_REQUEST["currentGameId"];
     $whichPlayer = $_REQUEST['player'];
-    $sectionObject = $_REQUEST["section"];
-    $sectionId = $sectionObject[0];
-    $answer = $sectionObject[3];
-    $score = $sectionObject[4];
-    //$section = $_REQUEST['section'];
- /*echo 'e';
-    $sectionId = $_REQUEST["sectionId"];
-echo 'f';    $answer = $_REQUEST["answer"];
-    echo 'd';$score = $_REQUEST["score"];
-    echo 'a';$whichPlayer = $_REQUEST["whichPlayer"];
-    echo 'qq';*/
+    $turn = $_REQUEST["turn"];
     
-    $result = mysql_query("UPDATE GameSections SET scoreP$whichPlayer = '$score', answerP$whichPlayer= '$answer' WHERE id=$sectionId");
+    //"SELECT SUM(scoreP1) as scoreP1, SUM(scoreP2) as scoreP2 FROM `GameSections` inner join `Games_new` on Games_new.id = GameSections.gameId");
+    $result = mysql_query("SELECT SUM(scoreP1) as scoreP1, SUM(scoreP2) as scoreP2 FROM `GameSections` where gameId = $currentGameId");
+    $row = mysql_fetch_array($result);
+    $totalScoreP1 = $row["scoreP1"];
+    $totalScoreP2 = $row["scoreP2"];
+    // Need to manage the gameId column in gameSections
+    
+    $status = 0; // Default status ("תן סימן");
+    
+    if ($turn == 1 && $player == 1) {
+        $status = 2;
+    } else if ($turn == 1 && $player == 2) {
+        $status = 1;
+    } 
+    else  { // $turn = 2
+        // Checking who won
+        $playerWon = 0;
+        if ($totalScoreP1 > $totalScoreP2) {
+            $playerWon = 1;
+        }
+        else if ($totalScoreP1 < $totalScoreP2) {
+            $playerWon = 2;
+        }
+        else {
+            // Tie
+            // No one gets a point
+        }
+        
+        // If it's not a tie
+        if ($playerWon != 0) {
+            $result = mysql_query("UPDATE `Matchups` SET scoreP$playerWon = scoreP$playerWon + 1 WHERE currGameId = $currentGameId");
+        }
+    }
+    
+
+    $sql = "UPDATE `Games_new` SET `status`='$status' WHERE id ='$gameId'";
+    $result = mysql_query($sql);
 
 //// check if row inserted or not
     if ($result) {
-        $response["success"] = 1;
-        $response["message"] = "section Updated!";
+        $response["success"] = $status;
         echo json_encode($response);
     } else {
 //error
         $response["success"] = 0;
-        $response["message"] = "Error";
+        $response["message"] = "Error in update";
 
 // echo no users JSON
         echo json_encode($response);
@@ -59,7 +85,7 @@ echo 'f';    $answer = $_REQUEST["answer"];
 } else {
     //error
     $response["success"] = 0;
-    $response["message"] = "Error";
+    $response["message"] = "Error in matchup";
 
 //    echo no users JSON;
     echo json_encode($response);

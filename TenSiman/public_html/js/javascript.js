@@ -468,7 +468,8 @@ function continueToNextQuestion(object) {
  * @returns {undefined} */
 function endGame() {
     $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
+        //url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/endTurn.php',
         method: 'POST',
         data: {
             gameId: currentGameId,
