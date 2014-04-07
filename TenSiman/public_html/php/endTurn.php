@@ -22,14 +22,14 @@ require_once __DIR__ . '/db_connect.php';
  
 //connecting to db
 $db = new DB_CONNECT();
-if (isset($_REQUEST["currentGameId"]) && isset($_REQUEST["player"]) && isset($_REQUEST["turn"])) {
+if (isset($_REQUEST["gameId"]) && isset($_REQUEST["player"]) && isset($_REQUEST["turn"])) {
  
     // NOTE: "player" referenced by the value of '1' or '2' to P1 or P2
     
     //array for JSON response
     $response = array();
-    $currentGameId = $_REQUEST["currentGameId"];
-    $whichPlayer = $_REQUEST['player'];
+    $currentGameId = $_REQUEST["gameId"];
+    $player = $_REQUEST["player"];
     $turn = $_REQUEST["turn"];
     
     //"SELECT SUM(scoreP1) as scoreP1, SUM(scoreP2) as scoreP2 FROM `GameSections` inner join `Games_new` on Games_new.id = GameSections.gameId");
@@ -40,6 +40,8 @@ if (isset($_REQUEST["currentGameId"]) && isset($_REQUEST["player"]) && isset($_R
     // Need to manage the gameId column in gameSections
     
     $status = 0; // Default status ("תן סימן");
+    
+    //echo "turn = $turn and player = $player";
     
     if ($turn == 1 && $player == 1) {
         $status = 2;
@@ -67,7 +69,8 @@ if (isset($_REQUEST["currentGameId"]) && isset($_REQUEST["player"]) && isset($_R
     }
     
 
-    $sql = "UPDATE `Games_new` SET `status`='$status' WHERE id ='$gameId'";
+    $sql = "UPDATE `Games_new` SET `status`='$status' WHERE id ='$currentGameId'";
+    //echo "UPDATE `Games_new` SET `status`='$status' WHERE id ='$currentGameId'";
     $result = mysql_query($sql);
 
 //// check if row inserted or not

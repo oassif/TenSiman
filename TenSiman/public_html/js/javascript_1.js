@@ -45,7 +45,7 @@ function resizeWidthIframe() {
 
 $(document).ready(function()
 {
-    try {
+
     if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
         //alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
         if (typeof CDV == 'undefined')
@@ -56,36 +56,18 @@ $(document).ready(function()
                 FB.Event.subscribe('auth.login', function(response) {
                     //alert('auth.login event');
                 });
-    }
-    catch (err) {
-        
-    }
-    try{
+
     FB.Event.subscribe('auth.logout', function(response) {
         //alert('auth.logout event');
     });
-    }
-    catch (err) {
-        
-    }    
 
-    try {
     FB.Event.subscribe('auth.sessionChange', function(response) {
         //alert('auth.sessionChange event');
     });
-    }
-    catch (err) {
-        
-    }
-    
-    try {
+
     FB.Event.subscribe('auth.statusChange', function(response) {
         //alert('auth.statusChange event');
     });
-    }
-    catch (err) {
-        
-    }
 
 
     getLoginStatus();
@@ -418,8 +400,6 @@ function onClick_checkAnswer(object) {
     // Saving user's answer
     gameDetails[order[currVideoId]][3] = object.text.toString();
 
-    console.trace(object.text.toString() + " <- user  answer ttttttttt right answer ->" + answerArray[order[currVideoId]][0])
-
     if (object.text.toString() === answerArray[order[currVideoId]][0])//answerArray[currVideoId][0])
     {
         gameDetails[order[currVideoId]][2] = true;
@@ -428,11 +408,10 @@ function onClick_checkAnswer(object) {
     }
     else {
         document.getElementById(object.id).style.background = "red";
-        console.trace("wrong");
         // Update score
         gameDetails[order[currVideoId]][4] = 0;
     }
-    console.trace("UpdateUserAnswer");
+    alert("UpdateUserAnswer");
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateUserAnswer.php',
         method: 'POST',
@@ -443,11 +422,11 @@ function onClick_checkAnswer(object) {
         success: function (data) {
             var jason = JSON.parse(data);
             if (jason.success == 1) { 
-                console.trace("seuccess!" + gameDetails[order[currVideoId]] + " " + player);
+                alert("seuccess!");
             }
         },
         error: function () {
-            console.trace("error");
+            alert("error");
         }
     });
 
@@ -489,7 +468,7 @@ function continueToNextQuestion(object) {
 
  * @returns {undefined} */
 function endGame() {
-    console.trace("Game Ended");
+    alert("Game Ended");
     $.ajax({
         //url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/endTurn.php',
@@ -727,8 +706,6 @@ function createNewGame(matchId) {
                 player = jason.player;
                 turn = jason.turn;
                 videoArray = jason.sections;
-                //console.trace(videoArray[0]);
-                //console.trace(turn + " <- turn ..... player ->" + player)
 
                 createGameDetails();
                 startGame();
@@ -795,8 +772,6 @@ function playTurn(game_id) {
                 player = jason.player;
                 turn = jason.turn;
                 videoArray = jason.sections;
-                //console.trace(videoArray[0]);
-                //console.trace(turn + " <- turn ..... player ->" + player)
                 createGameDetails();
                 startGame();
             }
@@ -850,8 +825,6 @@ function signUp(email, firstName, LastName, facebookId, imgUrl) {
 }
 
 function getLoginStatus() {
-    console.trace("Attempting to connect via facebook login");
-    try {
     FB.getLoginStatus(function(response) {
         if (response.status == 'connected') {
             fbId = response.authResponse.userId;
@@ -882,11 +855,6 @@ function getLoginStatus() {
     , {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
 
     );
-    }
-    catch (err){
-        console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
-        loginFromWeb();
-    }
 }
 
 var friendIDs = [];
@@ -1026,9 +994,11 @@ document.addEventListener('deviceready', function() {
 }, false);
 
 function loginFromWeb() {
-    currentPlayerId = 1;
+    currentPlayerId = 86;
 
 
     window.location = "#matchups";
     refreshMatchups();
 }
+
+
