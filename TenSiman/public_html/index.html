@@ -7,7 +7,7 @@ works with FaceBook
 
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css\TenSiman.css">
+        <link rel="stylesheet" type="text/css" href="TenSiman.css">
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
@@ -28,18 +28,24 @@ works with FaceBook
         <!-- Main Page -->
         <div id="main" data-role="page">
             <center>
-                <header data-role="header">
-                    <h1>TenSiman</h1>
+<!--                <header data-role="header">-->
                     <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>-->
-                    <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>
-                </header>
+                    <div id="header">
+                                            <img id="header-photo" src ="images/header.png">
+                                            <img id="progres_bar" src ="images/RoundedRectangle2.png">
+                    </div>
+<!--                    <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>-->
+<!--                </header>-->
+                
+                
+                
                 <div data-role="content" id="login_pagecontent">
                     <br/><br/><br/>
                     <br/><br/>
 
 
                     <!--                    <button id="imgFBLogin" onClick="signUp();">הרשם</button>-->
-<!--                    <button id="imgFBLogin" onClick="loginFromWeb();">התחבר</button>-->
+                    <button id="imgFBLogin" onClick="loginFromWeb();">התחבר</button>
                     <!--                    <button onclick="login()">Login</button>-->
                     <!--        <button onclick="me()">Me</button>
                             <button onclick="getSession()">Get session</button>-->
@@ -74,7 +80,6 @@ works with FaceBook
                 <div id="matchups_table_content" dir="rtl" align="center">
                     <table width="80%" id="matchups_tableNew"></table>
                     <br />----<br />
-                    <table width="80%" id="matchups_table"></table>
 
                 </div>
                 <br/><br/>
