@@ -23,8 +23,8 @@ var score = 0;
 var buffer = 20; //scroll bar buffer
 
 var currentGameId = -1;
-var turn = 0
-var player = 0
+var turn = 0;
+var player1or2 = 0;
 
 function pageY(elem) {
     return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
@@ -136,7 +136,7 @@ function ref() {
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getMatchupPageContent_New_DB.php',
         method: 'POST',
         data: {
-            userId: currentPlayerId, // TODO: change Hardcoded value for the user Oren Assif
+            userId: currentPlayerId // TODO: change Hardcoded value for the user Oren Assif
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -171,7 +171,6 @@ function buildPlayerBar(userData) {
 }
 
 function buildMatchesTable(matchesData) {
-
     // Clean the table
     var table = document.getElementById("matchups_tableNew");
     table.innerHTML = "";
@@ -183,6 +182,7 @@ function buildMatchesTable(matchesData) {
     for (index = 0; index < numOfMatchups; ++index) {
 
         var text = ""; // This
+        var buttonClass = "";
         var textValue = "";
         var buttonProperty = "";
 
@@ -190,19 +190,23 @@ function buildMatchesTable(matchesData) {
         // Decide button
         if (matchesData[index]["gameStatus"] === "0") {
             text = "תן סימן";
+            buttonClass = "newGame";
             buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["matchupId"] + ")\"";
         }
         else if (matchesData[index]["gameStatus"] === "1") {
             text = "תורך";
+            buttonClass = "yourTurn";
             //alert("your turn:" + matchesData[index]["LiveGameId"]);
             buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameId"] + ")\"";
         }
         else if (matchesData[index]["gameStatus"] === "2") {
             text = "המתן";
+            buttonClass = "waitForRival";
             buttonProperty = "disabled";
         }
         else if (matchesData[index]["gameStatus"] === "3") {
             text = "הזמנה ממומחה";
+            buttonClass = "expertChallange";
             buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameID"] + ")\"";
         }
         else {
@@ -212,7 +216,7 @@ function buildMatchesTable(matchesData) {
         }
 
         $("#matchups_tableNew").append("<tr align=\"center\">" +
-                "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                "<td><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
                 "<td>אני<br/>" + matchesData[index]["userScore"] + "</td>" +
                 "<td>:</td><td>" +
                 "<td>" + matchesData[index]["rivalName"] + "<br />" + matchesData[index]["rivalScore"] + "</td>" +
@@ -438,12 +442,12 @@ function onClick_checkAnswer(object) {
         method: 'POST',
         data: { 
             section: gameDetails[order[currVideoId]],
-            player: player
+            player: player1or2
         },
         success: function (data) {
             var jason = JSON.parse(data);
             if (jason.success == 1) { 
-                console.trace("seuccess!" + gameDetails[order[currVideoId]] + " " + player);
+                console.trace("seuccess!" + gameDetails[order[currVideoId]] + " " + player1or2);
             }
         },
         error: function () {
@@ -496,7 +500,7 @@ function endGame() {
         method: 'POST',
         data: {
             gameId: currentGameId,
-            player: player, //$("#name").val(),
+            player: player1or2, //$("#name").val(),
             turn: turn
         },
         success: function(data) {
@@ -530,8 +534,6 @@ function endGame() {
 }
 /**
  * Reset the 4 button of possible answers and the timer.
- * @param {type} matchup
- * @returns {undefined}
  */
 function resetButtons() {
 
@@ -551,9 +553,7 @@ function resetButtons() {
 }
 /**
  * Build the Friends List.
- * @param {type} userId
  * @param {type} toInvite
- * @param {type} temp
  * @returns {undefined}
  */
 function refreshFriendsZone(toInvite) {
@@ -582,7 +582,7 @@ function refreshFriendsZone(toInvite) {
                 method: 'POST',
                 data: {
                     userId: currentPlayerId,
-                    facebookFriends: friendIDs,
+                    facebookFriends: friendIDs
                 },
                 success: function(data) {
                     //alert("connected!")
@@ -652,10 +652,10 @@ function buildFriendsTable(matchesData, toInvite) {
 
         // Decide button
         if (toInvite) {
-            text = "הזמן"
+            text = "הזמן";
 
         } else {
-            text = "שחק"
+            text = "שחק";
             buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
 
         }
@@ -717,7 +717,7 @@ function createNewGame(matchId) {
         method: 'POST',
         data: {
             matchId: matchId,
-            currentPlayerId: currentPlayerId,
+            currentPlayerId: currentPlayerId
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -728,7 +728,7 @@ function createNewGame(matchId) {
                 turn = jason.turn;
                 videoArray = jason.sections;
                 //console.trace(videoArray[0]);
-                //console.trace(turn + " <- turn ..... player ->" + player)
+                //console.trace(turn + " <- turn ..... player ->" + player1or2)
 
                 createGameDetails();
                 startGame();
@@ -785,7 +785,7 @@ function playTurn(game_id) {
         method: 'POST',
         data: {
             gameId: game_id,
-            currentPlayerId: currentPlayerId,
+            currentPlayerId: currentPlayerId
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -796,7 +796,7 @@ function playTurn(game_id) {
                 turn = jason.turn;
                 videoArray = jason.sections;
                 //console.trace(videoArray[0]);
-                //console.trace(turn + " <- turn ..... player ->" + player)
+                //console.trace(turn + " <- turn ..... player ->" + player1or2)
                 createGameDetails();
                 startGame();
             }
@@ -831,7 +831,7 @@ function signUp(email, firstName, LastName, facebookId, imgUrl) {
             userFacebookId: facebookId,
             imgUrl: imgUrl,
             userGender: gender,
-            userBirthday: birthDay,
+            userBirthday: birthDay
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -940,7 +940,7 @@ function login() {
                         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
                         method: 'POST',
                         data: {
-                            facebookId: fbId,
+                            facebookId: fbId
                         },
                         success: function(data) {
                             var jason = JSON.parse(data);

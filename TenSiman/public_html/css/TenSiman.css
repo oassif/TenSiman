@@ -32,9 +32,36 @@ and open the template in the editor.
     border: 1px solid green;
 }
 
-button.answer {
+/*button.answer {
     font-size: 18em !important;
     height: 20px !important;
+}*/
+
+button.waitForRival {
+    border-radius: 30px;
+    background-color: lightskybluehtblow;
+    height: 40px;
+    width: 80px;
+    //font-size: 18em !important;
+    //height: 20px !important;
+}
+
+button.yourTurn {
+    border-radius: 30px;
+    background-color: lime;
+    height: 40px;
+    width: 80px;
+    //font-size: 18em !important;
+    //height: 20px !important;
+}
+
+button.newGame {
+    border-radius: 30px;
+    background-color: plum;
+    height: 40px;
+    width: 80px;
+    //font-size: 18em !important;
+    //height: 20px !important;
 }
 
 img.profile {
