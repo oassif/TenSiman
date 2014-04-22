@@ -61,5 +61,10 @@ button.newGame {
     height: 40px;
     width: 80px;
 }
+
+img.profile {
+    border: solid black thin;
+    border-radius: 100px;
+}
     //font-size: 18em !important;
 	    //height: 20px !important;

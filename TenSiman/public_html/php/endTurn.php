@@ -46,9 +46,7 @@ if (isset($_REQUEST["gameId"]) && isset($_REQUEST["player"]) && isset($_REQUEST[
     if ($turn == 1 && $player == 1) {
         $status = 2;
     } else if ($turn == 1 && $player == 2) {
-        $status = 1;
-    } 
-    else  { // $turn = 2
+        $status = 1;} else  { // $turn = 2
         // Checking who won
         $playerWon = 0;
         if ($totalScoreP1 > $totalScoreP2) {
