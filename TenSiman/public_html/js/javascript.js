@@ -1027,7 +1027,7 @@ document.addEventListener('deviceready', function() {
 }, false);
 
 function loginFromWeb() {
-    currentPlayerId = 1;
+    currentPlayerId = 86;
 
 
     window.location = "#matchups";
