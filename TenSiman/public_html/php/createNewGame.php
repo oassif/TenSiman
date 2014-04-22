@@ -33,20 +33,58 @@ if (isset($_REQUEST["matchId"]) && isset($_REQUEST["currentPlayerId"])) {
     $matchId = $_REQUEST['matchId'];
     $playerId = $_REQUEST["currentPlayerId"];
     $player = 1;
+   
+    /*
     $result = mysql_query("SELECT * FROM `Matchups` WHERE id=$matchId AND player2=$playerId");
 
     if (mysql_num_rows($result) > 0) {
         $player = 2;
+    }*/
+    
+    $result = mysql_query("SELECT * FROM `Matchups` WHERE id=$matchId");
+    
+    // TODO: what if didn't find any 
+    if (mysql_num_rows($result) > 0) {
+        $row = mysql_fetch_array($result);
+        $player2Id = $row["player2"];
+        $currentGameId = $row["currGameId"];
     }
+    else
+    {
+        $response["success"] = 0;
+        $response["message"] = "No match found!";
 
+        echo json_encode($response);
+        return;
+    }
+    
+    $result = mysql_query("SELECT * FROM `Games_new` WHERE id=$currentGameId");
+    $row = mysql_fetch_array($result);
+
+    if ($row["status"] != "0")
+    {
+        $response["success"] = 0;
+        $response["message"] = "Can't create new game, game in progress";
+
+        echo json_encode($response);
+        return;
+    }
+    
+    if ($playerId == $player2Id)
+    {
+        $player = 2;
+    }
+    
     // Generate 5 random numbers
-    $sql = "SELECT COUNT(*) FROM `Movies`";
-    $count = mysql_query($sql);
+    $sql1 = "SELECT id FROM `Movies`";
+    //echo $sql;
+    $result = mysql_query($sql1);
+    $countMovies = mysql_num_rows($result);
 
-    $numbers = range(1, $count);
+    $numbers = range(1, $countMovies);
     shuffle($numbers);
     array_slice($numbers, 0, 5);
-   // echo json_encode($numbers);
+   //echo json_encode($numbers);
     
     $sections = array();
     $videoIdArray = array();
@@ -82,7 +120,7 @@ if (isset($_REQUEST["matchId"]) && isset($_REQUEST["currentPlayerId"])) {
     $response["sections"] = $sections;
 
 
-    $result = mysql_query("INSERT INTO `Games_new` (`matchupId`, `status`, `section1`, `section2`, `section3`, `section4`, `section5`, `dateCreated`) VALUES ('$matchId', 1, '$sectionIdArray[0]',  '$sectionIdArray[1]',  '$sectionIdArray[2]',  '$sectionIdArray[3]',  '$sectionIdArray[4]', '2013-01-01 01:00:00')");
+    $result = mysql_query("INSERT INTO `Games_new` (`matchupId`, `status`, `section1`, `section2`, `section3`, `section4`, `section5`, `dateCreated`) VALUES ('$matchId', $player, '$sectionIdArray[0]',  '$sectionIdArray[1]',  '$sectionIdArray[2]',  '$sectionIdArray[3]',  '$sectionIdArray[4]', '2013-01-01 01:00:00')");
     $idCurGame = mysql_insert_id();
     
     // Setting the gameId for each of the sections. TODO: we might wish to remove the sectionId from the games_new table
