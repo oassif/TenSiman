@@ -418,6 +418,7 @@ function generateOrder(numberOfVideos) {
 */ 
 function onClick_checkAnswer(object) {
 
+// TODO: disable all buttons and enabling them only when creating the new buttons for the next answer
 //    gameDetails[order[currVideoId]][3] = count;
     // Saving user's answer
     gameDetails[order[currVideoId]][3] = object.text.toString();
@@ -576,7 +577,7 @@ function refreshFriendsZone(toInvite) {
             }
 
             // Getting the user status and current matchups
-            // friendIDs = [659746939, 848234613 ,1157420811, 644771584];
+             friendIDs = [659746939, 848234613 ,1157420811, 644771584];
             $.ajax({
                 url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
                 method: 'POST',
@@ -724,7 +725,7 @@ function createNewGame(matchId) {
             if (jason.success === 1) {
                 //alert("succes");
                 currentGameId = jason.currentGame;
-                player = jason.player;
+                player1or2 = jason.player;
                 turn = jason.turn;
                 videoArray = jason.sections;
                 //console.trace(videoArray[0]);
@@ -792,7 +793,7 @@ function playTurn(game_id) {
             if (jason.success === 1) {
                 //alert("ok");
                 currentGameId = game_id;
-                player = jason.player;
+                player1or2 = jason.player;
                 turn = jason.turn;
                 videoArray = jason.sections;
                 //console.trace(videoArray[0]);
