@@ -579,6 +579,7 @@ function refreshFriendsZone(toInvite) {
             }
         }
 
+        //
        // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
