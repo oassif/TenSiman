@@ -602,7 +602,6 @@ function refreshFriendsZone(toInvite) {
         });
     });
     document.getElementById("friends_table").innerHTML = "";
-
 }
 
 
