@@ -564,46 +564,46 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-     FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-     if (response.error) {
-     // Getting the user status and current matchups
-     } else {
-     var data = document.getElementById('data');
-     fdata = response.data;
-     friends = response.data;
-     var friendIDs = [];
-     
-     for (var k = 0; k < friends.length; k++) {
-     var friend = friends[k];
-     friendIDs[k] = friend.id;
-     }
-     }
+    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+        if (response.error) {
+            // Getting the user status and current matchups
+        } else {
+            var data = document.getElementById('data');
+            fdata = response.data;
+            friends = response.data;
+            var friendIDs = [];
 
-   // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
-    $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-        method: 'POST',
-        data: {
-            userId: currentPlayerId,
-            facebookFriends: friendIDs
-        },
-        success: function(data) {
-            //alert("connected!")
-            var jason = JSON.parse(data);
-            if (jason.success === 1) {
-                //alert("ok!");
-                if (toInvite) {
-                    buildFriendsTable(jason.toInvite, toInvite);
-                } else {
-                    buildFriendsTable(jason.matches, toInvite);
-                }
+            for (var k = 0; k < friends.length; k++) {
+                var friend = friends[k];
+                friendIDs[k] = friend.id;
             }
-        },
-        error: function() {
-            //alert("error in login");
         }
+
+        // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+        $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+            method: 'POST',
+            data: {
+                userId: currentPlayerId,
+                facebookFriends: friendIDs
+            },
+            success: function(data) {
+                //alert("connected!")
+                var jason = JSON.parse(data);
+                if (jason.success === 1) {
+                    //alert("ok!");
+                    if (toInvite) {
+                        buildFriendsTable(jason.toInvite, toInvite);
+                    } else {
+                        buildFriendsTable(jason.matches, toInvite);
+                    }
+                }
+            },
+            error: function() {
+                //alert("error in login");
+            }
+        });
     });
-     });
     document.getElementById("friends_table").innerHTML = "";
 }
 
@@ -657,7 +657,7 @@ function buildFriendsTable(matchesData, toInvite) {
         // Decide button
         if (toInvite) {
             text = "הזמן";
-
+            buttonProperty = "onClick=\"publishStoryFriend(" +  matchesData[index] +")\"";
         } else {
             text = "שחק";
             buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
@@ -665,8 +665,9 @@ function buildFriendsTable(matchesData, toInvite) {
 
         if (toInvite) {
 
-            var name = "";
-            FB.api('/12323146', function(response) {
+            var name = "stav";
+            var userId="'\\" + matchesData[index] + "'";
+            FB.api(userId, function(response) {
                 name = response.name;
             });
 
@@ -992,7 +993,6 @@ function login() {
 
 
 function facebookWallPost() {
-    console.log('Debug 1');
     var params = {
         method: 'feed',
         name: 'Facebook Dialogs',
@@ -1003,14 +1003,11 @@ function facebookWallPost() {
     };
     console.log(params);
     FB.ui(params, function(obj) {
-        console.log(obj);
+        //   console.log(obj);
     });
 }
 
-function publishStoryFriend() {
-    randNum = Math.floor(Math.random() * friendIDs.length);
-
-    var friendID = friendIDs[randNum];
+function publishStoryFriend(friendID) {
     if (friendID == undefined) {
         //alert('please click the me button to get a list of friends first');
     } else {
