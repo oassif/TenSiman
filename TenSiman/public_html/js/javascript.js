@@ -564,43 +564,46 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-        if (response.error) {
-            // Getting the user status and current matchups
-        } else {
-            var data = document.getElementById('data');
-            fdata = response.data;
-            friends = response.data;
-            var friendIDs = [];
+     FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+     if (response.error) {
+     // Getting the user status and current matchups
+     } else {
+     var data = document.getElementById('data');
+     fdata = response.data;
+     friends = response.data;
+     var friendIDs = [];
+     
+     for (var k = 0; k < friends.length; k++) {
+     var friend = friends[k];
+     friendIDs[k] = friend.id;
+     }
+     }
 
-            for (var k = 0; k < friends.length; k++) {
-                var friend = friends[k];
-                friendIDs[k] = friend.id;
-            }
-        }
-
-        //
-       // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145];
-        $.ajax({
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-            method: 'POST',
-            data: {
-                userId: currentPlayerId,
-                facebookFriends: friendIDs
-            },
-            success: function(data) {
-                //alert("connected!")
-                var jason = JSON.parse(data);
-                if (jason.success === 1) {
-                    //alert("ok!");
-                    buildFriendsTable(jason.matches, false);
+   // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+        method: 'POST',
+        data: {
+            userId: currentPlayerId,
+            facebookFriends: friendIDs
+        },
+        success: function(data) {
+            //alert("connected!")
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                //alert("ok!");
+                if (toInvite) {
+                    buildFriendsTable(jason.toInvite, toInvite);
+                } else {
+                    buildFriendsTable(jason.matches, toInvite);
                 }
-            },
-            error: function() {
-                //alert("error in login");
             }
-        });
+        },
+        error: function() {
+            //alert("error in login");
+        }
     });
+     });
     document.getElementById("friends_table").innerHTML = "";
 }
 
@@ -658,13 +661,26 @@ function buildFriendsTable(matchesData, toInvite) {
         } else {
             text = "שחק";
             buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
-
         }
 
-        $("#friends_table").append("<tr align=\"center\">" +
-                "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
-                "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+        if (toInvite) {
+
+            var name = "";
+            FB.api('/12323146', function(response) {
+                name = response.name;
+            });
+
+            $("#friends_table").append("<tr align=\"center\">" +
+                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                    "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
+                    "<br />" + name + "</td></tr>");
+
+        } else {
+            $("#friends_table").append("<tr align=\"center\">" +
+                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                    "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
+                    "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+        }
     }
 }
 
