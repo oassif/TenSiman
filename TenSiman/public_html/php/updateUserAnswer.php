@@ -42,7 +42,7 @@ echo 'f';    $answer = $_REQUEST["answer"];
     echo 'qq';*/
     
     $result = mysql_query("UPDATE GameSections SET scoreP$whichPlayer = '$score', answerP$whichPlayer= '$answer' WHERE id=$sectionId");
-
+    
 //// check if row inserted or not
     if ($result) {
         $response["success"] = 1;
