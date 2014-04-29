@@ -195,5 +195,42 @@ img.profile {
     border-radius: 100px;
     width: 80px;
 }
-    //font-size: 18em !important;
-	    //height: 20px !important;
+//font-size: 18em !important;
+//height: 20px !important;
+
+#header {
+    display: block;
+    left: 0;
+    /*    background-image:url('images/header.png');*/
+    /*    background-size: 100%;
+        background-size:80px 60px;*/
+    /*    background-color: white;*/
+    /*    background-repeat: no-repeat; 
+    */      position: left top;
+    /*
+            padding-top:68px; 
+            margin-bottom:50px; */
+}
+#header-photo {
+    width: 100%;
+    z-index: 0;
+    left: 0;
+    position: absolute;
+}
+
+#progres_bar{
+    /* left: 0; */
+    z-index: 1;
+    /* position: absolute; */
+    width: 70%;
+    /*    margin-bottom:20px;*/
+    bottom:-5px;
+}
+
+#matchups .main-header {
+    border-top:solid 4px black;
+    border-bottom: solid 4px black;
+    height: 8em;
+
+}
+

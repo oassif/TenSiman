@@ -46,45 +46,48 @@ function resizeWidthIframe() {
 $(document).ready(function()
 {
     try {
-    if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
-        //alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-        if (typeof CDV == 'undefined')
-            //alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-            if (typeof FB == 'undefined')
-                //alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+        if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
+            //alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+            if (typeof CDV == 'undefined')
+                //alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+                if (typeof FB == 'undefined')
+                    //alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
-                FB.Event.subscribe('auth.login', function(response) {
-                    //alert('auth.login event');
-                });
+                    FB.Event.subscribe('auth.login', function(response) {
+                        //alert('auth.login event');
+                    });
     }
     catch (err) {
-        
+
     }
-    try{
-    FB.Event.subscribe('auth.logout', function(response) {
-        //alert('auth.logout event');
-    });
+
+//    FB.init({appId: "609521172430311", nativeInterface: CDV.FB, useCachedDialogs: false});
+//    document.getElementById('data').innerHTML = "";
+    try {
+        FB.Event.subscribe('auth.logout', function(response) {
+            //alert('auth.logout event');
+        });
     }
     catch (err) {
-        
-    }    
+
+    }
 
     try {
-    FB.Event.subscribe('auth.sessionChange', function(response) {
-        //alert('auth.sessionChange event');
-    });
+        FB.Event.subscribe('auth.sessionChange', function(response) {
+            //alert('auth.sessionChange event');
+        });
     }
     catch (err) {
-        
+
     }
-    
+
     try {
-    FB.Event.subscribe('auth.statusChange', function(response) {
-        //alert('auth.statusChange event');
-    });
+        FB.Event.subscribe('auth.statusChange', function(response) {
+            //alert('auth.statusChange event');
+        });
     }
     catch (err) {
-        
+
     }
 
 
@@ -237,7 +240,6 @@ $("#matchups_tableNew").html("");
                 //"<br />" + matchesData[index]["rivalName"] +
                 "</td></tr>");
     }
-
 }
 
 function timer() {
@@ -286,7 +288,7 @@ function startGame()
 {
     // Setting video element to "" so the video won't jump when clicking "start game" while demo is running
     document.getElementById("myVideo").setAttribute("src", "");
-    
+
     currVideoId = 0;
     isDemo = true;
     document.getElementById("play").style.display = "block";
@@ -427,9 +429,9 @@ function generateOrder(numberOfVideos) {
 
 // on click of the answers
 /* Last updated 02/04/2014
-*  Changed to integrate with updateUserAnswer after each section
-*
-*/ 
+ *  Changed to integrate with updateUserAnswer after each section
+ *
+ */
 function onClick_checkAnswer(object) {
 
 // TODO: disable all buttons and enabling them only when creating the new buttons for the next answer
@@ -455,17 +457,17 @@ function onClick_checkAnswer(object) {
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateUserAnswer.php',
         method: 'POST',
-        data: { 
+        data: {
             section: gameDetails[order[currVideoId]],
             player: player1or2
         },
-        success: function (data) {
+        success: function(data) {
             var jason = JSON.parse(data);
-            if (jason.success == 1) { 
+            if (jason.success == 1) {
                 console.trace("seuccess!" + gameDetails[order[currVideoId]] + " " + player1or2);
             }
         },
-        error: function () {
+        error: function() {
             console.trace("error");
         }
     });
@@ -504,8 +506,8 @@ function continueToNextQuestion(object) {
 }
 
 /***
-* Ending the user's turn, after he played is turn in the game.
-
+ * Ending the user's turn, after he played is turn in the game.
+ 
  * @returns {undefined} */
 function endGame() {
     console.trace("Game Ended");
@@ -578,7 +580,7 @@ function refreshFriendsZone(toInvite) {
 
     FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
         if (response.error) {
-            //alert(JSON.stringify(response.error));
+            // Getting the user status and current matchups
         } else {
             var data = document.getElementById('data');
             fdata = response.data;
@@ -589,33 +591,34 @@ function refreshFriendsZone(toInvite) {
                 var friend = friends[k];
                 friendIDs[k] = friend.id;
             }
-
-            // Getting the user status and current matchups
-             friendIDs = [659746939, 848234613 ,1157420811, 644771584, 12323145];
-            $.ajax({
-                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-                method: 'POST',
-                data: {
-                    userId: currentPlayerId,
-                    facebookFriends: friendIDs
-                },
-                success: function(data) {
-                    //alert("connected!")
-                    var jason = JSON.parse(data);
-                    if (jason.success === 1) {
-                        //alert("ok!");
-                        buildFriendsTable(jason.matches, false);
-                    }
-                },
-                error: function() {
-                    //alert("error in login");
-                }
-            });
-
         }
-        document.getElementById("friends_table").innerHTML = "";
 
+        // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+        $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+            method: 'POST',
+            data: {
+                userId: currentPlayerId,
+                facebookFriends: friendIDs
+            },
+            success: function(data) {
+                //alert("connected!")
+                var jason = JSON.parse(data);
+                if (jason.success === 1) {
+                    //alert("ok!");
+                    if (toInvite) {
+                        buildFriendsTable(jason.toInvite, toInvite);
+                    } else {
+                        buildFriendsTable(jason.matches, toInvite);
+                    }
+                }
+            },
+            error: function() {
+                //alert("error in login");
+            }
+        });
     });
+    document.getElementById("friends_table").innerHTML = "";
 }
 
 
@@ -668,17 +671,31 @@ function buildFriendsTable(matchesData, toInvite) {
         // Decide button
         if (toInvite) {
             text = "הזמן";
-
+            buttonProperty = "onClick=\"publishStoryFriend(" +  matchesData[index] +")\"";
         } else {
             text = "שחק";
             buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
-
         }
 
-        $("#friends_table").append("<tr align=\"center\">" +
-                "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
-                "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+        if (toInvite) {
+
+            var name = "stav";
+            var userId="'\\" + matchesData[index] + "'";
+            FB.api(userId, function(response) {
+                name = response.name;
+            });
+
+            $("#friends_table").append("<tr align=\"center\">" +
+                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                    "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
+                    "<br />" + name + "</td></tr>");
+
+        } else {
+            $("#friends_table").append("<tr align=\"center\">" +
+                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                    "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
+                    "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+        }
     }
 }
 
@@ -786,7 +803,7 @@ function createGameDetails() {
         //alert("test3");
 //        // video source, right answer, user's answer, time, points
 //        gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
-        
+
         // sectiodId, right answer, answered right? , user's Answer, score
         gameDetails[index] = [videoArray[index]["sectionId"], answerArray[index][0], false, "", 0];
     }
@@ -867,38 +884,38 @@ function signUp(email, firstName, LastName, facebookId, imgUrl) {
 function getLoginStatus() {
     console.trace("Attempting to connect via facebook login");
     try {
-    FB.getLoginStatus(function(response) {
-        if (response.status == 'connected') {
-            fbId = response.authResponse.userId;
-            $.ajax({
-                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
-                method: 'POST',
-                data: {
-                    facebookId: fbId,
-                },
-                success: function(data) {
-                    //alert("connected!")
-                    var jason = JSON.parse(data);
-                    if (jason.success === 1) {
-                        currentPlayerId = jason.userId;
-                        window.location = "#matchups";
-                        refreshMatchups();
-                        alert(currentPlayerId);
+        FB.getLoginStatus(function(response) {
+            if (response.status == 'connected') {
+                fbId = response.authResponse.userId;
+                $.ajax({
+                    url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
+                    method: 'POST',
+                    data: {
+                        facebookId: fbId,
+                    },
+                    success: function(data) {
+                        //alert("connected!")
+                        var jason = JSON.parse(data);
+                        if (jason.success === 1) {
+                            currentPlayerId = jason.userId;
+                            window.location = "#matchups";
+                            refreshMatchups();
+                            alert(currentPlayerId);
+                        }
+                    },
+                    error: function() {
+                        alert("error in login");
                     }
-                },
-                error: function() {
-                    alert("error in login");
-                }
-            });
-        } else {
-            login();
+                });
+            } else {
+                login();
+            }
         }
-    }
-    , {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
+        , {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
 
-    );
+        );
     }
-    catch (err){
+    catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
         loginFromWeb();
     }
@@ -977,7 +994,7 @@ function login() {
                             }
                         },
                         error: function() {
-                            //alert("error in login");
+                            // alert("error in login");
                         }
                     });
                 } else {
@@ -990,7 +1007,6 @@ function login() {
 
 
 function facebookWallPost() {
-    console.log('Debug 1');
     var params = {
         method: 'feed',
         name: 'Facebook Dialogs',
@@ -1001,14 +1017,11 @@ function facebookWallPost() {
     };
     console.log(params);
     FB.ui(params, function(obj) {
-        console.log(obj);
+        //   console.log(obj);
     });
 }
 
-function publishStoryFriend() {
-    randNum = Math.floor(Math.random() * friendIDs.length);
-
-    var friendID = friendIDs[randNum];
+function publishStoryFriend(friendID) {
     if (friendID == undefined) {
         //alert('please click the me button to get a list of friends first');
     } else {
@@ -1036,7 +1049,7 @@ document.addEventListener('deviceready', function() {
         document.getElementById('data').innerHTML = "";
         getLoginStatus();
     } catch (e) {
-        //alert(e);
+        // alert(e);
     }
 }, false);
 
