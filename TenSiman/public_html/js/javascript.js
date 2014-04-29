@@ -125,6 +125,7 @@ function refreshMatchups() {
 
     // Getting the user status and current matchups
     ref();
+    //setTimeout(function(){ref()}, 2000);
     setInterval(ref, 10000);
     document.getElementById("matchups_table").innerHTML = "";
     document.getElementById("friends_bar").style.display = "none";
@@ -172,8 +173,11 @@ function buildPlayerBar(userData) {
 
 function buildMatchesTable(matchesData) {
     // Clean the table
+    
     var table = document.getElementById("matchups_tableNew");
     table.innerHTML = "";
+
+$("#matchups_tableNew").html("");
 
     var numOfMatchups = matchesData.length;
 
@@ -216,12 +220,22 @@ function buildMatchesTable(matchesData) {
         }
 
         $("#matchups_tableNew").append("<tr align=\"center\">" +
-                "<td><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
-                "<td>אני<br/>" + matchesData[index]["userScore"] + "</td>" +
-                "<td>:</td><td>" +
-                "<td>" + matchesData[index]["rivalName"] + "<br />" + matchesData[index]["rivalScore"] + "</td>" +
-                "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
-                "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+                "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
+                "<td class=\"matchScore\">" + matchesData[index]["userScore"] + "</td>" +
+                "<td class=\"summary\">:</td><td>" +
+                "<td class=\"matchScore\">" + matchesData[index]["rivalScore"] + "</td>" +
+                /*"<td class=\"matchInner\">" +
+                        "<table class=\"matchInnerTable\">" +
+                        
+                        "</table>" +
+                "</td>" +*/
+                "<td class=\"matchRival\">" +
+                "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
+                    "<div class=\"rivalRank\">1</div>" +
+                    "<div class=\"rivalName\">"+ matchesData[index]["rivalName"] + "</div>" +
+                "</div>" +
+                //"<br />" + matchesData[index]["rivalName"] +
+                "</td></tr>");
     }
 
 }
@@ -1027,7 +1041,7 @@ document.addEventListener('deviceready', function() {
 }, false);
 
 function loginFromWeb() {
-    currentPlayerId = 86;
+    currentPlayerId = 1;
 
 
     window.location = "#matchups";
