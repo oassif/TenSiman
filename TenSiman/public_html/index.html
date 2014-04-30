@@ -17,6 +17,7 @@ works with FaceBook
         <script type="text/javascript" src="cdv-plugin-fb-connect.js"></script>
         <!-- facebook js sdk -->
         <script type="text/javascript" src="facebook-js-sdk.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css\TenSiman.css">
 
     </head>
@@ -147,16 +148,33 @@ works with FaceBook
             </div>
 
             <br/><br/>
-            <footer data-role="footer"> 
+            <div class="MainFotter">
+                <div class="ExpertsZone">
+                    <table>
+                        <tr><td><img class="ExpertsZone" src="css/ExpertZone.png" /></td><td>איזור<br>מומחה</td></tr>
+                    </table>
+                </div>
+                <div class="MainFooterCenterBackground"></div>
+                <div class="MainFooterCenterDiv"></div>
+                <div class="MainFooterCenter">
+                    <button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>
+                </div>
+                <div class="HallOfFameZone">
+                    <table>
+                        <tr><td>היכל<br>התהילה</td><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td></tr>
+                    </table>
+                </div>
+            </div>
+            <!--<footer data-role="footer">
                 <div data-role="navbar">
                     <ul>
                         <li><a href=""><font size="4">איזור מומחה</font></a></li>
                         <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
-                        <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
+                        <!--<li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
                         <li><a href="#"><font size="4">היכל התהילה</font></a></li>
                     </ul>
                 </div>
-            </footer> 
+            </footer> -->
         </div>
 
         <!-- friends Page -->

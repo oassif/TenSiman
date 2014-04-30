@@ -172,7 +172,8 @@ td.matchScore
 {
     width: 100px;
     //border: solid black thick;
-    font-family: "Alef Hebrew";
+    //font-family: "Alef Hebrew";
+    font-family: 'Asap', sans-serif;
     font-size: 3em;
 }
 
@@ -216,6 +217,111 @@ div.rivalPic div.rivalName {
                     </div>
                 </div>-->*/
 /****** MATCHUPS TABLE : END ***********/
+
+/****** MAIN FOOTER : START ************/
+
+div.MainFotter {
+    width: 100%;
+    height: 112px;
+    border-top: solid black thick;
+    position: fixed;
+    bottom: 0px;
+    background-color: #f2f2f2;
+}
+
+div.MainFotter div.ExpertsZone {
+    display: inline-block;
+    left: 2px;
+    width: 33%;
+    height: 112px;
+    position:  absolute;
+    top: 10px;
+    //left: 3em;;
+    text-align: center;
+    font-family: "Alef Hebrew";
+    vertical-align: middle;
+    font-size: x-large;
+    
+    //border-top: solid black thick;
+}
+
+div.MainFotter div.MainFooterCenterBackground {
+    display: inline-block;
+    width: 300px;
+    height: 170px;
+    position: absolute;
+    left: 0;  right:0;  margin-left:auto;  margin-right:auto;
+    border: solid black thick;
+    top: -84px; /*bottom: 0;
+    margin-top: auto; margin-bottom: auto;*/
+    margin: auto;
+    z-index: 0;
+    border-radius: 300px 300px 0 0;}
+
+div.MainFotter div.MainFooterCenterDiv {
+    width: 33%;
+    height: 112px;
+    position:  absolute;
+    left:  0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f2f2f2;
+    z-index: 1;
+}
+
+div.MainFotter div.MainFooterCenter {
+    display: inline-block;
+    width: 300px;
+    height: 165px;
+    position: absolute;
+    left: 0;  right:0;  margin-left:auto;  margin-right:auto;
+    top: -79px;
+    /* margin-top: auto; */
+    /* margin-bottom: auto; */
+    /* border-top:  black solid thick; */
+    border: 4px;
+    border-bottom: 0px;
+    line-height: 73px;
+    background-color: #f2f2f2;
+    z-index: 2;
+    /* -webkit-border-radius: 100%; */ 
+    /* border-radius: 760px 760px 0px 0px; */
+    border-radius: 350px 350px 0 0;
+}
+
+div.MainFooterCenter button.NewGameZone {
+    border: 0;
+    height: 125px;
+    width: 220px;
+    left: 0; 
+    /* position:  absolute; */
+    top: 22px;
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    background: url('CreateGame.png') no-repeat center;
+    background-size: contain;
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+    /* line-height: 1; */
+}
+
+div.MainFotter div.HallOfFameZone {
+    display: inline-block;
+    position:  absolute;
+    width: 33%;
+    height: 112px;
+    right: 2px;
+    top: 10px;
+    //border-top: solid black thick;
+    text-align: center;
+    font-family: "Alef Hebrew";
+    vertical-align: middle;
+    font-size: x-large;
+}
+
+/****** MAIN FOOTER : END   ************/
 
 img.profile {
     border: solid black thick;

@@ -125,7 +125,7 @@ function refreshMatchups() {
     // Getting the user status and current matchups
 //    ref();
     setTimeout(function() {
-        ref()
+         ref();
     }, 2000);
     setInterval(ref, 10000);
     document.getElementById("matchups_table").innerHTML = "";
