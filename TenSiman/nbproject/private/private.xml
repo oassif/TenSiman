@@ -1,27 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>public_html/php/sendNewMatchup.php</url>
-            <bookmark id="1">
-                <name/>
-                <line>0</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/smoskovich/Documents/GitHub/TENSIMAN/TenSiman/public_html/index.html</file>
             <file>file:/C:/Users/smoskovich/Documents/GitHub/TENSIMAN/TenSiman/public_html/js/javascript.js</file>
-=======
-            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/css/TenSiman.css</file>
-            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/index.html</file>
-            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/js/javascript.js</file>
-            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/php/updateUserAnswer.php</file>
-            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/php/endTurn.php</file>
->>>>>>> 156804673ef37e29f72821c60f9e6070e60e6c4c
         </group>
     </open-files>
 </project-private>

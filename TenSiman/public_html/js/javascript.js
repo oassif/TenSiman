@@ -129,7 +129,9 @@ function refreshMatchups() {
 
     // Getting the user status and current matchups
 //    ref();
-    setTimeout(function(){ref()}, 2000);
+    setTimeout(function() {
+        ref()
+    }, 2000);
     setInterval(ref, 10000);
     document.getElementById("matchups_table").innerHTML = "";
     document.getElementById("friends_bar").style.display = "none";
@@ -177,11 +179,11 @@ function buildPlayerBar(userData) {
 
 function buildMatchesTable(matchesData) {
     // Clean the table
-    
+
     var table = document.getElementById("matchups_tableNew");
     table.innerHTML = "";
 
-$("#matchups_tableNew").html("");
+    $("#matchups_tableNew").html("");
 
     var numOfMatchups = matchesData.length;
 
@@ -229,14 +231,14 @@ $("#matchups_tableNew").html("");
                 "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["matchupId"] + ")\" class=\"summary\">i</td><td>" +
                 "<td class=\"matchScore\">" + matchesData[index]["rivalScore"] + "</td>" +
                 /*"<td class=\"matchInner\">" +
-                        "<table class=\"matchInnerTable\">" +
-                        
-                        "</table>" +
-                "</td>" +*/
+                 "<table class=\"matchInnerTable\">" +
+                 
+                 "</table>" +
+                 "</td>" +*/
                 "<td class=\"matchRival\">" +
                 "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
-                    "<div class=\"rivalRank\">1</div>" +
-                    "<div class=\"rivalName\">"+ matchesData[index]["rivalFirstName"] + "</div>" +
+                "<div class=\"rivalRank\">1</div>" +
+                "<div class=\"rivalName\">" + matchesData[index]["rivalFirstName"] + "</div>" +
                 "</div>" +
                 //"<br />" + matchesData[index]["rivalName"] +
                 "</td></tr>");
@@ -290,6 +292,7 @@ function startGame()
     // Setting video element to "" so the video won't jump when clicking "start game" while demo is running
     document.getElementById("myVideo").setAttribute("src", "");
 
+    score = 0;
     currVideoId = 0;
     isDemo = true;
     document.getElementById("play").style.display = "block";
@@ -488,8 +491,10 @@ function continueToNextQuestion(object) {
     document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
     document.getElementById(correctAnswerId).style.background = "gray";//"green";
     document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
-    document.getElementById(correctAnswerId).styele.background = "gray";//"green";
+    document.getElementById(correctAnswerId).style.background = "gray";//"green";
     document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
+    
+    console.log(score);
 
     // continte to the next question.
     ++currVideoId;
@@ -525,7 +530,8 @@ function endGame() {
             gameId: currentGameId,
             player: player1or2, //$("#name").val(),
             turn: turn,
-            score: score
+            score: score,
+            playerId: currentPlayerId
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -585,46 +591,46 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-/**    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-        if (response.error) {
-            // Getting the user status and current matchups
-        } else {
-            var data = document.getElementById('data');
-            fdata = response.data;
-            friends = response.data;
-            var friendIDs = [];
+    /**    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+     if (response.error) {
+     // Getting the user status and current matchups
+     } else {
+     var data = document.getElementById('data');
+     fdata = response.data;
+     friends = response.data;
+     var friendIDs = [];
+     
+     for (var k = 0; k < friends.length; k++) {
+     var friend = friends[k];
+     friendIDs[k] = friend.id;
+     }
+     }*/
 
-            for (var k = 0; k < friends.length; k++) {
-                var friend = friends[k];
-                friendIDs[k] = friend.id;
-            }
-        }*/
-
-       friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
-        $.ajax({
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-            method: 'POST',
-            data: {
-                userId: currentPlayerId,
-                facebookFriends: friendIDs
-            },
-            success: function(data) {
-                //alert("connected!")
-                var jason = JSON.parse(data);
-                if (jason.success === 1) {
-                    //alert("ok!");
-                    if (toInvite) {
-                        buildFriendsTable(jason.toInvite, toInvite);
-                    } else {
-                        buildFriendsTable(jason.matches, toInvite);
-                    }
+    friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+        method: 'POST',
+        data: {
+            userId: currentPlayerId,
+            facebookFriends: friendIDs
+        },
+        success: function(data) {
+            //alert("connected!")
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                //alert("ok!");
+                if (toInvite) {
+                    buildFriendsTable(jason.toInvite, toInvite);
+                } else {
+                    buildFriendsTable(jason.matches, toInvite);
                 }
-            },
-            error: function() {
-                //alert("error in login");
             }
-        });
- //   });
+        },
+        error: function() {
+            //alert("error in login");
+        }
+    });
+    //   });
     document.getElementById("friends_table").innerHTML = "";
 }
 
@@ -678,7 +684,7 @@ function buildFriendsTable(matchesData, toInvite) {
         // Decide button
         if (toInvite) {
             text = "הזמן";
-            buttonProperty = "onClick=\"publishStoryFriend(" +  matchesData[index] +")\"";
+            buttonProperty = "onClick=\"publishStoryFriend(" + matchesData[index] + ")\"";
         } else {
             text = "שחק";
             buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
@@ -687,7 +693,7 @@ function buildFriendsTable(matchesData, toInvite) {
         if (toInvite) {
 
             var name = "stav";
-            var userId="'\\" + matchesData[index] + "'";
+            var userId = "'\\" + matchesData[index] + "'";
             FB.api(userId, function(response) {
                 name = response.name;
             });

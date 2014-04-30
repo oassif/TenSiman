@@ -4,7 +4,6 @@ works with FaceBook
 <!DOCTYPE html>
 <html> 
     <head>
-
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
@@ -20,223 +19,219 @@ works with FaceBook
         <script type="text/javascript" src="facebook-js-sdk.js"></script>
         <link rel="stylesheet" type="text/css" href="css\TenSiman.css">
 
+    </head>
+    <body>
 
-
-</head>
-<body>
-
-    <div id="fb-root"></div>
-    <!-- Main Page -->
-    <div id="main" data-role="page"  >
-        <center>
+        <div id="fb-root"></div>
+        <!-- Main Page -->
+        <div id="main" data-role="page"  >
+            <center>
 
 
 
-            <div data-role="content" id="login_pagecontent">
+                <div data-role="content" id="login_pagecontent">
 
-                <div class="buttons">
-                    <button id="imgFBLogin" onClick="loginFromWeb();">התחבר</button>
-                    <button onclick="getLoginStatus()">התחבר</button>
-                    <button onclick="logout()">Logout</button>
+                    <div class="buttons">
+                        <button id="imgFBLogin" onClick="loginFromWeb();">התחבר</button>
+                        <button onclick="getLoginStatus()">התחבר</button>
+                        <button onclick="logout()">Logout</button>
+                    </div>
+
+
+                </div>
+            </center>
+        </div>
+
+
+        <!-- Main Page -->
+        <div id="matchups" data-role="page">
+            <!--            <header data-role="header">
+                            <h1>תן סימן</h1>
+                            <a href="#settings" data-icon="gear" data-role="button" class="ui-btn-right" data-theme="b">הגדרות</a>
+                        </header>-->
+
+            <div id="header">
+                <div class="main-header">
+                    <div id='logo'>
+
+
+
+                        <div id="header-top">
+                            <div class="fr header-right" >
+                                <a href="#" class="ui-btn" data-rel="back"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                            </div>
+                            <div class="header-center" style="display:inline-block;color: white;font-size:2em;">
+                                ten siman
+                            </div>
+                            <div class="fl header-left" style="display:inline-block;float: left;">
+                                <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
+                            </div>
+                        </div>
+
+
+                        <!--
+                        
+                                                <div style="border: none;float: left;width: 5em;height: 5em;margin-left: 4.5em;">
+                                                </div>-->
+
+                    </div>
+
+                </div>
+                <div class="top-container" style="border-bottom: solid 0.3em black;
+                     width: 90%;
+                     border-radius: 0 0 3em 3em;
+                     text-shadow: none !important;
+                     box-shadow: none !important;
+                     background: #F3F3F3;
+                     border-left: solid 0.3em black;
+                     margin-top: -2.1em;
+                     border-right: solid 0.3em black;
+                     margin-left: 5%;
+                     ">
+
+                    <div class="white-container" style="background: white;border: solid 2px black;margin: 1.9em;border-radius: 3em;height: 3.2em; display: block">
+
+                        <div class="red-container" style=" border: solid 2px black;margin: 30px;
+                             border-top-left-radius: 4em;border-bottom-left-radius: 4em;height: 50px;width: 50%;margin-top: -0.1em;float: left;margin-left: -0.2em;background-color: #ff4c65;      background-image: repeating-linear-gradient(136deg, transparent, transparent 31px, rgba(255,255,255,0.5) 29px, rgba(255,255,255,.5) 52px);">
+                            <span id="score" style="
+                                  margin-left: 50%;
+                                  float: left;
+                                  font-size: 3em;
+                                  ">50</span>
+                        </div>
+
+                        <div id="level" style="
+                             float: right;
+                             margin-top: -0.1em;
+                             font-size: 2em;
+                             width: 35%;
+                             text-align: right;
+                             ">   לשלב   - 43  </div>
+
+
+                        <div id="star" style="
+
+                             float: right;
+                             margin-right: -10%;
+                             background: url('images/Profressbarstar.png') no-repeat;
+                             width: 15%;
+                             height: 4em;
+                             display:inline-block;
+                             position: relative;
+
+                             "> 
+                            <span class="nextLevel" style="
+                                  font-size: 2.5em;
+                                  margin-left: 0.4em;
+                                  line-height: 1.4em;
+                                  display:inline-block;
+                                  position: relative;
+                                  "> 4 </span>
+                        </div>
+                    </div>
                 </div>
 
-
             </div>
-        </center>
-    </div>
 
+            <div data-role="content" id="matchups_pagecontent">
+                <div id="playerBar" dir="rtl">
 
-    <!-- Main Page -->
-    <div id="matchups" data-role="page">
-        <!--            <header data-role="header">
-                        <h1>תן סימן</h1>
-                        <a href="#settings" data-icon="gear" data-role="button" class="ui-btn-right" data-theme="b">הגדרות</a>
-                    </header>-->
-
-        <div id="header">
-            <div class="main-header">
-                <div id='logo'>
-                    <span class="tensiman" style="font-size: 4em;
-                          font-family: initial;
-                          color: white;margin-left: 8em;">תן סימן</span>
-
-                    <div style="border: none;
-                         float: right;
-                         width: 50px;
-                         height: 50px;
-                         margin-right: 4.5em;
-                         margin-left: 8em;">
-                        <a href="#" class="ui-btn" data-rel="back"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
-                    </div>
-
-                    <div style="border: none;
-                         float: left;
-                         width: 50px;
-                         height: 50px;
-                         margin-left: 4.5em;">
-
-                        <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
-                    </div>
                 </div>
-
-            </div>
-            <div class="top-container" style="border-bottom: solid 0.3em black;
-                 width: 90%;
-                 border-radius: 0 0 3em 3em;
-                 text-shadow: none !important;
-                 box-shadow: none !important;
-                 background: #F3F3F3;
-                 border-left: solid 0.3em black;
-                 margin-top: -2.1em;
-                 border-right: solid 0.3em black;
-                 margin-left: 4em;
-                 ">
-
-                <div class="white-container" style="background: white;border: solid 2px black;margin: 30px;border-radius: 3em;height: 3.2em;">
-
-                    <div class="red-container" style="/* background: red; */border: solid 2px black;margin: 30px;border-top-left-radius: 4em;border-bottom-left-radius: 4em;height: 50px;width: 28em;margin-top: -0.1em;float: left;margin-left: -0.2em;background-color: #ff4c65;      background-image: repeating-linear-gradient(136deg, transparent, transparent 31px, rgba(255,255,255,0.5) 29px, rgba(255,255,255,.5) 52px);">
-                        <span id="score" style="
-                              margin-left: 4em;
-                              float: left;
-                              font-size: 3em;
-                              ">50</span>
-                    </div>
-
-                    <span id="level" style="
-                          float: right;
-                          margin-right: 1em;
-                          font-size: 3em;
-                          ">   לשלב   - 43  </span>
-
-                    <div id="star" style="
-
-                         float: right;
-                         margin-right: 11em;
-                         background: url('images/Profressbarstar.png') no-repeat;
-                         width: 4em;
-                         height: 4em;
-
-                         "> 
-                        <span class="nextLevel" style="
-                              font-size: 2.5em;
-                              margin-left: 0.4em;
-                              line-height: 1.4em;
-                              "> 4 </span>
-                    </div>
-<!--
-<<<<<<< HEAD
-                </div>        
                 <br/><br/>
-                <div id="matchups_table_content" class="matches" dir="rtl" align="center">
-                    <table width="80%" id="matchups_tableNew"></table>
+                <div id="matchups_table_content" dir="rtl" align="center">
+                    <table width="50%" id="matchups_tableNew"></table>
                     <br />----<br />
-=======
->>>>>>> 33ea91f55a62faff6bea2726a7fdab734c6331d7
--->
+
                 </div>
+                <br/><br/>
             </div>
+
+            <br/><br/>
+            <footer data-role="footer"> 
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href=""><font size="4">איזור מומחה</font></a></li>
+                        <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
+                        <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
+                        <li><a href="#"><font size="4">היכל התהילה</font></a></li>
+                    </ul>
+                </div>
+            </footer> 
+        </div>
+
+        <!-- friends Page -->
+        <div id="friends" data-role="page">
+
+            <div data-role="content" id="friends_zone">
+                <div id="friends_zone_content" dir="rtl" align="center">
+                    <table width="80%" id="friends_bar">
+                        <tr>
+                            <td><a data-role="button" id="playWithFrineds" onclick="refreshFriendsZone(false);">שחק עם חברים</a></td>
+                            <td><a data-role="button" id="inviteFrineds" onclick="refreshFriendsZone(true);">הזמן חברים</a></td>
+
+                        </tr>
+                    </table>
+                    <br /> <br />
+                    <table width="80%" id="friends_table"></table>
+
+                </div>
+                <br/><br/>
+            </div>
+            <footer data-role="footer"> 
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href=""><font size="4">איזור מומחה</font></a></li>
+                        <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
+                        <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
+                        <li><a href="#"><font size="4">היכל התהילה</font></a></li>
+                    </ul>
+                </div>
+            </footer> 
 
         </div>
 
-        <div data-role="content" id="matchups_pagecontent">
-            <div id="playerBar" dir="rtl">
-
-            </div>
-            <br/><br/>
-            <div id="matchups_table_content" dir="rtl" align="center">
-                <table width="80%" id="matchups_tableNew"></table>
-                <br />----<br />
-
-            </div>
-            <br/><br/>
-        </div>
-
-        <br/><br/>
-        <footer data-role="footer"> 
-            <div data-role="navbar">
-                <ul>
-                    <li><a href=""><font size="4">איזור מומחה</font></a></li>
-                    <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
-                    <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
-                    <li><a href="#"><font size="4">היכל התהילה</font></a></li>
-                </ul>
-            </div>
-        </footer> 
-    </div>
-
-    <!-- friends Page -->
-    <div id="friends" data-role="page">
-
-        <div data-role="content" id="friends_zone">
-            <div id="friends_zone_content" dir="rtl" align="center">
-                <table width="80%" id="friends_bar">
-                    <tr>
-                        <td><a data-role="button" id="playWithFrineds" onclick="refreshFriendsZone(false);">שחק עם חברים</a></td>
-                        <td><a data-role="button" id="inviteFrineds" onclick="refreshFriendsZone(true);">הזמן חברים</a></td>
-
-                    </tr>
-                </table>
-                <br /> <br />
-                <table width="80%" id="friends_table"></table>
-
-            </div>
-            <br/><br/>
-        </div>
-        <footer data-role="footer"> 
-            <div data-role="navbar">
-                <ul>
-                    <li><a href=""><font size="4">איזור מומחה</font></a></li>
-                    <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
-                    <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
-                    <li><a href="#"><font size="4">היכל התהילה</font></a></li>
-                </ul>
-            </div>
-        </footer> 
-
-    </div>
-
-    <!-- Game Page -->
-    <div id="game" data-role="page">
-        <center>
-            <header data-role="header">
-                <span id="title">
-                    נסו לזכור את המילים הבאות
-                </span>
-                <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>
-                <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>-->
-            </header>
+        <!-- Game Page -->
+        <div id="game" data-role="page">
+            <center>
+                <header data-role="header">
+                    <span id="title">
+                        נסו לזכור את המילים הבאות
+                    </span>
+                    <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>
+                    <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>-->
+                </header>
 
 
-            <img id="myVideo" src=""  style="display: block;">
-            <div align="center" id="translation">
-                <!--<input type="button" id="repeat" onclick="showVideos();" style="display: none">-->
-                <!--<button-->
-                <span id="translatedWord"></span>
-                <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
-                <!-- display should be none, it's block only for debug-->
-                <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
-            </div>
-            <br/><br/>
-            <div align="center" id="answers">
-                <table width="100%">
-                    <tr>
-                        <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
-                        <td width="10%"></td>
-                        <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
-                    </tr>
-                    <tr>
-                        <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
-                        <td width="10%"></td>
-                        <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
-                    </tr>
-                </table>
-            </div>
+                <img id="myVideo" src=""  style="display: block;">
+                <div align="center" id="translation">
+                    <!--<input type="button" id="repeat" onclick="showVideos();" style="display: none">-->
+                    <!--<button-->
+                    <span id="translatedWord"></span>
+                    <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
+                    <!-- display should be none, it's block only for debug-->
+                    <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
+                </div>
+                <br/><br/>
+                <div align="center" id="answers">
+                    <table width="100%">
+                        <tr>
+                            <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
+                            <td width="10%"></td>
+                            <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
+                        </tr>
+                        <tr>
+                            <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
+                            <td width="10%"></td>
+                            <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
+                        </tr>
+                    </table>
+                </div>
 
-            <br>
-            <center><span id="timer"></span></center>
-            <br>
-            <!-- </div>
-                 </td></tr></table></center>-->
-            </div>
-    </body>
-</html> 
+                <br>
+                <center><span id="timer"></span></center>
+                <br>
+                <!-- </div>
+                     </td></tr></table></center>-->
+                </div>
+                </body>
+                </html> 

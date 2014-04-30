@@ -46,14 +46,14 @@ td.matchButton button:active {
     background-image: repeating-linear-gradient(70deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 60px);
     */
     //border-radius: 17px;
-    
+
     //height: 130px;
     //background-image: url('YourTurn.png');
     background-position-y: 6px;
     line-height: 2px;
-    
+
     //background: url(YourTurn.png) no-repeat top;
-    
+
     //font-size: 18em !important;
     //height: 20px !important;
 }
@@ -68,9 +68,9 @@ td.matchButton button.waitForRival:active {
     background-position-y: 0px !important;
     //height: 130px;
     //background-image: url('YourTurn.png');
-    
+
     //background: url(YourTurn.png) no-repeat top;
-    
+
     //font-size: 18em !important;
     //height: 20px !important;
 }
@@ -90,10 +90,10 @@ button.newGame {
 }
 
 button.waitForRival {
-   /* border-radius: 30px;
-    background-color: lightskybluehtblow;
-    height: 40px;
-    width: 80px;*/
+    /* border-radius: 30px;
+     background-color: lightskybluehtblow;
+     height: 40px;
+     width: 80px;*/
     border: 0px;
     height: 100px;
     width: 100px;
@@ -109,7 +109,7 @@ button.yourTurn {
     background-color: #3abe8b;
     background-image: repeating-linear-gradient(70deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 60px);
     */
-    
+
     //border-radius: 17px;
     border: 0px;
     height: 100px;
@@ -258,6 +258,36 @@ img.profile {
     border-top:solid 4px black;
     border-bottom: solid 4px black;
     height: 8em;
+    width: 100%;
+
 
 }
 
+.fl {
+
+    float: left !important;
+}
+.fr {
+
+    float:right !important;
+}
+
+#header-top {
+
+    display:block;text-align: center;
+}
+
+#header-top .header-right {
+
+    display:inline-block;
+
+}
+#header-top .header-center {
+    display:inline-block;
+    color: white;font-size:2em;
+
+}
+#header-top .header-left {
+    display: inline-block !important;
+
+}
