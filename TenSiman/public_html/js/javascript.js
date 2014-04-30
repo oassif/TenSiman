@@ -16,7 +16,6 @@ var answerArray = [6];
 var startIndex;
 var gameDetails = new Array();
 var isDemo = true;
-
 var count;
 var counter;
 var score = 0;
@@ -26,7 +25,6 @@ var m_isCanClick; // Used to prevent user from clicking multiple times on the an
 var currentGameId = -1;
 var turn = 0;
 var player1or2 = 0;
-
 function pageY(elem) {
     return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
 }
@@ -93,7 +91,6 @@ $(document).ready(function()
 
 
     getLoginStatus();
-
     //   refreshMatchups();
 //    videoSource[0] = 'movies/new.gif';
 //    videoSource[1] = 'movies/after.gif';
@@ -109,7 +106,6 @@ $(document).ready(function()
      */
     // Generate Random number
     videoCount = NUMBER_SECTIONS;
-
     /*
      for (var index = 0; index < videoCount; ++index) {
      // video source, right answer, user's answer, time, points
@@ -121,7 +117,6 @@ $(document).ready(function()
     //document.getElementById('myVideo').addEventListener('ended', myHandler, false);
 
 });
-
 function refreshMatchups() {
     //login();
     var htmlCode = "";
@@ -135,7 +130,6 @@ function refreshMatchups() {
     setInterval(ref, 10000);
     document.getElementById("matchups_table").innerHTML = "";
     document.getElementById("friends_bar").style.display = "none";
-
 }
 
 function ref() {
@@ -156,7 +150,6 @@ function ref() {
             //alert("error");
         }
     });
-
 }
 
 function buildPlayerBar(userData) {
@@ -178,15 +171,12 @@ function buildPlayerBar(userData) {
 }
 
 function buildMatchesTable(matchesData) {
-    // Clean the table
+// Clean the table
 
     var table = document.getElementById("matchups_tableNew");
     table.innerHTML = "";
-
     $("#matchups_tableNew").html("");
-
     var numOfMatchups = matchesData.length;
-
     var index;
     //table.innerHTML = "";
     for (index = 0; index < numOfMatchups; ++index) {
@@ -195,7 +185,6 @@ function buildMatchesTable(matchesData) {
         var buttonClass = "";
         var textValue = "";
         var buttonProperty = "";
-
         // Todo: see if it's the first player or sceond player and according to it decide.
         // Decide button
         if (matchesData[index]["gameStatus"] === "0") {
@@ -220,7 +209,7 @@ function buildMatchesTable(matchesData) {
             buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameID"] + ")\"";
         }
         else {
-            // default status
+// default status
             text = "תן סימן " + matchesData[index]["gameStatus"];
             buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["rivalId"] + ")\"";
         }
@@ -274,7 +263,6 @@ function createNewLiveGame(matchUpId)
             //alert("error");
         }
     });
-
     // TODO: set the video's array and other values once we'll have them
 
     // TODO: might need to change something here:
@@ -291,7 +279,6 @@ function startGame()
 {
     // Setting video element to "" so the video won't jump when clicking "start game" while demo is running
     document.getElementById("myVideo").setAttribute("src", "");
-
     score = 0;
     currVideoId = 0;
     isDemo = true;
@@ -314,15 +301,11 @@ function videoPlay(videoNum)
         document.getElementById("title").innerHTML = "נסו לזכור את המילים הבאות";
         document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
         document.getElementById("myVideo").style.display = "block";
-
         // Showing the translation
         document.getElementById("translatedWord").style.display = "block";
         document.getElementById("translatedWord").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
-
         // Hiding the options
         document.getElementById("answers").style.display = "none";
-
-
         if (videoNum < 4) {
             videoNum++;
             setTimeout(function() {
@@ -336,7 +319,6 @@ function videoPlay(videoNum)
                 document.getElementById("myVideo").style.display = "none";
                 document.getElementById("repeat").style.display = "block";
             }, 2200);
-
         }
     }
 
@@ -352,13 +334,11 @@ function videoPlay(videoNum)
 }
 
 function show4possibleAnswers(videoNum) {
-    // Not Showing the translation
-    //document.getElementById("translation").innerHTML = "<H1>&nbsp</H1>";
+// Not Showing the translation
+//document.getElementById("translation").innerHTML = "<H1>&nbsp</H1>";
     document.getElementById("translatedWord").innerHTML = "<H1>&nbsp</H1>";
     document.getElementById("translatedWord").style.display = "none";
-
     resetButtons();
-
     // Showing the answers
     // First, generates Random number for the first answer
     var firstAnswerId = Math.floor((Math.random() * 4));
@@ -382,14 +362,14 @@ function show4possibleAnswers(videoNum) {
         correctAnswerId = "answer" + (5 - firstAnswerId);
     }
 
-    // Show answers
+// Show answers
     document.getElementById("answers").style.display = "block";
 }
 
 
 function myHandler() {
 
-    //alert("im called");
+//alert("im called");
     if (isDemo) {
         ++currVideoId;
         if (currVideoId === videoCount) {
@@ -414,7 +394,6 @@ function startPlay() {
     // Hiding buttons
     document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
-
 // call for the first video
     order = generateOrder();
     setTimeout(function() {
@@ -427,7 +406,6 @@ function startPlay() {
 // randomly decide the order of the videos.
 function generateOrder(numberOfVideos) {
     var videosOrder = [1, 0, 2, 4, 3];
-
     // Math.floor((Math.random()*videoCount)+1); 
     return videosOrder;
 }
@@ -441,12 +419,11 @@ function onClick_checkAnswer(object) {
 
 // TODO: disable all buttons and enabling them only when creating the new buttons for the next answer
 //    gameDetails[order[currVideoId]][3] = count;
-    // Saving user's answer
+// Saving user's answer
     if (m_isCanClick)
     {
         m_isCanClick = false;
         gameDetails[order[currVideoId]][3] = object.text.toString();
-
         console.trace(object.text.toString() + " <- user  answer ttttttttt right answer ->" + answerArray[order[currVideoId]][0])
 
         if (object.text.toString() === answerArray[order[currVideoId]][0])//answerArray[currVideoId][0])
@@ -479,7 +456,6 @@ function onClick_checkAnswer(object) {
                 console.trace("error");
             }
         });
-
         score += gameDetails[order[currVideoId]][4];
         continueToNextQuestion(object);
     }
@@ -488,23 +464,22 @@ function onClick_checkAnswer(object) {
 
 
 function continueToNextQuestion(object) {
-    document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
-    document.getElementById(correctAnswerId).style.background = "gray";//"green";
-    document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
-    document.getElementById(correctAnswerId).style.background = "gray";//"green";
-    document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
-    
-    console.log(score);
+    document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
+    document.getElementById(correctAnswerId).style.background = "gray"; //"green";
+    document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
+    document.getElementById(correctAnswerId).style.background = "gray"; //"green";
+    document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
 
+    console.log(score);
     // continte to the next question.
     ++currVideoId;
     if (currVideoId === videoCount) {
-        // If all the questions were showed, end game
+// If all the questions were showed, end game
         clearInterval(counter);
         endGame();
     }
     else {
-        // Awaits half a second before showing the next question
+// Awaits half a second before showing the next question
         setTimeout(function() {
             if (object !== null) {
                 document.getElementById(object.id).style.background = "";
@@ -543,7 +518,6 @@ function endGame() {
         }
     });
     $("#text").val("");
-
     for (var index = 0; index < videoCount; ++index) {
         console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
     }
@@ -554,11 +528,9 @@ function endGame() {
     document.getElementById("answer2").style.display = "none";
     document.getElementById("answer3").style.display = "none";
     document.getElementById("answer4").style.display = "none";
-
     document.getElementById("translatedWord").style.display = "block";
     score *= 10;
     document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
-
     window.location = "#matchups";
     refreshMatchups();
 }
@@ -572,14 +544,10 @@ function resetButtons() {
     document.getElementById("answer2").style.display = "block";
     document.getElementById("answer3").style.display = "block";
     document.getElementById("answer4").style.display = "block";
-
     document.getElementById("answer1").style.background = "";
     document.getElementById("answer2").style.background = "";
     document.getElementById("answer3").style.background = "";
     document.getElementById("answer4").style.background = "";
-
-
-
 }
 /**
  * Build the Friends List.
@@ -591,69 +559,64 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-    /**    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-     if (response.error) {
-     // Getting the user status and current matchups
-     } else {
-     var data = document.getElementById('data');
-     fdata = response.data;
-     friends = response.data;
-     var friendIDs = [];
-     
-     for (var k = 0; k < friends.length; k++) {
-     var friend = friends[k];
-     friendIDs[k] = friend.id;
-     }
-     }*/
+    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+        if (response.error) {
 
-    friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
-    $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-        method: 'POST',
-        data: {
-            userId: currentPlayerId,
-            facebookFriends: friendIDs
-        },
-        success: function(data) {
-            //alert("connected!")
-            var jason = JSON.parse(data);
-            if (jason.success === 1) {
-                //alert("ok!");
-                if (toInvite) {
-                    buildFriendsTable(jason.toInvite, toInvite);
-                } else {
-                    buildFriendsTable(jason.matches, toInvite);
-                }
+        } else {
+            var data = document.getElementById('data');
+            fdata = response.data;
+            friends = response.data;
+            var friendIDs = [];
+            for (var k = 0; k < friends.length; k++) {
+                var friend = friends[k];
+                friendIDs[k] = friend.id;
             }
-        },
-        error: function() {
-            //alert("error in login");
         }
+
+        // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+        $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+            method: 'POST',
+            data: {
+                userId: currentPlayerId,
+                facebookFriends: friendIDs
+            },
+            success: function(data) {
+                //alert("connected!")
+                var jason = JSON.parse(data);
+                if (jason.success === 1) {
+                    //alert("ok!");
+                    if (toInvite) {
+                        buildFriendsTable(jason.toInvite, toInvite);
+                    } else {
+                        buildFriendsTable(jason.matches, toInvite);
+                    }
+                }
+            },
+            error: function() {
+                //alert("error in login");
+            }
+        });
     });
-    //   });
     document.getElementById("friends_table").innerHTML = "";
 }
+
 
 
 function buildFriendsBar(matchup) {
     document.getElementById("matchups_table").style.display = "none";
     document.getElementById("friends_bar").innerHTML = "";
-
     var table = document.getElementById("friends_bar");
     var play_button = document.createElement("button");
     var invite_button = document.createElement("button");
-
     var textPlay = document.createTextNode(text = "שחק עם חברים");
     var textInvite = document.createTextNode(text = "הזמן חברים");
-
     var onclick = document.createAttribute(on)
 
     play_button.appendChild(textInvite);
     invite_button.appendChild(textPlay);
-
     play_button.setAttribute("onClick", buildFriendsTable(matchup, false));
     invite_button.onClick = buildFriendsTable(matchup, true);
-
     var row = document.createElement("tr");
     var button_col = document.createElement("td");
     button_col.appendChild(play_button);
@@ -669,18 +632,16 @@ function buildFriendsTable(matchesData, toInvite) {
     document.getElementById("friends_bar").style.display = "block";
     // document.getElementById("matchups_tableNew").style.display = "none";
     document.getElementById("friends_table").innerHTML = "";
-
     var table = document.getElementById("friends_table");
-
     var numOfMatchups = matchesData.length;
     /*//alert(numOfMatchups);
      //alert(table.innerHTML);*/
     var index;
     for (index = 0; index < numOfMatchups; ++index) {
 
+
         var text = "";
         var buttonProperty = "";
-
         // Decide button
         if (toInvite) {
             text = "הזמן";
@@ -694,15 +655,17 @@ function buildFriendsTable(matchesData, toInvite) {
 
             var name = "stav";
             var userId = "'\\" + matchesData[index] + "'";
-            FB.api(userId, function(response) {
+
+            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
                 name = response.name;
+
+
+
+                $("#friends_table").append("<tr align=\"center\">" +
+                        "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                        "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
+                        "<br />" + name + "</td></tr>");
             });
-
-            $("#friends_table").append("<tr align=\"center\">" +
-                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                    "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
-                    "<br />" + name + "</td></tr>");
-
         } else {
             $("#friends_table").append("<tr align=\"center\">" +
                     "<td><button " + buttonProperty + " >" + text + "</button></td>" +
@@ -865,7 +828,6 @@ function playTurn(game_id) {
 function signUp(email, firstName, LastName, facebookId, imgUrl) {
     var gender = "F";
     var birthDay = "29.9.1989";
-
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/signUp.php',
         method: 'POST',
@@ -891,7 +853,6 @@ function signUp(email, firstName, LastName, facebookId, imgUrl) {
             //alert("error in match");
         }
     });
-
 }
 
 function getLoginStatus() {
@@ -955,9 +916,7 @@ function me() {
         for (var k = 0; k < friends.length && k < 200; k++) {
             var friend = friends[k];
             var index = 1;
-
             friendIDs[k] = friend.id;
-
             //friendsInfo[k] = friend;
         }
         console.log("friendId's: " + friendIDs);
@@ -991,14 +950,12 @@ function login() {
                             var jason = JSON.parse(data);
                             if (jason.success === 1) {
                                 currentPlayerId = jason.userId;
-
                                 // New user should signUp first:
                                 if (currentPlayerId == -1) {
                                     FB.api('/me', function(response) {
                                         //alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
                                         var img_link = "http://graph.facebook.com/" + response.id + "/picture";
                                         signUp(response.email, response.first_name, response.last_name, response.id, img_link);
-
                                     });
                                 }
 
@@ -1065,11 +1022,8 @@ document.addEventListener('deviceready', function() {
         // alert(e);
     }
 }, false);
-
 function loginFromWeb() {
     currentPlayerId = 1;
-
-
     window.location = "#matchups";
     refreshMatchups();
 }
