@@ -468,7 +468,7 @@ function continueToNextQuestion(object) {
     document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
     document.getElementById(correctAnswerId).style.background = "gray";//"green";
     document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
-    document.getElementById(correctAnswerId).style.background = "gray";//"green";
+    document.getElementById(correctAnswerId).styele.background = "gray";//"green";
     document.getElementById(correctAnswerId).style.background = "#B5EAAA";//"green";
 
     // continte to the next question.
@@ -504,7 +504,8 @@ function endGame() {
         data: {
             gameId: currentGameId,
             player: player1or2, //$("#name").val(),
-            turn: turn
+            turn: turn,
+            score: score
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -564,7 +565,7 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+/**    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
         if (response.error) {
             // Getting the user status and current matchups
         } else {
@@ -577,9 +578,9 @@ function refreshFriendsZone(toInvite) {
                 var friend = friends[k];
                 friendIDs[k] = friend.id;
             }
-        }
+        }*/
 
-        // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+       friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
@@ -603,7 +604,7 @@ function refreshFriendsZone(toInvite) {
                 //alert("error in login");
             }
         });
-    });
+ //   });
     document.getElementById("friends_table").innerHTML = "";
 }
 
