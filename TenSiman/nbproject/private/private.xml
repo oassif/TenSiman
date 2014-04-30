@@ -12,8 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/smoskovich/Documents/GitHub/TENSIMAN/TenSiman/public_html/index.html</file>
             <file>file:/C:/Users/smoskovich/Documents/GitHub/TENSIMAN/TenSiman/public_html/js/javascript.js</file>
+=======
+            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/css/TenSiman.css</file>
+            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/index.html</file>
+            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/js/javascript.js</file>
+            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/php/updateUserAnswer.php</file>
+            <file>file:/C:/Users/Oren/Documents/GitHub/TenSiman/TenSiman/public_html/php/endTurn.php</file>
+>>>>>>> 156804673ef37e29f72821c60f9e6070e60e6c4c
         </group>
     </open-files>
 </project-private>

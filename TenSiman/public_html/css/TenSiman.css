@@ -8,6 +8,8 @@ and open the template in the editor.
     Author     : Oren
 */
 
+@import url(http://fonts.googleapis.com/earlyaccess/alefhebrew.css);
+
 .video_container {
     border: 1px solid silver;
     height: fit-content;
@@ -37,34 +39,188 @@ button.answer {
     height: 20px !important;
 }
 
+td.matchButton button:active {
+    /*border-radius: 30px;
+    border: solid black thin;
+    background-color: #3abe8b;
+    background-image: repeating-linear-gradient(70deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 60px);
+    */
+    //border-radius: 17px;
+    
+    //height: 130px;
+    //background-image: url('YourTurn.png');
+    background-position-y: 6px;
+    line-height: 2px;
+    
+    //background: url(YourTurn.png) no-repeat top;
+    
+    //font-size: 18em !important;
+    //height: 20px !important;
+}
+
+td.matchButton button.waitForRival:active {
+    /*border-radius: 30px;
+    border: solid black thin;
+    background-color: #3abe8b;
+    background-image: repeating-linear-gradient(70deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 60px);
+    */
+    //border-radius: 17px;
+    background-position-y: 0px !important;
+    //height: 130px;
+    //background-image: url('YourTurn.png');
+    
+    //background: url(YourTurn.png) no-repeat top;
+    
+    //font-size: 18em !important;
+    //height: 20px !important;
+}
+
+/****** MATCHUPS TABLE : START ***********/
+
+button.newGame {
+    border: 0px;
+    height: 100px;
+    width: 100px;
+    background: url('NewGame.png') no-repeat center;
+    background-size: contain;
+    /*border-radius: 30px;
+    background-color: plum;
+    height: 40px;
+    width: 80px;*/
+}
+
 button.waitForRival {
-    border-radius: 30px;
+   /* border-radius: 30px;
     background-color: lightskybluehtblow;
     height: 40px;
-    width: 80px;
+    width: 80px;*/
+    border: 0px;
+    height: 100px;
+    width: 100px;
+    background: url('Hold.png') no-repeat center;
+    background-size: contain;
     //font-size: 18em !important;
     //height: 20px !important;
 }
 
 button.yourTurn {
-    border-radius: 30px;
-    background-color: lime;
-    height: 40px;
-    width: 80px;
+    /*border-radius: 30px;
+    border: solid black thin;
+    background-color: #3abe8b;
+    background-image: repeating-linear-gradient(70deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 60px);
+    */
+    
+    //border-radius: 17px;
+    border: 0px;
+    height: 100px;
+    width: 100px;
+    background: url('YourTurn.png') no-repeat center;
+    background-size: contain;
     //font-size: 18em !important;
     //height: 20px !important;
 }
 
-button.newGame {
-    border-radius: 30px;
-    background-color: plum;
-    height: 40px;
-    width: 80px;
+
+button.expertChallange {
+    border: 0px;
+    height: 100px;
+    width: 100px;
+    background: url('Expert.png') no-repeat center;
+    background-size: contain;
 }
 
-img.profile {
-    border: solid black thin;
+table.matches tr {
+    //height: 136px;
+    line-height: 70px;
+}
+
+table.matches td.summary
+{
+    width: 75px;
+}
+
+td.summary button.summary
+{
+    width: 67px;
+    height: 67px;
     border-radius: 100px;
+    border: solid black;
+    border-bottom-width: 5px;
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, .3), inset 0px 4px 1px 1px white, inset 0px -3px 1px 1px rgba(204,198,197,.5);
+}
+
+td.summary button.summary:active
+{
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    border: solid black;
+    border-bottom-width: 3px;
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, .4), inset 0px -3px 1px 1px white, inset 0px -3px 1px 1px rgba(204,198,197,.5);
+}
+
+table.matches td.matchButton
+{
+    width: 33%;
+}
+
+td.matchScore
+{
+    width: 100px;
+    //border: solid black thick;
+    font-family: "Alef Hebrew";
+    font-size: 3em;
+}
+
+table.matches td.matchRival
+{
+    width: 33%;
+    font-family: "Alef Hebrew";
+}
+
+div.rivalPic {
+    position: relative;
+    width: 104px;
+}
+
+div.rivalRank {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    right: -9px;
+    bottom: -9px;
+    background: url('Profressbarstar.png') no-repeat center;
+    background-size: contain;
+    text-align: center;
+    /* vertical-align: top; */
+    line-height: 49px;
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+}
+div.rivalPic div.rivalName {
+    position: absolute;
+    left: 4.8em;
+    bottom: -8px;
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+}
+
+/*<!--<div style="position:relative; border: 1px solid pink; width:250px; height:250px;">
+                    <img src="css\YourTurn.png"/>
+                    <div style="width:30px; height:30px; border:1px solid black; position:absolute; right:-10px; bottom:-5px;">
+                        <img src="css\YourTurn.png" />
+                    </div>
+                </div>-->*/
+/****** MATCHUPS TABLE : END ***********/
+
+img.profile {
+    border: solid black thick;
+    border-radius: 100px;
+    width: 80px;
 }
 //font-size: 18em !important;
 //height: 20px !important;

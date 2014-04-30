@@ -5,7 +5,7 @@
 var NUMBER_SECTIONS = 5;
 var currentPlayerId = 0;
 var timePerRound = 10;
-var delayBetweenQuestions = 750; // in milliseconds
+var delayBetweenQuestions = 1250; // in milliseconds
 
 var currVideoId = 0;
 var correctAnswerId;
@@ -21,6 +21,7 @@ var count;
 var counter;
 var score = 0;
 var buffer = 20; //scroll bar buffer
+var m_isCanClick; // Used to prevent user from clicking multiple times on the answer (couldn't disabled the buttons for some reason)
 
 var currentGameId = -1;
 var turn = 0;
@@ -127,7 +128,8 @@ function refreshMatchups() {
     //alert("ref match up player" + currentPlayerId);
 
     // Getting the user status and current matchups
-    ref();
+//    ref();
+    setTimeout(function(){ref()}, 2000);
     setInterval(ref, 10000);
     document.getElementById("matchups_table").innerHTML = "";
     document.getElementById("friends_bar").style.display = "none";
@@ -175,8 +177,11 @@ function buildPlayerBar(userData) {
 
 function buildMatchesTable(matchesData) {
     // Clean the table
+    
     var table = document.getElementById("matchups_tableNew");
     table.innerHTML = "";
+
+$("#matchups_tableNew").html("");
 
     var numOfMatchups = matchesData.length;
 
@@ -215,16 +220,26 @@ function buildMatchesTable(matchesData) {
         else {
             // default status
             text = "תן סימן " + matchesData[index]["gameStatus"];
-            buttonProperty = "createNewGame(" + matchesData[index]["rivalId"] + ")";
+            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["rivalId"] + ")\"";
         }
 
         $("#matchups_tableNew").append("<tr align=\"center\">" +
-                "<td><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
-                "<td>אני<br/>" + matchesData[index]["userScore"] + "</td>" +
-                "<td>:</td><td>" +
-                "<td>" + matchesData[index]["rivalName"] + "<br />" + matchesData[index]["rivalScore"] + "</td>" +
-                "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
-                "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+                "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
+                "<td class=\"matchScore\">" + matchesData[index]["userScore"] + "</td>" +
+                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["matchupId"] + ")\" class=\"summary\">i</td><td>" +
+                "<td class=\"matchScore\">" + matchesData[index]["rivalScore"] + "</td>" +
+                /*"<td class=\"matchInner\">" +
+                        "<table class=\"matchInnerTable\">" +
+                        
+                        "</table>" +
+                "</td>" +*/
+                "<td class=\"matchRival\">" +
+                "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
+                    "<div class=\"rivalRank\">1</div>" +
+                    "<div class=\"rivalName\">"+ matchesData[index]["rivalFirstName"] + "</div>" +
+                "</div>" +
+                //"<br />" + matchesData[index]["rivalName"] +
+                "</td></tr>");
     }
 }
 
@@ -356,6 +371,7 @@ function show4possibleAnswers(videoNum) {
     document.getElementById("answer4").innerHTML = "<font size=\"5\">" +
             answerArray[videoNum][(firstAnswerId + 3) % 4] +
             "</font>";
+    m_isCanClick = true;
     if (firstAnswerId === 0) {
         correctAnswerId = "answer1";
     }
@@ -423,43 +439,47 @@ function onClick_checkAnswer(object) {
 // TODO: disable all buttons and enabling them only when creating the new buttons for the next answer
 //    gameDetails[order[currVideoId]][3] = count;
     // Saving user's answer
-    gameDetails[order[currVideoId]][3] = object.text.toString();
-
-    console.trace(object.text.toString() + " <- user  answer ttttttttt right answer ->" + answerArray[order[currVideoId]][0])
-
-    if (object.text.toString() === answerArray[order[currVideoId]][0])//answerArray[currVideoId][0])
+    if (m_isCanClick)
     {
-        gameDetails[order[currVideoId]][2] = true;
-        //Update score
-        gameDetails[order[currVideoId]][4] = count;
-    }
-    else {
-        document.getElementById(object.id).style.background = "red";
-        console.trace("wrong");
-        // Update score
-        gameDetails[order[currVideoId]][4] = 0;
-    }
-    console.trace("UpdateUserAnswer");
-    $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateUserAnswer.php',
-        method: 'POST',
-        data: {
-            section: gameDetails[order[currVideoId]],
-            player: player1or2
-        },
-        success: function(data) {
-            var jason = JSON.parse(data);
-            if (jason.success == 1) {
-                console.trace("seuccess!" + gameDetails[order[currVideoId]] + " " + player1or2);
-            }
-        },
-        error: function() {
-            console.trace("error");
-        }
-    });
+        m_isCanClick = false;
+        gameDetails[order[currVideoId]][3] = object.text.toString();
 
-    score += gameDetails[order[currVideoId]][4];
-    continueToNextQuestion(object);
+        console.trace(object.text.toString() + " <- user  answer ttttttttt right answer ->" + answerArray[order[currVideoId]][0])
+
+        if (object.text.toString() === answerArray[order[currVideoId]][0])//answerArray[currVideoId][0])
+        {
+            gameDetails[order[currVideoId]][2] = true;
+            //Update score
+            gameDetails[order[currVideoId]][4] = count;
+        }
+        else {
+            document.getElementById(object.id).style.background = "red";
+            console.trace("wrong");
+            // Update score
+            gameDetails[order[currVideoId]][4] = 0;
+        }
+        console.trace("UpdateUserAnswer");
+        $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateUserAnswer.php',
+            method: 'POST',
+            data: {
+                section: gameDetails[order[currVideoId]],
+                player: player1or2
+            },
+            success: function(data) {
+                var jason = JSON.parse(data);
+                if (jason.success == 1) {
+                    console.trace("seuccess!" + gameDetails[order[currVideoId]] + " " + player1or2);
+                }
+            },
+            error: function() {
+                console.trace("error");
+            }
+        });
+
+        score += gameDetails[order[currVideoId]][4];
+        continueToNextQuestion(object);
+    }
 }
 
 
@@ -681,7 +701,7 @@ function buildFriendsTable(matchesData, toInvite) {
             $("#friends_table").append("<tr align=\"center\">" +
                     "<td><button " + buttonProperty + " >" + text + "</button></td>" +
                     "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
-                    "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+                    "<br />" + matchesData[index]["rivalFirstName"] + " " + matchesData[index]["rivalLastName"] + "</td></tr>");
         }
     }
 }
@@ -1041,7 +1061,9 @@ document.addEventListener('deviceready', function() {
 }, false);
 
 function loginFromWeb() {
-    currentPlayerId = 86;
+    currentPlayerId = 1;
+
+
     window.location = "#matchups";
     refreshMatchups();
 }
