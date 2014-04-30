@@ -139,14 +139,41 @@ table.matches td.summary
     width: 75px;
 }
 
+td.summary button.summary
+{
+    width: 67px;
+    height: 67px;
+    border-radius: 100px;
+    border: solid black;
+    border-bottom-width: 5px;
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, .3), inset 0px 4px 1px 1px white, inset 0px -3px 1px 1px rgba(204,198,197,.5);
+}
+
+td.summary button.summary:active
+{
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    border: solid black;
+    border-bottom-width: 3px;
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, .4), inset 0px -3px 1px 1px white, inset 0px -3px 1px 1px rgba(204,198,197,.5);
+}
+
 table.matches td.matchButton
 {
     width: 33%;
 }
 
-table.matches td.matchScore
+td.matchScore
 {
     width: 100px;
+    //border: solid black thick;
+    font-family: "Alef Hebrew";
+    font-size: 3em;
 }
 
 table.matches td.matchRival
@@ -176,7 +203,7 @@ div.rivalRank {
 }
 div.rivalPic div.rivalName {
     position: absolute;
-    left: 3.3em;
+    left: 4.8em;
     bottom: -8px;
     font-family: "Alef Hebrew";
     font-size: x-large;

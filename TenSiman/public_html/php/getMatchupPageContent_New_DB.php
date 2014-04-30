@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 // TODO: change all $_GET to $_POST
 
 // Save the given LiveGame id
-$userId = $_REQUEST['userId'];
+$facebookId = $_REQUEST['userId'];
 
 //include db connect class
 require_once __DIR__ . '/db_connect.php';
@@ -31,14 +31,17 @@ $db = new DB_CONNECT();
 // Checking that value exists
 if (isset($_REQUEST["userId"])) {
     
+    $userId = $_REQUEST["userId"];
+        
      // TODO: try to get the live game (might fail so need to handle error - wrond id or invalid id)
     $result = mysql_query("SELECT * FROM Users WHERE id=$userId");
-    $result2 = mysql_query("SELECT g.id As matchId,
+    $result2 = mysql_query("SELECT m.id as matchupId,
                                    scoreP1 AS userScore,
                                    scoreP2 AS rivalScore,
                                    status AS gameStatus,
                                    g.id AS LiveGameId,
-                                   concat(FirstName, ' ', LastName) AS rivalName,
+                                   FirstName AS rivalFirstName,
+                                   LastName As rivalLastName,
                                    player2 AS rivalId,
                                    imgURL AS rivalImg
                                    FROM `Matchups` m, `Games_new` g, `Users` u
@@ -46,11 +49,13 @@ if (isset($_REQUEST["userId"])) {
                                          AND m.player2 = u.id
                                          AND currGameId = g.id");
              //SELECT  FROM Games WHERE player1Id=$userId");
-     $result3 = mysql_query("SELECT scoreP2 AS userScore,
+     $result3 = mysql_query("SELECT m.id as matchupId,
+                                    scoreP2 AS userScore,
                                     scoreP1 AS rivalScore,
                                     status AS gameStatus,
                                     g.id AS LiveGameId,
-                                    concat(FirstName, ' ', LastName) AS rivalName,
+                                    FirstName AS rivalFirstName,
+                                    LastName As rivalLastName,
                                     player1 AS rivalId,
                                     imgURL AS rivalImg
                                     FROM `Matchups` m,`Games_new` g, `Users` u
@@ -59,16 +64,6 @@ if (isset($_REQUEST["userId"])) {
                                           AND currGameId = g.id");
              //SELECT * FROM Games WHERE player2Id=$userId");
      
-     /* 
-      * selects game details when player1 is the user
-      SELECT scorePlayer1 AS userScore,
-       scorePlayer2 AS rivalScore,
-       gameStatus,
-       imgURL AS rivalImg,
-       concat(FirstName, ' ', LastName) AS rivalName
-FROM `Games` g, `Users` u
-WHERE player1Id=1
-      AND g.player2Id = u.id */
 }
  
 // Check first query result
@@ -96,7 +91,6 @@ if (mysql_num_rows($result2) > 0) {
     while ($row = mysql_fetch_array($result2)) {
         // temp chat array
         $match = array();
-        $match["matchId"] = $row["matchId"];
         $match["userScore"] = $row["userScore"];
         $match["rivalScore"] = $row["rivalScore"];
         if ($row["gameStatus"] == 4) {
@@ -105,10 +99,12 @@ if (mysql_num_rows($result2) > 0) {
         else {
             $match["gameStatus"] = $row["gameStatus"];
         }
-        $match["rivalName"] = $row["rivalName"];
+        $match["rivalFirstName"] = $row["rivalFirstName"];
+        $match["rivalLastName"] = $row["rivalLastName"];
         $match["rivalImg"] = $row["rivalImg"];
         $match["rivalId"] = $row["rivalId"];
         $match["LiveGameId"] = $row["LiveGameId"];
+        $match["matchupId"] = $row["matchupId"];
 
         // push single users into final response array
         array_push($response["matches"], $match);
@@ -140,36 +136,17 @@ if (mysql_num_rows($result3) > 0) {
             // it's the other user's turn (either regular game or expert game)
             $match["gameStatus"] = "2";
         }
-        $match["rivalName"] = $row["rivalName"];
+        $match["rivalFirstName"] = $row["rivalFirstName"];
+        $match["rivalLastName"] = $row["rivalLastName"];
         $match["rivalImg"] = $row["rivalImg"];
         $match["rivalId"] = $row["rivalId"];
         $match["LiveGameId"] = $row["LiveGameId"];
+        $match["matchupId"] = $row["matchupId"];
 
         // push single users into final response array
         array_push($response["matches"], $match);
     }
 }
-
-    /* IDO's Example
-     * // check for empty result
-if (mysql_num_rows($result) > 0) {
-    
-    $response["lines"] = array();
-
-    // looping through all results
-    while ($row = mysql_fetch_array($result)) {
-        // temp chat array
-        $chat = array();
-        $chat["name"] = $row["name"];
-        $chat["text"] = $row["text"];
-        $chat["time"] = $row["time"];
-
-        // push single users into final response array
-        array_push($response["lines"], $chat);
-    }
-     * 
-     */
-
 
 
 //// check if row inserted or not
