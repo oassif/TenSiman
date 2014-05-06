@@ -241,7 +241,7 @@ div.MainFotter div.ExpertsZone {
     font-family: "Alef Hebrew";
     vertical-align: middle;
     font-size: x-large;
-    
+
     //border-top: solid black thick;
 }
 
@@ -325,7 +325,7 @@ div.MainFotter div.HallOfFameZone {
 
 img.profile {
     border: solid black thick;
-    border-radius: 100px;
+    border-radius: 98px;
     width: 80px;
 }
 //font-size: 18em !important;
@@ -368,6 +368,14 @@ img.profile {
 
 
 }
+#summary .main-header {
+    border-top:solid 4px black;
+    border-bottom: solid 4px black;
+    height: 8em;
+    width: 100%;
+
+
+}
 
 .fl {
 
@@ -396,4 +404,39 @@ img.profile {
 #header-top .header-left {
     display: inline-block !important;
 
+}
+
+
+
+td.word
+{
+    width: 33%;
+    font-family: "Alef Hebrew";
+    -webkit-text-stroke-width: 1px;     
+    -webkit-text-stroke-color: black;
+    -webkit-text-fill-color: white;
+    font-size: 208%;
+}
+
+td.scoreP1
+{
+    width: 100px;
+    font-family: 'Asap', sans-serif;
+    font-size: 2em;
+}
+
+td.playerPic .pic{
+    border: 2px solid black;
+    border-radius: 100%;
+    width: 38%;}
+
+td.playerPic div.playerName{
+    /* position: absolute; */
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+}
+
+td.scoreP1 div.sec {
+    font-family: "Alef Hebrew";
+    font-size: 50%;
 }

@@ -118,14 +118,9 @@ $(document).ready(function()
 
 });
 function refreshMatchups() {
-    //login();
     var htmlCode = "";
-    //alert("ref match up player" + currentPlayerId);
-
-    // Getting the user status and current matchups
-//    ref();
     setTimeout(function() {
-         ref();
+        ref();
     }, 2000);
     setInterval(ref, 10000);
     document.getElementById("matchups_table").innerHTML = "";
@@ -147,7 +142,8 @@ function ref() {
             }
         },
         error: function() {
-            //alert("error");
+
+
         }
     });
 }
@@ -160,14 +156,12 @@ function buildPlayerBar(userData) {
             "<td>נקודות: " + userData["score"] + "</td>" +
             "<td></td>" +
             "</tr></table>";
-    /* LTR OLD VERSION
-     barDiv.innerHTML = "<table width=\"100%\"><tr>" +
-     "<td>" + userData["score"] + "נקודות:</td>" +
-     "<td>" + userData["rank"] + "רמה:</td>" +
-     "<td>" + userData["fullName"] + "</td>" +
-     "<td><img src=\"" + userData["imgURL"] + "\" /></td>" +
-     "</tr></table>";
-     */
+    
+    
+     document.getElementById("score").innerHTML = userData["score"]; 
+     document.getElementById("level").innerHTML = "120";
+    // document.getElementById("nextLevel").innerHTML = userData["level"];
+  
 }
 
 function buildMatchesTable(matchesData) {
@@ -185,6 +179,7 @@ function buildMatchesTable(matchesData) {
         var buttonClass = "";
         var textValue = "";
         var buttonProperty = "";
+        var playerTurn = 2;
         // Todo: see if it's the first player or sceond player and according to it decide.
         // Decide button
         if (matchesData[index]["gameStatus"] === "0") {
@@ -197,11 +192,13 @@ function buildMatchesTable(matchesData) {
             buttonClass = "yourTurn";
             //alert("your turn:" + matchesData[index]["LiveGameId"]);
             buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameId"] + ")\"";
+            playerTurn= 1;
         }
         else if (matchesData[index]["gameStatus"] === "2") {
             text = "המתן";
             buttonClass = "waitForRival";
             buttonProperty = "disabled";
+            playerTurn = 1;
         }
         else if (matchesData[index]["gameStatus"] === "3") {
             text = "הזמנה ממומחה";
@@ -217,7 +214,7 @@ function buildMatchesTable(matchesData) {
         $("#matchups_tableNew").append("<tr align=\"center\">" +
                 "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
                 "<td class=\"matchScore\">" + matchesData[index]["userScore"] + "</td>" +
-                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["matchupId"] + ")\" class=\"summary\">i</td><td>" +
+                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["LiveGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
                 "<td class=\"matchScore\">" + matchesData[index]["rivalScore"] + "</td>" +
                 /*"<td class=\"matchInner\">" +
                  "<table class=\"matchInnerTable\">" +
@@ -532,7 +529,7 @@ function endGame() {
     score *= 10;
     document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
 
-    getSummary();
+    showGameSummary(currentGameId, turn);
 }
 
 /**
@@ -1024,7 +1021,7 @@ document.addEventListener('deviceready', function() {
     }
 }, false);
 function loginFromWeb() {
-    currentPlayerId = 1;
+    currentPlayerId = 86;
     window.location = "#matchups";
     refreshMatchups();
 }
@@ -1033,30 +1030,72 @@ function loginFromWeb() {
  * At the end of each turn - present a game summary.
  
  * @returns {undefined} */
-function getSummary(gameId) {
+function getSummary(gameId, turn) {
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getGameDetails.php',
         method: 'POST',
         data: {
             gameId: gameId
         },
-        
         success: function(data) {
             //alert("connected!")
             var jason = JSON.parse(data);
             if (jason.success === 1) {
-                //alert("ok!");
-                if (toInvite) {
-                    buildFriendsTable(jason.toInvite, toInvite);
-                } else {
-                    buildFriendsTable(jason.matches, toInvite);
-                }
+                buildSummaryTable(jason, turn);
             }
         },
         error: function() {
-            //alert("error in login");
         }
     });
+}
 
 
+function buildSummaryTable(matchesData, turn) {
+
+//    var table = document.getElementById("summary_table");
+//    table.innerHTML = "";
+    $("#summary_table").html("");
+    $("#summary_bar_table").html("");
+
+    var numOfWords = 5;
+    var index;
+
+    var player1array = matchesData["player1"];
+    var player2array = matchesData["player2"];
+    var sections = matchesData["sections"];
+
+
+    var player2score = player2array[0]["score"];
+    if (turn == 1) {
+        player2score = "?";
+    }
+
+    $("#summary_bar_table").append("<tr align=\"center\">" +
+            "<td class=\"playerPic\"><img class=\"pic \" src=\"" + player2array[0]["pic"] + "\">" +
+            "<div class=\"playerName\">" + player2array[0]["name"] + "</div></td>" +
+            "<td class=\"scoreP1\">" + player2score + "</td>" +
+            "<td class=\"scoreP1\">" + ":" + "</td>" +
+            "<td class=\"scoreP1\">" + player1array[0]["score"] + "</td>" +
+            "<td class=\"playerPic\"><img class=\"pic \"  src=\"" + player1array[0]["pic"] + "\">" +
+            "<div class=\"playerName\">" + player1array[0]["name"] + "</div></td>" +
+            "</tr>"
+            );
+
+    for (index = 0; index < numOfWords; ++index) {
+
+        if (turn != 1) {
+            player2score = sections[index]["scoreP2"];
+        }
+
+        $("#summary_table").append("<tr align=\"center\">" +
+                "<td class=\"scoreP1\">" + player2score + "<div class=sec> שניות</div></td>" +
+                "<td class=\"word\">" + sections[index]["word"] + "</td>" +
+                "<td class=\"scoreP1\">" + sections[index]["scoreP1"] + "<div class=sec> שניות</div></td>" +
+                "</tr>");
+    }
+}
+
+function showGameSummary(gameId, turn) {
+    window.location = "#summary";
+    getSummary(gameId, turn);
 }
