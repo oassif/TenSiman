@@ -211,7 +211,7 @@ function buildMatchesTable(matchesData) {
         else {
 // default status
             text = "תן סימן " + matchesData[index]["gameStatus"];
-            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["rivalId"] + ")\"";
+            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["matchupId"] + ")\"";
         }
 
         $("#matchups_tableNew").append("<tr align=\"center\">" +
@@ -531,9 +531,10 @@ function endGame() {
     document.getElementById("translatedWord").style.display = "block";
     score *= 10;
     document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
-    window.location = "#matchups";
-    refreshMatchups();
+
+    getSummary();
 }
+
 /**
  * Reset the 4 button of possible answers and the timer.
  */
@@ -1026,4 +1027,36 @@ function loginFromWeb() {
     currentPlayerId = 1;
     window.location = "#matchups";
     refreshMatchups();
+}
+
+/**
+ * At the end of each turn - present a game summary.
+ 
+ * @returns {undefined} */
+function getSummary(gameId) {
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getGameDetails.php',
+        method: 'POST',
+        data: {
+            gameId: gameId
+        },
+        
+        success: function(data) {
+            //alert("connected!")
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                //alert("ok!");
+                if (toInvite) {
+                    buildFriendsTable(jason.toInvite, toInvite);
+                } else {
+                    buildFriendsTable(jason.matches, toInvite);
+                }
+            }
+        },
+        error: function() {
+            //alert("error in login");
+        }
+    });
+
+
 }
