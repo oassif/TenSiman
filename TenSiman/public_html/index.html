@@ -19,7 +19,7 @@ works with FaceBook
         <script type="text/javascript" src="facebook-js-sdk.js"></script>
         <link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css\TenSiman.css">
-
+        <meta name="viewport" content="width=device-width; initial-scale = 1.0; maximum-scale=1.0; user-scalable=no" />
     </head>
     <body>
 
@@ -42,10 +42,10 @@ works with FaceBook
                 </div>
             </center>
         </div>
-
-
+        
+        
         <!-- Main Page -->
-        <div id="matchups" data-role="page">
+        <div id="matchups" data-role="page" style="width: 100%;">
             <!--            <header data-role="header">
                             <h1>תן סימן</h1>
                             <a href="#settings" data-icon="gear" data-role="button" class="ui-btn-right" data-theme="b">הגדרות</a>
@@ -53,7 +53,7 @@ works with FaceBook
 
             <div id="header">
                 <div class="main-header">
-                    <div id='logo'>
+                    <div id='logo' style="background-color: #f2f2f2; width: 100%; height: 100%; border: 0px; position: absolute; top:0; z-index: 2;">
 
 
 
@@ -76,71 +76,111 @@ works with FaceBook
                                                 </div>-->
 
                     </div>
+                    <div class="top-container" style="z-index: 1; border-bottom: solid 0.3em black;
+                         width: 90%;
+                         max-height: 100%;
+                         height: 100%;
+                         position: absolute;
+                         top: 50%;
+                         border-radius: 0 0 3em 3em;
+                         text-shadow: none !important;
+                         box-shadow: none !important;
+                         background: #F3F3F3;
+                         border-left: solid 0.3em black;
+                         //margin-top: -2.1em;
+                         
+                         border-right: solid 0.3em black;
+                         //margin-left: 5%;
+                         left: 0;
+                         right: 0;
+                         margin-left: auto;
+                         margin-right: auto;
+                         ">
 
-                </div>
-                <div class="top-container" style="border-bottom: solid 0.3em black;
-                     width: 90%;
-                     border-radius: 0 0 3em 3em;
-                     text-shadow: none !important;
-                     box-shadow: none !important;
-                     background: #F3F3F3;
-                     border-left: solid 0.3em black;
-                     margin-top: -2.1em;
-                     border-right: solid 0.3em black;
-                     margin-left: 5%;
-                     ">
-
-                    <div class="white-container" style="background: white;border: solid 2px black;margin: 1.9em;border-radius: 3em;height: 3.2em; display: block">
-
-                        <div class="red-container" style=" border: solid 2px black;margin: 30px;
-                             border-top-left-radius: 4em;border-bottom-left-radius: 4em;height: 50px;width: 50%;margin-top: -0.1em;float: left;margin-left: -0.2em;background-color: #ff4c65;      background-image: repeating-linear-gradient(136deg, transparent, transparent 31px, rgba(255,255,255,0.5) 29px, rgba(255,255,255,.5) 52px);">
-                            <span id="score" style="
-                                  margin-left: 50%;
-                                  float: left;
-                                  font-size: 3em;
-                                  ">50</span>
-                        </div>
-
-                        <div id="level" style="
-                             float: right;
-                             margin-top: -0.1em;
-                             font-size: 2em;
-                             width: 35%;
-                             text-align: right;
-                             ">   לשלב   - 43  </div>
-
-
-                        <div id="star" style="
-
-                             float: right;
-                             margin-right: -10%;
-                             background: url('images/Profressbarstar.png') no-repeat;
-                             width: 15%;
-                             height: 4em;
-                             display:inline-block;
-                             position: relative;
-
-                             "> 
-                            <span class="nextLevel" style="
-                                  font-size: 2.5em;
-                                  margin-left: 0.4em;
-                                  line-height: 1.4em;
-                                  display:inline-block;
-                                  position: relative;
-                                  "> 4 </span>
-                        </div>
+                        
                     </div>
+                    <div class="white-container" style="z-index: 4; 
+                         width: 80%;
+                         max-height: 100%;
+                         height: 50%;
+                         top: 75%;
+                         position: absolute;
+                         background-color: white;
+                         border: solid 2px black;
+                         left: 0;
+                         right: 0;
+                         margin-left: auto;
+                         margin-right: auto;
+                         //                         margin: 1.9em;
+                         border-radius: 5em;
+                         //height: 3.2em;
+                         display: block">
+
+                            <div class="red-container" style=" border: solid 2px black;//margin: 30px;
+                                 border-radius: 5em 5em 5em 5em;
+                                 //border-top-left-radius: 4em;border-bottom-left-radius: 4em;
+                                 height: 100%;
+                                 width: 33%;
+                                 //margin-top: -0.1em;float: left;margin-left: -0.2em;
+                                 position: absolute;
+                                 top: -2px;
+                                 margin-top: auto;
+                                 margin-bottom: auto;
+                                 left: 0;
+                                 //margin: -0.5px;
+                                 //background-color: #ff4c65;
+                                 text-align: center;
+                                 //line-height: 200%;
+                                 background-image: repeating-linear-gradient(45deg, #ff4c65, rgba(255,70,95,0.8), #ff4c65,  rgba(255,70,95,0.8) 3%);">
+                                <!--<span id="score" style="
+                                      margin-left: 50%;
+                                      float: left;
+                                      font-size: 3em;
+                                      ">50</span>-->
+                                <div style="position: absolute; height: 100%;">50</div>
+                            </div>
+
+                            <div id="level" style="
+                                 float: right;
+                                 margin-top: -0.1em;
+                                 font-size: 2em;
+                                 width: 35%;
+                                 text-align: right;
+                                 ">   לשלב   - 43  </div>
+
+
+                            <div id="star" style="
+
+                                 float: right;
+                                 margin-right: -10%;
+                                 background: url('images/Profressbarstar.png') no-repeat;
+                                 width: 15%;
+                                 height: 4em;
+                                 display:inline-block;
+                                 position: relative;
+
+                                 "> 
+                                <span class="nextLevel" style="
+                                      font-size: 2.5em;
+                                      margin-left: 0.4em;
+                                      line-height: 1.4em;
+                                      display:inline-block;
+                                      position: relative;
+                                      "> 4 </span>
+                            </div>
+                        </div>
                 </div>
+
 
             </div>
 
             <div data-role="content" id="matchups_pagecontent">
-                <div id="playerBar" dir="rtl">
+                <div id="playerBar" class="playerBarContent" dir="rtl">
 
                 </div>
                 <br/><br/>
                 <div id="matchups_table_content" dir="rtl" align="center">
-                    <table width="50%" id="matchups_tableNew"></table>
+                    <table width="100%" id="matchups_tableNew"></table>
                     <br />----<br />
 
                 </div>
@@ -151,17 +191,31 @@ works with FaceBook
             <div class="MainFotter">
                 <div class="ExpertsZone">
                     <table>
-                        <tr><td><img class="ExpertsZone" src="css/ExpertZone.png" /></td><td>איזור<br>מומחה</td></tr>
+                        <tr><td><img class="ExpertsZone" src="css/ExpertZone.png" /></td><td class="bottomText">איזור<br>מומחה</td></tr>
                     </table>
                 </div>
+                <div class="MainFooterCenterBorder"></div>
                 <div class="MainFooterCenterBackground"></div>
+                <script>
+                    /*var backgroundCircleWidth = $('.MainFooterCenterBackground').width();
+                    $('.MainFooterCenterBackground').css({
+                        'height': backgroundCircleWidth + '%'
+                    });
+                   
+                    var summaryButtonWidth = $('butoon.summary').width();
+                    $('.summary').css({
+                        'height': summaryButtonWidth + '%'
+                    });*/
+                </script>
                 <div class="MainFooterCenterDiv"></div>
                 <div class="MainFooterCenter">
-                    <button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>
+                    <!--<button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>-->
+                    <div class="NewGameTxtBtn">משחק<br>חדש</div>
+                    <img class="NewGameImgBtn" src="css/CreateGame.png" onclick="refreshFriendsZone(false);" />
                 </div>
                 <div class="HallOfFameZone">
                     <table>
-                        <tr><td>היכל<br>התהילה</td><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td></tr>
+                        <tr><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td><td>היכל<br>התהילה</td></tr>
                     </table>
                 </div>
             </div>

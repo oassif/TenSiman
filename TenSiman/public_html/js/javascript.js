@@ -29,7 +29,7 @@ function pageY(elem) {
     return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
 }
 
-function resizeIframe() {
+/*function resizeIframe() {
     var height = document.documentElement.clientHeight * 0.65;
     height -= pageY(document.getElementById('myVideo')) + buffer;
     height = (height < 0) ? 0 : height;
@@ -40,7 +40,7 @@ function resizeWidthIframe() {
     width -= pageY(document.getElementById('myVideo')) + buffer;
     width = (width < 0) ? 0 : width;
     document.getElementById('myVideo').style.width = width + 'px';
-}
+}*/
 
 $(document).ready(function()
 {
@@ -127,8 +127,8 @@ function refreshMatchups() {
     setTimeout(function() {
          ref();
     }, 2000);
-    setInterval(ref, 10000);
-    document.getElementById("matchups_table").innerHTML = "";
+    //setInterval(ref, 10000);
+    $("#matchups_tableNew").html("");
     document.getElementById("friends_bar").style.display = "none";
 }
 
@@ -154,7 +154,8 @@ function ref() {
 
 function buildPlayerBar(userData) {
     var barDiv = document.getElementById("playerBar");
-    barDiv.innerHTML = "<table width=\"100%\"><tr>" +
+    //barDiv.innerHTML = "<table width=\"100%\"><tr>" +
+    barDiv.innerHTML = "<table width=\"100\"><tr>" +
             "<td><img src=\"" + userData["imgURL"] + "\" />&nbsp" + userData["fullName"] + "</td>" +
             "<td>רמה " + userData["level"] + "</td>" +
             "<td>נקודות: " + userData["score"] + "</td>" +
@@ -176,6 +177,7 @@ function buildMatchesTable(matchesData) {
     var table = document.getElementById("matchups_tableNew");
     table.innerHTML = "";
     $("#matchups_tableNew").html("");
+    $("#matchups_tableNew").addClass("matches");
     var numOfMatchups = matchesData.length;
     var index;
     //table.innerHTML = "";
@@ -217,7 +219,8 @@ function buildMatchesTable(matchesData) {
         $("#matchups_tableNew").append("<tr align=\"center\">" +
                 "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
                 "<td class=\"matchScore\">" + matchesData[index]["userScore"] + "</td>" +
-                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["matchupId"] + ")\" class=\"summary\">i</td><td>" +
+//                "<td class=\"summary\"><div id=\"summaryContainer\"><div class=\"summaryDummy\"></div><div class=\"summaryBox\"><button onClick=\"showGameSummary(" + matchesData[index]["matchupId"] + ")\" class=\"summary\">i</button></div></div></td>" +
+                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["matchupId"] + ")\" class=\"summary\">i</button></td>" +
                 "<td class=\"matchScore\">" + matchesData[index]["rivalScore"] + "</td>" +
                 /*"<td class=\"matchInner\">" +
                  "<table class=\"matchInnerTable\">" +
@@ -226,8 +229,10 @@ function buildMatchesTable(matchesData) {
                  "</td>" +*/
                 "<td class=\"matchRival\">" +
                 "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
-                "<div class=\"rivalRank\">1</div>" +
+                //"<div class=\"rivalRank\"><img src=\"css/Profressbarstar.png\" width=\"100%\" class=\"imgStar\"/>" + matchesData[index]["rivalLevel"] + 
+                "<div class=\"rivalRank\">" + matchesData[index]["rivalLevel"] + 
                 "<div class=\"rivalName\">" + matchesData[index]["rivalFirstName"] + "</div>" +
+                "</div>" +
                 "</div>" +
                 //"<br />" + matchesData[index]["rivalName"] +
                 "</td></tr>");
@@ -268,8 +273,8 @@ function createNewLiveGame(matchUpId)
     // TODO: might need to change something here:
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
-    resizeIframe();
-    resizeWidthIframe();
+/*    resizeIframe();
+    resizeWidthIframe();*/
     setTimeout(function() {
         videoPlay(0);
     }, 100);
@@ -286,8 +291,8 @@ function startGame()
     document.getElementById("translatedWord").style.display = "block";
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
-    resizeIframe();
-    resizeWidthIframe();
+/*    resizeIframe();
+    resizeWidthIframe();*/
     setTimeout(function() {
         videoPlay(0);
     }, 100);
