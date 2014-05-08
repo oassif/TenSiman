@@ -120,7 +120,7 @@ if (isset($_REQUEST["matchId"]) && isset($_REQUEST["currentPlayerId"])) {
     $response["sections"] = $sections;
 
 
-    $result = mysql_query("INSERT INTO `Games_new` (`matchupId`, `status`, `section1`, `section2`, `section3`, `section4`, `section5`, `dateCreated`) VALUES ('$matchId', $player, '$sectionIdArray[0]',  '$sectionIdArray[1]',  '$sectionIdArray[2]',  '$sectionIdArray[3]',  '$sectionIdArray[4]', '2013-01-01 01:00:00')");
+    $result = mysql_query("INSERT INTO `Games_new` (`matchupId`, `status`, `section1`, `section2`, `section3`, `section4`, `section5`, `dateCreated`, `initiator`) VALUES ('$matchId', $player, '$sectionIdArray[0]',  '$sectionIdArray[1]',  '$sectionIdArray[2]',  '$sectionIdArray[3]',  '$sectionIdArray[4]', '2013-01-01 01:00:00', $player)");
     $idCurGame = mysql_insert_id();
     
     // Setting the gameId for each of the sections. TODO: we might wish to remove the sectionId from the games_new table
