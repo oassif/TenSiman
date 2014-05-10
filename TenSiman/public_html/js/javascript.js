@@ -598,7 +598,7 @@ function refreshFriendsZone(toInvite) {
                 friendIDs[k] = friend.id;
             }
         }
-  //      friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+//        friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
@@ -679,18 +679,17 @@ function buildFriendsTable(matchesData, toInvite) {
         if (toInvite) {
 
             var name = "stav";
-            var userId = "'//" + matchesData[index] + "'";
+            var userId = "/" + matchesData[index];
 
-        //    FB.api('/12323145', {fields: 'id, name, picture'}, function(response) {
-           FB.api(userId, {fields: 'id, name, picture'}, function(response) {
+             //   FB.api('/12323145', {fields: 'id, name, picture'}, function(response) {
+            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
 
-            name = response.name;
-          //  name = "stav";
+                name = response.name;
 
-            $("#friends_table").append("<tr align=\"center\">" +
-                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                    "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
-                    "<br />" + name + "</td></tr>");
+                $("#friends_table").append("<tr align=\"center\">" +
+                        "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                        "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
+                        "<br />" + matchesData[index] + "," + index + "," + name + "</td></tr>");
             });
 
         } else {
@@ -703,7 +702,7 @@ function buildFriendsTable(matchesData, toInvite) {
 }
 
 function onClick_moreFriends() {
-    
+
 }
 
 /**
