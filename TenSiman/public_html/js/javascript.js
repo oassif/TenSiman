@@ -1032,10 +1032,10 @@ function publishStoryFriend(friendID) {
             method: 'feed',
             to: friendID.toString(),
             name: 'Ten Siman',
-            link: 'http://build.phonegap.com/apps/698754/install/?qr_key=EDyLEsvJH5SpzG6D99Bq',
+            link: 'https://www.facebook.com/tensiman',
             picture: 'images/logo.jpg',
             caption: 'TEN SIMAN',
-            description: 'I invite you to play with me and learn sign language'
+            description: 'I invite you to play with me and learn sign languege'
         };
         FB.ui(params, function(obj) {
             console.log(obj);
