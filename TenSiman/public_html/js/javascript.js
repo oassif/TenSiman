@@ -47,8 +47,9 @@ $(document).ready(function()
 
 
     myVideo.addEventListener("playing", function() {
-        count = 10;
         document.getElementById("timer").style.display = "block";
+        count = 10;
+
     }, false);
 
     try {
@@ -597,8 +598,7 @@ function refreshFriendsZone(toInvite) {
                 friendIDs[k] = friend.id;
             }
         }
-
-        // friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+        friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
@@ -655,14 +655,16 @@ function buildFriendsBar(matchup) {
 function buildFriendsTable(matchesData, toInvite) {
 
     document.getElementById("friends_bar").style.display = "block";
-    // document.getElementById("matchups_tableNew").style.display = "none";
     document.getElementById("friends_table").innerHTML = "";
     var table = document.getElementById("friends_table");
     var numOfMatchups = matchesData.length;
-    /*//alert(numOfMatchups);
-     //alert(table.innerHTML);*/
+    var size = numOfMatchups;
+    if (size > 20) {
+        size = 20;
+    }
+
     var index;
-    for (index = 0; index < numOfMatchups; ++index) {
+    for (index = 0; index < size; ++index) {
 
 
         var text = "";
@@ -679,23 +681,23 @@ function buildFriendsTable(matchesData, toInvite) {
         if (toInvite) {
 
             var name = "stav";
-            var userId = "'\\" + matchesData[index] + "'";
+            var userId = "'//" + matchesData[index] + "'";
 
-            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
-                name = response.name;
+            FB.api('/12323145', {fields: 'id, name, picture'}, function(response) {
+            name = response.name;
+            //name = "stav";
 
-
-
-                $("#friends_table").append("<tr align=\"center\">" +
-                        "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                        "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
-                        "<br />" + name + "</td></tr>");
+            $("#friends_table").append("<tr align=\"center\">" +
+                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                    "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
+                    "<br />" + name + "</td></tr>");
             });
+
         } else {
             $("#friends_table").append("<tr align=\"center\">" +
                     "<td><button " + buttonProperty + " >" + text + "</button></td>" +
                     "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
-                    "<br />" + matchesData[index]["rivalFirstName"] + " " + matchesData[index]["rivalLastName"] + "</td></tr>");
+                    "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
         }
     }
 }
