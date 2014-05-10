@@ -122,7 +122,7 @@ function refreshMatchups() {
     setTimeout(function() {
         ref();
     }, 2000);
-    setInterval(ref, 10000);
+    setInterval(checkRefresh, 10000);
     $("#matchups_tableNew").html("");
     document.getElementById("friends_bar").style.display = "none";
 }
@@ -1100,4 +1100,13 @@ function buildSummaryTable(matchesData, turn) {
 function showGameSummary(gameId, turn) {
     window.location = "#summary";
     getSummary(gameId, turn);
+}
+
+function checkRefresh()
+{
+    // Checking that we are in the matchups page, else there is not point to call the refresh php
+    if (window.location.toString().match("\#matchups$"))
+    {
+        ref();
+    }
 }

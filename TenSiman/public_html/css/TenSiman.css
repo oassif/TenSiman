@@ -75,10 +75,16 @@ td.matchButton button.waitForRival:active {
     //height: 20px !important;
 }
 
+#matchups_pagecontent {
+    position: absolute;
+    top: 15%;
+}
+
 /****** Player Bar : START ********/
 
 .playerBarContent {
     //width: inherit;
+    display: none;
     position: relative;
 }
 
@@ -359,7 +365,7 @@ div.MainFotter div.MainFooterCenterDiv {
     width: 100%;
     left: 0; 
     /* position:  absolute; */
-    top: 22px;
+    /* top: 22px; */
     right: 0; 
     margin-left: auto; 
     margin-right: auto;
@@ -367,8 +373,18 @@ div.MainFotter div.MainFooterCenterDiv {
     background-size: contain;
     font-family: "Alef Hebrew";
     font-size: x-large;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: 0 0 0 rgba(0,0,0,.2);
+    box-shadow: 0 0 0 rgba(0,0,0,.2);
+    margin: 0 0;
 }
 
+.MainFooterCenter .ui-btn-down-c {
+    background-position-y: 3px;
+    //line-height: 2px;
+}
+    
 .MainFooterCenter .NewGameImgBtn {
     border: 0;
     //height: 125px;
@@ -385,6 +401,24 @@ div.MainFotter div.MainFooterCenterDiv {
     /* font-family: "Alef Hebrew"; */
     /* font-size: x-large; */
     z-index: 0;
+}
+
+.MainFooterCenter .NewGameBtn
+{
+    border: 0;
+    text-align: center;
+    //height: 125px;
+    //width: 220px;
+    width: 100%;
+    left: 0; 
+    position:  absolute;
+    top: -50%;
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    font-family: "Alef Hebrew";
+    font-size: large;
+    font-weight: bold;
 }
 
 .MainFooterCenter .NewGameTxtBtn {
