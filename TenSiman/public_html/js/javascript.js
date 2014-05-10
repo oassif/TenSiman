@@ -236,8 +236,8 @@ function buildMatchesTable(matchesData) {
 }
 
 function timer() {
-  if (window.location.toString().match("\#game$"))
-  {
+    if (window.location.toString().match("\#game$"))
+    {
         if (count <= 0) {
             continueToNextQuestion(null);
             return;
@@ -498,43 +498,45 @@ function continueToNextQuestion(object) {
  
  * @returns {undefined} */
 function endGame() {
-    console.trace("Game Ended");
-    $.ajax({
-        //url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/endTurn.php',
-        method: 'POST',
-        data: {
-            gameId: currentGameId,
-            player: player1or2, //$("#name").val(),
-            turn: turn,
-            score: score,
-            playerId: currentPlayerId
-        },
-        success: function(data) {
-            var jason = JSON.parse(data);
-            if (jason.success == 1) {
+    if (window.location.toString().match("\#game$")) {
+        console.trace("Game Ended");
+        $.ajax({
+            //url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/endTurn.php',
+            method: 'POST',
+            data: {
+                gameId: currentGameId,
+                player: player1or2, //$("#name").val(),
+                turn: turn,
+                score: score,
+                playerId: currentPlayerId
+            },
+            success: function(data) {
+                var jason = JSON.parse(data);
+                if (jason.success == 1) {
+                }
+            },
+            error: function() {
+                //alert("error");
             }
-        },
-        error: function() {
-            //alert("error");
+        });
+        $("#text").val("");
+        for (var index = 0; index < videoCount; ++index) {
+            console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
         }
-    });
-    $("#text").val("");
-    for (var index = 0; index < videoCount; ++index) {
-        console.log("User answered on " + gameDetails[index][0] + " " + gameDetails[index][2] + " answer. Time:" + gameDetails[index][3] + " score: " + gameDetails[index][4]);
+
+        document.getElementById("timer").style.display = "none";
+        document.getElementById("myVideo").style.display = "none";
+        document.getElementById("answer1").style.display = "none";
+        document.getElementById("answer2").style.display = "none";
+        document.getElementById("answer3").style.display = "none";
+        document.getElementById("answer4").style.display = "none";
+        document.getElementById("translatedWord").style.display = "block";
+        score *= 10;
+        document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
+
+        showGameSummary(currentGameId, turn);
     }
-
-    document.getElementById("timer").style.display = "none";
-    document.getElementById("myVideo").style.display = "none";
-    document.getElementById("answer1").style.display = "none";
-    document.getElementById("answer2").style.display = "none";
-    document.getElementById("answer3").style.display = "none";
-    document.getElementById("answer4").style.display = "none";
-    document.getElementById("translatedWord").style.display = "block";
-    score *= 10;
-    document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
-
-    showGameSummary(currentGameId, turn);
 }
 
 /**

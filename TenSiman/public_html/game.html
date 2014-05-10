@@ -27,7 +27,6 @@ and open the template in the editor.
             }
 
             function playVideo() {
-                alert("hi");
                 var video = document.getElementById("video");
                 document.getElementById("video").play();
                 setInterval(timer, 1000);
@@ -35,11 +34,13 @@ and open the template in the editor.
             }
 
             video.addEventListener("playing", function() {
+                counter = 10;
                 setInterval(timer, 1000);
             }, false);
 
             video.addEventListener("canplay", function() {
-                alert("hi!!!!");
+                var video = document.getElementById("video");
+                document.getElementById("video").play();
             }, false);
 
         </script>
