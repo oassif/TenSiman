@@ -896,7 +896,7 @@ function getLoginStatus() {
     }
     catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
-        loginFromWeb();
+       // loginFromWeb();
     }
 }
 

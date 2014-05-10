@@ -23,34 +23,27 @@ and open the template in the editor.
                     return;
                 }
                 count = count - 1;
-                document.getElementById("timer").innerHTML = count + " secs";
+                document.getElementById("timer111").innerHTML = count + " secs";
             }
 
             function playVideo() {
                 var video = document.getElementById("video");
                 document.getElementById("video").play();
-                setInterval(timer, 1000);
-
             }
 
             video.addEventListener("playing", function() {
-                counter = 10;
                 setInterval(timer, 1000);
             }, false);
 
-            video.addEventListener("canplay", function() {
-                var video = document.getElementById("video");
-                document.getElementById("video").play();
-            }, false);
 
         </script>
 
-        <video id="video" loop poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" oncanplay="playVideo()">
+        <video id="video" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg">
             <source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">
             Your browser does not support the video tag.
         </video>
 
-    <center><span id="timer"></span></center>
+    <center><span id="timer111"></span></center>
 
 
 
