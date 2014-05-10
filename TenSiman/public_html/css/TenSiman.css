@@ -49,7 +49,7 @@ td.matchButton button:active {
 
     //height: 130px;
     //background-image: url('YourTurn.png');
-    background-position-y: 6px;
+    background-position-y: 8px;
     line-height: 2px;
 
     //background: url(YourTurn.png) no-repeat top;
@@ -75,12 +75,22 @@ td.matchButton button.waitForRival:active {
     //height: 20px !important;
 }
 
+/****** Player Bar : START ********/
+
+.playerBarContent {
+    //width: inherit;
+    position: relative;
+}
+
+/****** Player Bar : END **********/
+
 /****** MATCHUPS TABLE : START ***********/
 
 button.newGame {
     border: 0px;
-    height: 100px;
-    width: 100px;
+    height: 100%;
+    //width: 100px;
+    width: 60%;
     background: url('NewGame.png') no-repeat center;
     background-size: contain;
     /*border-radius: 30px;
@@ -95,8 +105,9 @@ button.waitForRival {
      height: 40px;
      width: 80px;*/
     border: 0px;
-    height: 100px;
-    width: 100px;
+    height: 100%;
+    //width: 100px;
+    width: 60%;
     background: url('Hold.png') no-repeat center;
     background-size: contain;
     //font-size: 18em !important;
@@ -112,8 +123,9 @@ button.yourTurn {
 
     //border-radius: 17px;
     border: 0px;
-    height: 100px;
-    width: 100px;
+    height: 100%;
+    //width: 100px;
+    width: 60%;
     background: url('YourTurn.png') no-repeat center;
     background-size: contain;
     //font-size: 18em !important;
@@ -123,25 +135,40 @@ button.yourTurn {
 
 button.expertChallange {
     border: 0px;
-    height: 100px;
-    width: 100px;
+    height: 100%;
+    //width: 100px;
+    width: 60%;
     background: url('Expert.png') no-repeat center;
     background-size: contain;
 }
 
 table.matches tr {
     //height: 136px;
-    line-height: 70px;
+    //line-height: 70px;
+    line-height: 23%;
+    position: relative;
+    height: 24%;
 }
 
 table.matches td.summary
 {
-    width: 75px;
+    //width: 75px;
+    width: 10%;
 }
+
+table.matches .summaryContainer {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    background-color: black;
+}
+
+
 
 td.summary button.summary
 {
-    width: 67px;
+    //width: 67px;
+    width: 100%;
     height: 67px;
     border-radius: 100px;
     border: solid black;
@@ -153,8 +180,9 @@ td.summary button.summary
 
 td.summary button.summary:active
 {
-    width: 64px;
-    height: 64px;
+    //width: 64px;
+    width: 96%;
+    height: 43px;
     border-radius: 100px;
     border: solid black;
     border-bottom-width: 3px;
@@ -165,49 +193,66 @@ td.summary button.summary:active
 
 table.matches td.matchButton
 {
-    width: 33%;
+    width: 35%;
+    right: -23px;
+    position: relative;
 }
 
 td.matchScore
 {
-    width: 100px;
+    //width: 100px;
+    width: 10%;
     //border: solid black thick;
     //font-family: "Alef Hebrew";
     font-family: 'Asap', sans-serif;
-    font-size: 3em;
+    font-size: x-large;
 }
 
 table.matches td.matchRival
 {
-    width: 33%;
+    width: 35%;
     font-family: "Alef Hebrew";
+    left:60px;
 }
 
 div.rivalPic {
     position: relative;
-    width: 104px;
+    //width: 104px;
+    width: 100%;
+    right: 31px;
+    /* right: 17px; */
 }
 
 div.rivalRank {
-    height: 50px;
-    width: 50px;
+    /* height: 50px; */
+    //width: 50px;
+    width: 30%;
     position: absolute;
-    right: -9px;
-    bottom: -9px;
+    right: 11px;
+    bottom: -10px;
     background: url('Profressbarstar.png') no-repeat center;
     background-size: contain;
     text-align: center;
     /* vertical-align: top; */
     line-height: 49px;
-    font-family: "Alef Hebrew";
-    font-size: x-large;
+    font-family: 'Asap', sans-serif;
+    font-weight: bold;
+    font-size: large;
 }
+
+/*div.rivalRank img.imgStar {
+    position: absolute;
+    width: 100%;
+    top: -52%;
+}*/
+
 div.rivalPic div.rivalName {
     position: absolute;
-    left: 4.8em;
-    bottom: -8px;
-    font-family: "Alef Hebrew";
-    font-size: x-large;
+    left: 100%;
+    top: 16%;
+    font-family: 'Asap', sans-serif;
+    font-size: medium;
+    font-weight: normal;
 }
 
 /*<!--<div style="position:relative; border: 1px solid pink; width:250px; height:250px;">
@@ -222,9 +267,11 @@ div.rivalPic div.rivalName {
 
 div.MainFotter {
     width: 100%;
-    height: 112px;
+    //height: 112px;
+    height: 10%;
     border-top: solid black thick;
     position: fixed;
+    left: 0px;
     bottom: 0px;
     background-color: #f2f2f2;
 }
@@ -233,35 +280,70 @@ div.MainFotter div.ExpertsZone {
     display: inline-block;
     left: 2px;
     width: 33%;
-    height: 112px;
+    //height: 112px;
+    height: 10%;
     position:  absolute;
     top: 10px;
     //left: 3em;;
     text-align: center;
     font-family: "Alef Hebrew";
     vertical-align: middle;
-    font-size: x-large;
-
+    font-size: medium;
+    
     //border-top: solid black thick;
+}
+
+div.MainFotter td.bottomText {
+    padding-left: 0px;
+}
+
+div.MainFotter img.ExpertsZone {
+width: 66%;
+}
+
+div.MainFotter img.HallOfFameZone {
+width: 66%;
+}
+
+
+div.MainFotter div.MainFooterCenterBorder {
+    display: inline-block;
+    width: 33%;
+    height: 100%;
+    /* width: 300px; */
+    //height: 170px;
+    position: absolute;
+    left: 0;  right:0;  margin-left:auto;  margin-right:auto;
+    border: solid black thick;
+    top: -50%; /*bottom: 0;
+    margin-top: auto; margin-bottom: auto;*/
+    margin: auto;
+    z-index: 0;
+    border-radius: 100% 100% 0 0;
 }
 
 div.MainFotter div.MainFooterCenterBackground {
     display: inline-block;
-    width: 300px;
-    height: 170px;
+    width: 33%;
+    height: 100%;
+    /* width: 300px; */
+    //height: 170px;
     position: absolute;
     left: 0;  right:0;  margin-left:auto;  margin-right:auto;
-    border: solid black thick;
-    top: -84px; /*bottom: 0;
+    border-top: black solid thick;
+    background-color: #f2f2f2;
+    top: -50%; /*bottom: 0;
     margin-top: auto; margin-bottom: auto;*/
     margin: auto;
-    z-index: 0;
-    border-radius: 300px 300px 0 0;}
+    z-index: 1;
+    border-radius: 100% 100% 0 0;
+}
 
 div.MainFotter div.MainFooterCenterDiv {
     width: 33%;
-    height: 112px;
-    position:  absolute;
+    height: 100%;
+    border: #f2f2f2 solid thick;
+    position: absolute;
     left:  0;
     right: 0;
     margin-left: auto;
@@ -270,30 +352,11 @@ div.MainFotter div.MainFooterCenterDiv {
     z-index: 1;
 }
 
-div.MainFotter div.MainFooterCenter {
-    display: inline-block;
-    width: 300px;
-    height: 165px;
-    position: absolute;
-    left: 0;  right:0;  margin-left:auto;  margin-right:auto;
-    top: -79px;
-    /* margin-top: auto; */
-    /* margin-bottom: auto; */
-    /* border-top:  black solid thick; */
-    border: 4px;
-    border-bottom: 0px;
-    line-height: 73px;
-    background-color: #f2f2f2;
-    z-index: 2;
-    /* -webkit-border-radius: 100%; */ 
-    /* border-radius: 760px 760px 0px 0px; */
-    border-radius: 350px 350px 0 0;
-}
-
-div.MainFooterCenter button.NewGameZone {
+.MainFooterCenter .ui-btn {
     border: 0;
-    height: 125px;
-    width: 220px;
+    //height: 125px;
+    //width: 220px;
+    width: 100%;
     left: 0; 
     /* position:  absolute; */
     top: 22px;
@@ -304,6 +367,78 @@ div.MainFooterCenter button.NewGameZone {
     background-size: contain;
     font-family: "Alef Hebrew";
     font-size: x-large;
+}
+
+.MainFooterCenter .NewGameImgBtn {
+    border: 0;
+    //height: 125px;
+    //width: 220px;
+    width: 100%;
+    left: 0; 
+    position:  absolute;
+    top: -50%;
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    //background: url('CreateGame.png') no-repeat center;
+    /* background-size: contain; */
+    /* font-family: "Alef Hebrew"; */
+    /* font-size: x-large; */
+    z-index: 0;
+}
+
+.MainFooterCenter .NewGameTxtBtn {
+    width: 100%;
+    text-align: center;
+    //left: 0; 
+    position: absolute;
+    top: -50%;
+    //right: 0; 
+    //margin-left: auto; 
+    //margin-right: auto;
+    font-family: "Alef Hebrew";
+    font-size: large;
+    font-weight: bold;
+    z-index: 1;
+    margin-top: 10%;
+}
+
+div.MainFotter div.MainFooterCenter {
+    display: inline-block;
+    /* width: 300px; */
+    width: 33%;
+    //height: 165px;
+    position: absolute;
+    left: 0;  right:0;  margin-left:auto;  margin-right:auto;
+    top: -33%;
+    /* margin-top: auto; */
+    /* margin-bottom: auto; */
+    /* border-top:  black solid thick; */
+    //border: 4px;
+    //border-bottom: 0px;
+    //line-height: 1px;
+    background-color: transparent;
+    z-index: 2;
+    /* -webkit-border-radius: 100%; */ 
+    /* border-radius: 760px 760px 0px 0px; */
+    border-radius: 100% 100% 0 0;
+}
+
+div.MainFooterCenter button.NewGameZone {
+    //border: 0;
+    //height: 125px;
+    /*width: 220px;*/
+    //width: 100%;
+    //left: 0; 
+    /* position:  absolute; */
+    //top: 22px;
+    //right: 0; 
+    //margin-left: auto; 
+    //margin-right: auto;
+    //background: url('CreateGame.png') no-repeat center;
+    //background-size: contain;
+    //font-family: "Alef Hebrew";
+    //font-size: x-large;
     /* line-height: 1; */
 }
 
@@ -311,22 +446,25 @@ div.MainFotter div.HallOfFameZone {
     display: inline-block;
     position:  absolute;
     width: 33%;
-    height: 112px;
+    //height: 112px;
+    height: 10%;
     right: 2px;
     top: 10px;
     //border-top: solid black thick;
     text-align: center;
     font-family: "Alef Hebrew";
     vertical-align: middle;
-    font-size: x-large;
+    font-size: medium;
+    direction: rtl;
 }
 
 /****** MAIN FOOTER : END   ************/
 
 img.profile {
-    border: solid black thick;
-    border-radius: 98px;
-    width: 80px;
+    border: solid black;
+    border-radius: 100px;
+    //width: 80px;
+    width: 50%;
 }
 //font-size: 18em !important;
 //height: 20px !important;
@@ -361,12 +499,13 @@ img.profile {
 }
 
 #matchups .main-header {
-    border-top:solid 4px black;
+    border-top:solid 0px black;
     border-bottom: solid 4px black;
-    height: 8em;
+    /* height: 8em; */
     width: 100%;
-
-
+    height: 13%;
+    position: fixed;
+    z-index: 1;
 }
 #summary .main-header {
     border-top:solid 4px black;
@@ -388,7 +527,11 @@ img.profile {
 
 #header-top {
 
-    display:block;text-align: center;
+    display:block;
+    z-index: 2;
+    text-align: center;
+    
+
 }
 
 #header-top .header-right {

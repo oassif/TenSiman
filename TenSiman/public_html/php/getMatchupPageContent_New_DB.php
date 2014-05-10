@@ -43,7 +43,8 @@ if (isset($_REQUEST["userId"])) {
                                    FirstName AS rivalFirstName,
                                    LastName As rivalLastName,
                                    player2 AS rivalId,
-                                   imgURL AS rivalImg
+                                   imgURL AS rivalImg,
+                                   (SELECT level FROM `Users` WHERE id = player2) AS rivalLevel
                                    FROM `Matchups` m, `Games_new` g, `Users` u
                                    WHERE player1=$userId
                                          AND m.player2 = u.id
@@ -57,7 +58,8 @@ if (isset($_REQUEST["userId"])) {
                                     FirstName AS rivalFirstName,
                                     LastName As rivalLastName,
                                     player1 AS rivalId,
-                                    imgURL AS rivalImg
+                                    imgURL AS rivalImg,
+                                    (SELECT level FROM `Users` WHERE id = player1) AS rivalLevel
                                     FROM `Matchups` m,`Games_new` g, `Users` u
                                     WHERE player2=$userId
                                           AND m.player1 = u.id
@@ -103,6 +105,7 @@ if (mysql_num_rows($result2) > 0) {
         $match["rivalLastName"] = $row["rivalLastName"];
         $match["rivalImg"] = $row["rivalImg"];
         $match["rivalId"] = $row["rivalId"];
+        $match["rivalLevel"] = $row["rivalLevel"];
         $match["LiveGameId"] = $row["LiveGameId"];
         $match["matchupId"] = $row["matchupId"];
 
@@ -140,6 +143,7 @@ if (mysql_num_rows($result3) > 0) {
         $match["rivalLastName"] = $row["rivalLastName"];
         $match["rivalImg"] = $row["rivalImg"];
         $match["rivalId"] = $row["rivalId"];
+        $match["rivalLevel"] = $row["rivalLevel"];
         $match["LiveGameId"] = $row["LiveGameId"];
         $match["matchupId"] = $row["matchupId"];
 
