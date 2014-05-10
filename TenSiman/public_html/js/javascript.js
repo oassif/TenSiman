@@ -1033,7 +1033,7 @@ function publishStoryFriend(friendID) {
             to: friendID.toString(),
             name: 'Ten Siman',
             link: 'https://www.facebook.com/tensiman',
-            picture: 'images/logo.jpg',
+            picture: 'images/logo.png',
             caption: 'TEN SIMAN',
             description: 'I invite you to play with me and learn sign languege'
         };
