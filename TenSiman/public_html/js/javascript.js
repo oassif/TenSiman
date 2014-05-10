@@ -44,6 +44,14 @@ function pageY(elem) {
 
 $(document).ready(function()
 {
+
+
+    myVideo.addEventListener("playing", function() {
+        alert("hi")
+        count = 10;
+        document.getElementById("timer").style.display = "block";
+    }, false);
+
     try {
         if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
             //alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
@@ -285,56 +293,61 @@ function startGame()
     document.getElementById("myVideo").setAttribute("src", "");
     score = 0;
     currVideoId = 0;
-    isDemo = true;
-    document.getElementById("play").style.display = "block";
+//    isDemo = true;
+    document.getElementById("play").style.display = "none";
     document.getElementById("translatedWord").style.display = "block";
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
     /*    resizeIframe();
      resizeWidthIframe();*/
-    setTimeout(function() {
-        videoPlay(0);
-    }, 100);
+//    setTimeout(function() {
+//        videoPlay(0);
+//    }, 100);
+//    
+
+    startPlay();
 }
 
-function videoPlay(videoNum)
-{
 
-    // Checks if need to show the translation
-    if (isDemo) {
-        document.getElementById("title").innerHTML = "נסו לזכור את המילים הבאות";
-        document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
-        document.getElementById("myVideo").style.display = "block";
-        // Showing the translation
-        document.getElementById("translatedWord").style.display = "block";
-        document.getElementById("translatedWord").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
-        // Hiding the options
-        document.getElementById("answers").style.display = "none";
-        if (videoNum < 4) {
-            videoNum++;
-            setTimeout(function() {
-                document.getElementById("myVideo").setAttribute("src", "");
-                videoPlay(videoNum);
-            }, 2300);
-        } else {
-
-            setTimeout(function() {
-                document.getElementById("translatedWord").style.display = "none";
-                document.getElementById("myVideo").style.display = "none";
-                document.getElementById("repeat").style.display = "block";
-            }, 2200);
-        }
-    }
-
-    else {
-        document.getElementById("myVideo").setAttribute("src", "");
-        document.getElementById("myVideo").style.display = "block";
-        document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
-        document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
-        show4possibleAnswers(videoNum);
-    }
-}
-
+/**
+ function videoPlay(videoNum)
+ {
+ 
+ // Checks if need to show the translation
+ if (isDemo) {
+ document.getElementById("title").innerHTML = "נסו לזכור את המילים הבאות";
+ document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
+ document.getElementById("myVideo").style.display = "block";
+ // Showing the translation
+ document.getElementById("translatedWord").style.display = "block";
+ document.getElementById("translatedWord").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
+ // Hiding the options
+ document.getElementById("answers").style.display = "none";
+ if (videoNum < 4) {
+ videoNum++;
+ setTimeout(function() {
+ document.getElementById("myVideo").setAttribute("src", "");
+ videoPlay(videoNum);
+ }, 2300);
+ } else {
+ 
+ setTimeout(function() {
+ document.getElementById("translatedWord").style.display = "none";
+ document.getElementById("myVideo").style.display = "none";
+ document.getElementById("repeat").style.display = "block";
+ }, 2200);
+ }
+ }
+ 
+ else {
+ document.getElementById("myVideo").setAttribute("src", "");
+ document.getElementById("myVideo").style.display = "block";
+ document.getElementById("myVideo").setAttribute("src", videoArray[videoNum]["moviePath"]);
+ document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
+ show4possibleAnswers(videoNum);
+ }
+ }
+ */
 function show4possibleAnswers(videoNum) {
 // Not Showing the translation
 //document.getElementById("translation").innerHTML = "<H1>&nbsp</H1>";
@@ -391,6 +404,7 @@ function myHandler() {
 // start to show videos + answers. 
 function startPlay() {
 
+    document.getElementById("timer").style.display = "none";
     isDemo = false;
     currVideoId = 0;
     // Hiding buttons
@@ -422,6 +436,9 @@ function onClick_checkAnswer(object) {
 // TODO: disable all buttons and enabling them only when creating the new buttons for the next answer
 //    gameDetails[order[currVideoId]][3] = count;
 // Saving user's answer
+    //count = 10;
+    document.getElementById("timer").style.display = "none";
+
     if (m_isCanClick)
     {
         m_isCanClick = false;
@@ -466,6 +483,10 @@ function onClick_checkAnswer(object) {
 
 
 function continueToNextQuestion(object) {
+
+    count = 10;
+    document.getElementById("timer").style.display = "none";
+
     document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
     document.getElementById(correctAnswerId).style.background = "gray"; //"green";
     document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
@@ -544,7 +565,7 @@ function endGame() {
  */
 function resetButtons() {
 
-    document.getElementById("timer").style.display = "block";
+    //document.getElementById("timer").style.display = "block";
     document.getElementById("answer1").style.display = "block";
     document.getElementById("answer2").style.display = "block";
     document.getElementById("answer3").style.display = "block";
@@ -896,7 +917,7 @@ function getLoginStatus() {
     }
     catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
-       // loginFromWeb();
+        loginFromWeb();
     }
 }
 
@@ -1115,4 +1136,19 @@ function checkRefresh()
     {
         ref();
     }
+}
+
+
+function videoPlay(videoNum)
+{
+    document.getElementById("timer").style.display = "none";
+    document.getElementById("myVideo").style.display = "block";
+    document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
+    document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
+    show4possibleAnswers(videoNum);
+
+}
+
+function playVideo() {
+    document.getElementById("myVideo").play();
 }
