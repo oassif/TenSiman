@@ -30,17 +30,17 @@ function pageY(elem) {
 }
 
 /*function resizeIframe() {
-    var height = document.documentElement.clientHeight * 0.65;
-    height -= pageY(document.getElementById('myVideo')) + buffer;
-    height = (height < 0) ? 0 : height;
-    document.getElementById('myVideo').style.height = height + 'px';
-}
-function resizeWidthIframe() {
-    var width = document.documentElement.clientWidth;
-    width -= pageY(document.getElementById('myVideo')) + buffer;
-    width = (width < 0) ? 0 : width;
-    document.getElementById('myVideo').style.width = width + 'px';
-}*/
+ var height = document.documentElement.clientHeight * 0.65;
+ height -= pageY(document.getElementById('myVideo')) + buffer;
+ height = (height < 0) ? 0 : height;
+ document.getElementById('myVideo').style.height = height + 'px';
+ }
+ function resizeWidthIframe() {
+ var width = document.documentElement.clientWidth;
+ width -= pageY(document.getElementById('myVideo')) + buffer;
+ width = (width < 0) ? 0 : width;
+ document.getElementById('myVideo').style.width = width + 'px';
+ }*/
 
 $(document).ready(function()
 {
@@ -157,12 +157,12 @@ function buildPlayerBar(userData) {
             "<td>נקודות: " + userData["score"] + "</td>" +
             "<td></td>" +
             "</tr></table>";
-    
-    
-     document.getElementById("score").innerHTML = userData["score"]; 
-     document.getElementById("level").innerHTML = "120";
+
+
+    document.getElementById("score").innerHTML = userData["score"];
+    document.getElementById("level").innerHTML = "120";
     // document.getElementById("nextLevel").innerHTML = userData["level"];
-  
+
 }
 
 function buildMatchesTable(matchesData) {
@@ -194,7 +194,7 @@ function buildMatchesTable(matchesData) {
             buttonClass = "yourTurn";
             //alert("your turn:" + matchesData[index]["LiveGameId"]);
             buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameId"] + ")\"";
-            playerTurn= 1;
+            playerTurn = 1;
         }
         else if (matchesData[index]["gameStatus"] === "2") {
             text = "המתן";
@@ -226,7 +226,7 @@ function buildMatchesTable(matchesData) {
                 "<td class=\"matchRival\">" +
                 "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
                 //"<div class=\"rivalRank\"><img src=\"css/Profressbarstar.png\" width=\"100%\" class=\"imgStar\"/>" + matchesData[index]["rivalLevel"] + 
-                "<div class=\"rivalRank\">" + matchesData[index]["rivalLevel"] + 
+                "<div class=\"rivalRank\">" + matchesData[index]["rivalLevel"] +
                 "<div class=\"rivalName\">" + matchesData[index]["rivalFirstName"] + "</div>" +
                 "</div>" +
                 "</div>" +
@@ -236,12 +236,15 @@ function buildMatchesTable(matchesData) {
 }
 
 function timer() {
-    if (count <= 0) {
-        continueToNextQuestion(null);
-        return;
+  if (window.location.toString().match("\#game$"))
+  {
+        if (count <= 0) {
+            continueToNextQuestion(null);
+            return;
+        }
+        count = count - 1;
+        document.getElementById("timer").innerHTML = count + " secs";
     }
-    count = count - 1;
-    document.getElementById("timer").innerHTML = count + " secs";
 }
 
 function createNewLiveGame(matchUpId)
@@ -269,8 +272,8 @@ function createNewLiveGame(matchUpId)
     // TODO: might need to change something here:
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
-/*    resizeIframe();
-    resizeWidthIframe();*/
+    /*    resizeIframe();
+     resizeWidthIframe();*/
     setTimeout(function() {
         videoPlay(0);
     }, 100);
@@ -287,8 +290,8 @@ function startGame()
     document.getElementById("translatedWord").style.display = "block";
     document.getElementById("answers").style.display = "none";
     window.location = "#game";
-/*    resizeIframe();
-    resizeWidthIframe();*/
+    /*    resizeIframe();
+     resizeWidthIframe();*/
     setTimeout(function() {
         videoPlay(0);
     }, 100);
@@ -891,7 +894,7 @@ function getLoginStatus() {
     }
     catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
-     //   loginFromWeb();
+        loginFromWeb();
     }
 }
 
