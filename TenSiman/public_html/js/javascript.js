@@ -598,7 +598,7 @@ function refreshFriendsZone(toInvite) {
                 friendIDs[k] = friend.id;
             }
         }
-        friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+     //   friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
@@ -665,8 +665,6 @@ function buildFriendsTable(matchesData, toInvite) {
 
     var index;
     for (index = 0; index < size; ++index) {
-
-
         var text = "";
         var buttonProperty = "";
         // Decide button
@@ -683,7 +681,9 @@ function buildFriendsTable(matchesData, toInvite) {
             var name = "stav";
             var userId = "'//" + matchesData[index] + "'";
 
-            FB.api('/12323145', {fields: 'id, name, picture'}, function(response) {
+        //    FB.api('/12323145', {fields: 'id, name, picture'}, function(response) {
+           FB.api(userId, {fields: 'id, name, picture'}, function(response) {
+
             name = response.name;
             //name = "stav";
 
@@ -700,6 +700,10 @@ function buildFriendsTable(matchesData, toInvite) {
                     "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
         }
     }
+}
+
+function onClick_moreFriends() {
+    
 }
 
 /**
