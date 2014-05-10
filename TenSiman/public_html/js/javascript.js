@@ -47,7 +47,6 @@ $(document).ready(function()
 
 
     myVideo.addEventListener("playing", function() {
-        alert("hi")
         count = 10;
         document.getElementById("timer").style.display = "block";
     }, false);
