@@ -879,7 +879,7 @@ function getLoginStatus() {
                             currentPlayerId = jason.userId;
                             window.location = "#matchups";
                             refreshMatchups();
-                            alert(currentPlayerId);
+                            //alert(currentPlayerId);
                         }
                     },
                     error: function() {
