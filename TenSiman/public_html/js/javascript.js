@@ -685,11 +685,13 @@ function buildFriendsTable(matchesData, toInvite) {
             FB.api(userId, {fields: 'id, name, picture'}, function(response) {
 
                 name = response.name;
+                id = response.id;
+                picture = response.picture;
 
                 $("#friends_table").append("<tr align=\"center\">" +
                         "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                        "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
-                        "<br />" + matchesData[index] + "," + index + "," + name + "</td></tr>");
+                        "<td><img src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
+                        "<br />" + id + "," + index + "," + name + "</td></tr>");
             });
 
         } else {
