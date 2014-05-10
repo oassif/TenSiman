@@ -330,8 +330,6 @@ function videoPlay(videoNum)
         document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
         show4possibleAnswers(videoNum);
     }
-
-
 }
 
 function show4possibleAnswers(videoNum) {
