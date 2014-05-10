@@ -22,6 +22,7 @@ var score = 0;
 var buffer = 20; //scroll bar buffer
 var m_isCanClick; // Used to prevent user from clicking multiple times on the answer (couldn't disabled the buttons for some reason)
 
+var allreadyPlayed = false;
 var currentGameId = -1;
 var turn = 0;
 var player1or2 = 0;
@@ -48,8 +49,10 @@ $(document).ready(function()
 
     myVideo.addEventListener("playing", function() {
         document.getElementById("timer").style.display = "block";
-        count = 10;
-
+        if (!allreadyPlayed) {
+            count = 10;
+            allreadyPlayed = true;
+        } 
     }, false);
 
     try {
@@ -598,7 +601,7 @@ function refreshFriendsZone(toInvite) {
                 friendIDs[k] = friend.id;
             }
         }
-//        friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+        //friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
@@ -678,34 +681,30 @@ function buildFriendsTable(matchesData, toInvite) {
 
         if (toInvite) {
 
-            var name = "stav";
             var userId = "/" + matchesData[index];
+//            id = matchesData[index];
+//            name = "stav";
 
-             //   FB.api('/12323145', {fields: 'id, name, picture'}, function(response) {
             FB.api(userId, {fields: 'id, name, picture'}, function(response) {
-
                 name = response.name;
                 id = response.id;
                 picture = response.picture;
 
                 $("#friends_table").append("<tr align=\"center\">" +
                         "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                        "<td><img src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
-                        "<br />" + id + "," + index + "," + name + "</td></tr>");
+                        "<td><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
+                        "<div class=\"friendName\">" + name + "</div></td></tr>");
             });
 
         } else {
             $("#friends_table").append("<tr align=\"center\">" +
                     "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                    "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
-                    "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+                    "<td><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" />" +
+                    "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td></tr>");
         }
     }
 }
 
-function onClick_moreFriends() {
-
-}
 
 /**
  * Create new MatchUp between 2 users who never played before.
@@ -1032,11 +1031,11 @@ function publishStoryFriend(friendID) {
         var params = {
             method: 'feed',
             to: friendID.toString(),
-            name: 'Facebook Dialogs',
-            link: 'https://developers.facebook.com/docs/reference/dialogs/',
-            picture: 'http://fbrell.com/f8.jpg',
-            caption: 'Reference Documentation',
-            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+            name: 'Ten Siman',
+            link: 'http://build.phonegap.com/apps/698754/install/?qr_key=EDyLEsvJH5SpzG6D99Bq',
+            picture: 'images/logo.jpg',
+            caption: 'TEN SIMAN',
+            description: 'I invite you to play with me and learn sign language'
         };
         FB.ui(params, function(obj) {
             console.log(obj);
@@ -1147,6 +1146,7 @@ function checkRefresh()
 
 function videoPlay(videoNum)
 {
+    allreadyPlayed = false;
     document.getElementById("timer").style.display = "none";
     document.getElementById("myVideo").style.display = "block";
     document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
@@ -1157,4 +1157,8 @@ function videoPlay(videoNum)
 
 function playVideo() {
     document.getElementById("myVideo").play();
+}
+
+function onClick_moreFriends() {
+
 }
