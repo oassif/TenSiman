@@ -891,7 +891,7 @@ function getLoginStatus() {
     }
     catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
-        loginFromWeb();
+     //   loginFromWeb();
     }
 }
 
@@ -1022,6 +1022,7 @@ document.addEventListener('deviceready', function() {
         // alert(e);
     }
 }, false);
+
 function loginFromWeb() {
     currentPlayerId = 1;
     window.location = "#matchups";
