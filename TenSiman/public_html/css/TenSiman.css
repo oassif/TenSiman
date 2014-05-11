@@ -496,7 +496,7 @@ div.MainFotter div.HallOfFameZone {
 
 img.profile {
     border: solid black;
-    border-radius: 100px;
+    border-radius: 50% 50% 50% 50%;
     //width: 80px;
     width: 50%;
 }
@@ -583,7 +583,7 @@ img.profile {
 
 }
 
-
+/// summary Table - start////
 
 td.word
 {
@@ -941,3 +941,12 @@ img.GameProfile {
     width: 75%;
 }
 /* ########### START GAME ############# */
+/// summary Table - end////
+
+//// friends Table - start ///
+
+
+.friendName{
+    font-family: "Alef Hebrew";
+    font-size: x-large;
+}
