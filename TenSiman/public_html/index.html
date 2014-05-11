@@ -34,7 +34,7 @@ works with FaceBook
                     <img src="images/logo.png" width="67%">
 
                     <div class="buttons">
-                        <a href="game.html" >התחבר</button> </a>
+                        <a href="game.html" >התחבר</a>
                         <button onclick="getLoginStatus()">התחבר</button>
                         <button onclick="logout()">Logout</button>
                     </div>
@@ -257,26 +257,76 @@ works with FaceBook
 
         <!-- Game Page -->
         <div id="game" data-role="page">
-            <center>
+            <div id="GameHeader">
+                <div id="Game_HeaderLeft" align="center">
+                    <img id="Game_LeftPic" src="http://graph.facebook.com/assif/picture/" class="GameProfile"/>
+                    <div id="Game_LeftName">Me</div>
+                </div>
+                <div id="Game_HeaderCenter">
+                    <span id="timer"></span>
+                </div>
+                <div id="Game_HeaderRight"  align="center">
+                    <img id="Game_RightPic" src="http://graph.facebook.com/assif/picture/" class="GameProfile"/>
+                    <div id="Game_RightName">Rival</div>
+                </div>
+            </div>
+                                
+            <div id="GameMainContainer">
+                <div id="GameVideoContainer">
+                    <center>
+                    <video id="myVideo" autoplay poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
+                        <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
+                        Your browser does not support the video tag.
+                    </video>
+                    </center>
+                </div>
+                <div id="GameAnswers">
+                    <div id="TopLeftAnswer" class="GameAnswerContainer">
+                        <!--<a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>-->
+                        <a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>
+                    </div>
+                    <div id="TopRightAnswer" class="GameAnswerContainer">
+                        <a data-role="button" id="gameAnswer2" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>
+                    </div>
+                    <div id="BottomLeftAnswer" class="GameAnswerContainer">
+                        <a data-role="button" id="gameAnswer3" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>
+                    </div>
+                    <div id="BottomRightAnswer" class="GameAnswerContainer">
+                        <a data-role="button" id="gameAnswer4" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>
+                    </div>
+                </div>
+            </div>
+            <div id="Game_LeftScore" class="GameScore">12
+            </div>
+            <div id="Game_RightScore" class="GameScore">27
+            </div>
+            <div id="left_score_bar" class="GameScoreBar"> </div>
+            <div id="right_score_bar" class="GameScoreBar"></div>
+            <div align="center" id="translation" style="display: none;">
+                        <input type="button" id="repeat" onclick="showVideos();" style="display: none">
+                        <span id="translatedWord"></span>
+                        <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
+                         <!--display should be none, it's block only for debug-->
+                        <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
+                    </div>
+<!--            <center>
                 <header data-role="header">
                     <span id="title">
                         נסו לזכור את המילים הבאות
                     </span>
-                    <!--<a href="#mainpage" data-icon="check" data-role="button" data-theme="b">Sign In</a>
-                    <a href="#settings" data-icon="gear" data-role="button" data-theme="b">Settings</a>-->
                 </header>
 
 
                 <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
                 </video>
-<!--                        <button onclick="playVideo()">play()</button>-->
+                        <button onclick="playVideo()">play()</button>
 
                     <div align="center" id="translation">
-                        <!--<input type="button" id="repeat" onclick="showVideos();" style="display: none">-->
-                        <!--<button-->
+                        <input type="button" id="repeat" onclick="showVideos();" style="display: none">
+                        <button
                         <span id="translatedWord"></span>
                         <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
-                        <!-- display should be none, it's block only for debug-->
+                         display should be none, it's block only for debug
                         <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
                     </div>
                     <br/><br/>
@@ -298,10 +348,10 @@ works with FaceBook
                     <br>
                     <center><span id="timer"></span></center>
                     <br>
-                    <!-- </div>
-                         </td></tr></table>-->
-                    </center>
-                    </div>
+                     </div>
+                         </td></tr></table>
+                    </center>-->
+        </div>
 
 
                     <!-- Summary Page -->
