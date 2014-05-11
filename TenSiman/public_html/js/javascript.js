@@ -23,6 +23,7 @@ var score = 0;
 var buffer = 20; //scroll bar buffer
 var m_isCanClick; // Used to prevent user from clicking multiple times on the answer (couldn't disabled the buttons for some reason)
 
+var allreadyPlayed = false;
 var currentGameId = -1;
 var turn = 0;
 var player1or2 = 0;
@@ -49,8 +50,10 @@ $(document).ready(function()
 
     myVideo.addEventListener("playing", function() {
         document.getElementById("timer").style.display = "block";
-        count = 10;
-
+        if (!allreadyPlayed) {
+            count = 10;
+            allreadyPlayed = true;
+        } 
     }, false);
 
     try {
@@ -299,6 +302,7 @@ function startGame()
     document.getElementById("play").style.display = "none";
     document.getElementById("translatedWord").style.display = "block";
     document.getElementById("GameAnswers").style.display = "none";
+    document.getElementById("GameAnswers").style.display = "none";
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getGameDetails.php',
         method: 'POST',
@@ -311,7 +315,7 @@ function startGame()
             if (jason.success === 1) {
                 //buildSummaryTable(jason, turn);
                 gameFlowData = jason;
-                
+
                 if (gameFlowData.initiatorId == currentPlayerId) {
                     document.getElementById("Game_LeftName").innerHTML = gameFlowData.player1[0]["name"];
                     document.getElementById("Game_RightName").innerHTML = gameFlowData.player2[0]["name"];
@@ -336,7 +340,7 @@ function startGame()
         error: function() {
         }
     });
-
+	
     /*    resizeIframe();
      resizeWidthIframe();*/
 //    setTimeout(function() {
@@ -407,7 +411,7 @@ function show4possibleAnswers(videoNum) {
             //"</font>";
     document.getElementById("gameAnswer4").innerHTML = //"<font size=\"5\">" +
             answerArray[videoNum][(firstAnswerId + 3) % 4]; //+
-            //"</font>";
+	    //"</font>";
     m_isCanClick = true;
     if (firstAnswerId === 0) {
         correctAnswerId = "gameAnswer1";
@@ -493,8 +497,6 @@ function onClick_checkAnswer(object) {
         else {
             //document.getElementById(object.id).style.background = "red";
             document.getElementById(object.id).style.backgroundImage = "url(css/WrongAnswer.png)";
-            //document.getElementById(object.id).className = "WrongAnswer";
-            
             console.trace("wrong");
             // Update score
             gameDetails[order[currVideoId]][4] = 0;
@@ -518,7 +520,7 @@ function onClick_checkAnswer(object) {
             }
         });
         score += gameDetails[order[currVideoId]][4];
-        
+
         if (gameFlowData.initiatorId == currentPlayerId) {
             document.getElementById("Game_LeftScore").innerHTML = score;
             // TODO: add bool value false (don't need to update the rival score
@@ -546,8 +548,7 @@ function continueToNextQuestion(object) {
     document.getElementById(correctAnswerId).style.background = "gray"; //"green";
     document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";*/
     document.getElementById(correctAnswerId).style.backgroundImage = "url(css/RightAnswer.png)";
-    //document.getElementById(correctAnswerId).className = "RightAnswer";
-
+    
     console.log(score);
     // continte to the next question.
     ++currVideoId;
@@ -562,11 +563,9 @@ function continueToNextQuestion(object) {
             if (object !== null) {
                 //document.getElementById(object.id).style.background = "";
                 document.getElementById(object.id).style.backgroundImage = "url(css/NeutralAnswer.png)";
-                //document.getElementById(object.id).className = "GameAnswer";
             }
             //document.getElementById(correctAnswerId).style.background = "";
             document.getElementById(correctAnswerId).style.backgroundImage = "url(css/NeutralAnswer.png)";
-            //document.getElementById(correctAnswerId).className = "GameAnswer";
             count = timePerRound;
             videoPlay(order[currVideoId]);
         }, delayBetweenQuestions);
@@ -629,20 +628,10 @@ function resetButtons() {
     document.getElementById("gameAnswer2").style.display = "block";
     document.getElementById("gameAnswer3").style.display = "block";
     document.getElementById("gameAnswer4").style.display = "block";
-    /*document.getElementById("gameAnswer1").style.background = "";
-    document.getElementById("gameAnswer2").style.background = "";
-    document.getElementById("gameAnswer3").style.background = "";
-    document.getElementById("gameAnswer4").style.background = "";*/
     document.getElementById("gameAnswer1").style.backgroundImage = "url(css/NeutralAnswer.png)";
     document.getElementById("gameAnswer2").style.backgroundImage = "url(css/NeutralAnswer.png)";
     document.getElementById("gameAnswer3").style.backgroundImage = "url(css/NeutralAnswer.png)";
     document.getElementById("gameAnswer4").style.backgroundImage = "url(css/NeutralAnswer.png)";
-    /*document.getElementById("gameAnswer1").className = "GameAnswer";
-    document.getElementById("gameAnswer2").className = "GameAnswer";
-    document.getElementById("gameAnswer3").className = "GameAnswer";
-    document.getElementById("gameAnswer4").className = "GameAnswer";*/
-    
-    
 }
 /**
  * Build the Friends List.
@@ -667,7 +656,7 @@ function refreshFriendsZone(toInvite) {
                 friendIDs[k] = friend.id;
             }
         }
-  //      friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
+        //friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
@@ -747,33 +736,30 @@ function buildFriendsTable(matchesData, toInvite) {
 
         if (toInvite) {
 
-            var name = "stav";
-            var userId = "'//" + matchesData[index] + "'";
+            var userId = "/" + matchesData[index];
+//            id = matchesData[index];
+//            name = "stav";
 
-        //    FB.api('/12323145', {fields: 'id, name, picture'}, function(response) {
-           FB.api(userId, {fields: 'id, name, picture'}, function(response) {
+            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
+                name = response.name;
+                id = response.id;
+                picture = response.picture;
 
-            name = response.name;
-          //  name = "stav";
-
-            $("#friends_table").append("<tr align=\"center\">" +
-                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                    "<td><img src=\"" + "https://graph.facebook.com/" + matchesData[index] + "/picture/" + "\" />" +
-                    "<br />" + name + "</td></tr>");
+                $("#friends_table").append("<tr align=\"center\">" +
+                        "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                        "<td><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
+                        "<div class=\"friendName\">" + name + "</div></td></tr>");
             });
 
         } else {
             $("#friends_table").append("<tr align=\"center\">" +
                     "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                    "<td><img src=\"" + matchesData[index]["rivalImg"] + "\" />" +
-                    "<br />" + matchesData[index]["rivalName"] + "</td></tr>");
+                    "<td><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" />" +
+                    "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td></tr>");
         }
     }
 }
 
-function onClick_moreFriends() {
-    
-}
 
 /**
  * Create new MatchUp between 2 users who never played before.
@@ -1100,11 +1086,11 @@ function publishStoryFriend(friendID) {
         var params = {
             method: 'feed',
             to: friendID.toString(),
-            name: 'Facebook Dialogs',
-            link: 'https://developers.facebook.com/docs/reference/dialogs/',
-            picture: 'http://fbrell.com/f8.jpg',
-            caption: 'Reference Documentation',
-            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+            name: 'Ten Siman',
+            link: 'https://www.facebook.com/tensiman',
+            picture: 'images/logo.png',
+            caption: 'TEN SIMAN',
+            description: 'I invite you to play with me and learn sign language'
         };
         FB.ui(params, function(obj) {
             console.log(obj);
@@ -1215,6 +1201,7 @@ function checkRefresh()
 
 function videoPlay(videoNum)
 {
+    allreadyPlayed = false;
     document.getElementById("timer").style.display = "none";
     document.getElementById("myVideo").style.display = "block";
     document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
@@ -1228,20 +1215,23 @@ function playVideo() {
 }
 
 function markTheRightAnswer() {
-    
     var counter = 0;
     var timerId = 0;
     timerId = setInterval(function() {
         ++counter;
         if (counter % 2 === 0) {
-        document.getElementById(correctAnswerId).style.backgroundImage = "url(css/RightAnswer.png)";
+            document.getElementById(correctAnswerId).style.backgroundImage = "url(css/RightAnswer.png)";
         }
         else {
             document.getElementById(correctAnswerId).style.backgroundImage = "url(css/NeutralAnswer.png)";
         }
-        
+
         if (counter == 2) {
             clearInterval(timerId);
         }
     }, 200);
+}
+
+function onClick_moreFriends() {
+
 }
