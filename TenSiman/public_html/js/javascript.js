@@ -15,6 +15,7 @@ var videoCount = NUMBER_SECTIONS;
 var answerArray = [6];
 var startIndex;
 var gameDetails = new Array();
+var gameFlowData;
 var isDemo = true;
 var count;
 var counter;
@@ -250,11 +251,12 @@ function timer() {
     if (window.location.toString().match("\#game$"))
     {
         if (count <= 0) {
+            markTheRightAnswer();
             continueToNextQuestion(null);
             return;
         }
         count = count - 1;
-        document.getElementById("timer").innerHTML = count + " secs";
+        document.getElementById("timer").innerHTML = "<br>" + count;// + " secs";
     }
 }
 
@@ -281,7 +283,7 @@ function createNewLiveGame(matchUpId)
     // TODO: set the video's array and other values once we'll have them
 
     // TODO: might need to change something here:
-    document.getElementById("answers").style.display = "none";
+    document.getElementById("GameAnswers").style.display = "none";
     window.location = "#game";
     /*    resizeIframe();
      resizeWidthIframe();*/
@@ -299,8 +301,45 @@ function startGame()
 //    isDemo = true;
     document.getElementById("play").style.display = "none";
     document.getElementById("translatedWord").style.display = "block";
-    document.getElementById("answers").style.display = "none";
-    window.location = "#game";
+    document.getElementById("GameAnswers").style.display = "none";
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getGameDetails.php',
+        method: 'POST',
+        data: {
+            gameId: currentGameId
+        },
+        success: function(data) {
+            //alert("connected!")
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                //buildSummaryTable(jason, turn);
+                gameFlowData = jason;
+
+                if (gameFlowData.initiatorId == currentPlayerId) {
+                    document.getElementById("Game_LeftName").innerHTML = gameFlowData.player1[0]["name"];
+                    document.getElementById("Game_RightName").innerHTML = gameFlowData.player2[0]["name"];
+                    document.getElementById("Game_LeftPic").setAttribute("src", gameFlowData.player1[0]["pic"]);
+                    document.getElementById("Game_RightPic").setAttribute("src", gameFlowData.player2[0]["pic"]);
+                    document.getElementById("Game_LeftScore").innerHTML = '0';
+                    document.getElementById("Game_RightScore").innerHTML = '?';
+                    // TODO: add bool value false (don't need to update the rival score
+                }
+                else {
+                    document.getElementById("Game_LeftName").innerHTML = gameFlowData.player2[0]["name"];
+                    document.getElementById("Game_RightName").innerHTML = gameFlowData.player1[0]["name"];
+                    document.getElementById("Game_LeftPic").setAttribute("src", gameFlowData.player2[0]["pic"]);
+                    document.getElementById("Game_RightPic").setAttribute("src", gameFlowData.player1[0]["pic"]);
+                    document.getElementById("Game_LeftScore").innerHTML = '0';
+                    document.getElementById("Game_RightScore").innerHTML = '0';
+                    // TODO: add bool value true (need to update the rival score
+                }
+                window.location = "#game";
+            }
+        },
+        error: function() {
+        }
+    });
+
     /*    resizeIframe();
      resizeWidthIframe();*/
 //    setTimeout(function() {
@@ -360,28 +399,28 @@ function show4possibleAnswers(videoNum) {
     // Showing the answers
     // First, generates Random number for the first answer
     var firstAnswerId = Math.floor((Math.random() * 4));
-    document.getElementById("answer1").innerHTML = "<font size=\"5\">" +
-            answerArray[videoNum][firstAnswerId] +
-            "</font>";
-    document.getElementById("answer2").innerHTML = "<font size=\"5\">" +
-            answerArray[videoNum][(firstAnswerId + 1) % 4] +
-            "</font>";
-    document.getElementById("answer3").innerHTML = "<font size=\"5\">" +
-            answerArray[videoNum][(firstAnswerId + 2) % 4] +
-            "</font>";
-    document.getElementById("answer4").innerHTML = "<font size=\"5\">" +
-            answerArray[videoNum][(firstAnswerId + 3) % 4] +
-            "</font>";
+    document.getElementById("gameAnswer1").innerHTML = //"<font size=\"5\">" +
+            answerArray[videoNum][firstAnswerId]; //+
+            //"</font>";
+    document.getElementById("gameAnswer2").innerHTML = //"<font size=\"5\">" +
+            answerArray[videoNum][(firstAnswerId + 1) % 4]; //+
+            //"</font>";
+    document.getElementById("gameAnswer3").innerHTML = //"<font size=\"5\">" +
+            answerArray[videoNum][(firstAnswerId + 2) % 4]; //+
+            //"</font>";
+    document.getElementById("gameAnswer4").innerHTML = //"<font size=\"5\">" +
+            answerArray[videoNum][(firstAnswerId + 3) % 4]; //+
+	    //"</font>";
     m_isCanClick = true;
     if (firstAnswerId === 0) {
-        correctAnswerId = "answer1";
+        correctAnswerId = "gameAnswer1";
     }
     else {
-        correctAnswerId = "answer" + (5 - firstAnswerId);
+        correctAnswerId = "gameAnswer" + (5 - firstAnswerId);
     }
 
 // Show answers
-    document.getElementById("answers").style.display = "block";
+    document.getElementById("GameAnswers").style.display = "block";
 }
 
 
@@ -455,7 +494,8 @@ function onClick_checkAnswer(object) {
             gameDetails[order[currVideoId]][4] = count;
         }
         else {
-            document.getElementById(object.id).style.background = "red";
+            //document.getElementById(object.id).style.background = "red";
+            document.getElementById(object.id).style.backgroundImage = "url(css/WrongAnswer.png)";
             console.trace("wrong");
             // Update score
             gameDetails[order[currVideoId]][4] = 0;
@@ -479,6 +519,17 @@ function onClick_checkAnswer(object) {
             }
         });
         score += gameDetails[order[currVideoId]][4];
+        
+        if (gameFlowData.initiatorId == currentPlayerId) {
+            document.getElementById("Game_LeftScore").innerHTML = score;
+            // TODO: add bool value false (don't need to update the rival score
+        }
+        else {
+            document.getElementById("Game_LeftScore").innerHTML = score;
+            document.getElementById("Game_RightScore").innerHTML = '0'; // TODO: sum rival score
+            // TODO: add bool value true (need to update the rival score
+        }
+        
         continueToNextQuestion(object);
     }
 }
@@ -490,11 +541,12 @@ function continueToNextQuestion(object) {
     count = 10;
     document.getElementById("timer").style.display = "none";
 
-    document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
+    /*document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
     document.getElementById(correctAnswerId).style.background = "gray"; //"green";
     document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
     document.getElementById(correctAnswerId).style.background = "gray"; //"green";
-    document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
+    document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";*/
+    document.getElementById(correctAnswerId).style.backgroundImage = "url(css/RightAnswer.png)";
 
     console.log(score);
     // continte to the next question.
@@ -508,9 +560,11 @@ function continueToNextQuestion(object) {
 // Awaits half a second before showing the next question
         setTimeout(function() {
             if (object !== null) {
-                document.getElementById(object.id).style.background = "";
+                //document.getElementById(object.id).style.background = "";
+                document.getElementById(object.id).style.backgroundImage = "url(css/NeutralAnswer.png)";
             }
-            document.getElementById(correctAnswerId).style.background = "";
+            //document.getElementById(correctAnswerId).style.background = "";
+            document.getElementById(correctAnswerId).style.backgroundImage = "url(css/NeutralAnswer.png)";
             count = timePerRound;
             videoPlay(order[currVideoId]);
         }, delayBetweenQuestions);
@@ -551,10 +605,10 @@ function endGame() {
 
         document.getElementById("timer").style.display = "none";
         document.getElementById("myVideo").style.display = "none";
-        document.getElementById("answer1").style.display = "none";
-        document.getElementById("answer2").style.display = "none";
-        document.getElementById("answer3").style.display = "none";
-        document.getElementById("answer4").style.display = "none";
+        document.getElementById("gameAnswer1").style.display = "none";
+        document.getElementById("gameAnswer2").style.display = "none";
+        document.getElementById("gameAnswer3").style.display = "none";
+        document.getElementById("gameAnswer4").style.display = "none";
         document.getElementById("translatedWord").style.display = "block";
         score *= 10;
         document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
@@ -569,14 +623,14 @@ function endGame() {
 function resetButtons() {
 
     //document.getElementById("timer").style.display = "block";
-    document.getElementById("answer1").style.display = "block";
-    document.getElementById("answer2").style.display = "block";
-    document.getElementById("answer3").style.display = "block";
-    document.getElementById("answer4").style.display = "block";
-    document.getElementById("answer1").style.background = "";
-    document.getElementById("answer2").style.background = "";
-    document.getElementById("answer3").style.background = "";
-    document.getElementById("answer4").style.background = "";
+    document.getElementById("gameAnswer1").style.display = "block";
+    document.getElementById("gameAnswer2").style.display = "block";
+    document.getElementById("gameAnswer3").style.display = "block";
+    document.getElementById("gameAnswer4").style.display = "block";
+    document.getElementById("gameAnswer1").style.backgroundImage = "url(css/NeutralAnswer.png)";
+    document.getElementById("gameAnswer2").style.backgroundImage = "url(css/NeutralAnswer.png)";
+    document.getElementById("gameAnswer3").style.backgroundImage = "url(css/NeutralAnswer.png)";
+    document.getElementById("gameAnswer4").style.backgroundImage = "url(css/NeutralAnswer.png)";
 }
 /**
  * Build the Friends List.
@@ -1035,7 +1089,7 @@ function publishStoryFriend(friendID) {
             link: 'https://www.facebook.com/tensiman',
             picture: 'images/logo.png',
             caption: 'TEN SIMAN',
-            description: 'I invite you to play with me and learn sign languege'
+            description: 'I invite you to play with me and learn sign language'
         };
         FB.ui(params, function(obj) {
             console.log(obj);
@@ -1150,7 +1204,7 @@ function videoPlay(videoNum)
     document.getElementById("timer").style.display = "none";
     document.getElementById("myVideo").style.display = "block";
     document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
-    document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
+    //document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
     show4possibleAnswers(videoNum);
 
 }
@@ -1161,4 +1215,22 @@ function playVideo() {
 
 function onClick_moreFriends() {
 
+}
+
+function markTheRightAnswer() {
+    var counter = 0;
+    var timerId = 0;
+    timerId = setInterval(function() {
+        ++counter;
+        if (counter % 2 === 0) {
+            document.getElementById(correctAnswerId).style.backgroundImage = "url(css/RightAnswer.png)";
+        }
+        else {
+            document.getElementById(correctAnswerId).style.backgroundImage = "url(css/NeutralAnswer.png)";
+        }
+
+        if (counter == 2) {
+            clearInterval(timerId);
+        }
+    }, 200);
 }
