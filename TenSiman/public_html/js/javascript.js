@@ -49,12 +49,23 @@ $(document).ready(function()
 
 
     myVideo.addEventListener("playing", function() {
-        document.getElementById("timer").style.display = "block";
-        if (!allreadyPlayed) {
-            count = 10;
-            allreadyPlayed = true;
+        if (!isDemo) {
+            document.getElementById("timer").style.display = "block";
+            if (!allreadyPlayed) {
+                count = 10;
+                counter = setInterval(timer, 1000); //1000 will run it every 1 second 
+                allreadyPlayed = true;
+
+            }
+        }
+    }, false);
+
+    myVideo.addEventListener("ended", function() {
+        if (isDemo) {
+            videoPlay(order[2]);
         } 
     }, false);
+
 
     try {
         if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined'))
@@ -348,7 +359,7 @@ function startGame()
 //    }, 100);
 //    
 
-    startPlay();
+    startPlay(true);
 }
 
 
@@ -402,16 +413,16 @@ function show4possibleAnswers(videoNum) {
     var firstAnswerId = Math.floor((Math.random() * 4));
     document.getElementById("gameAnswer1").innerHTML = //"<font size=\"5\">" +
             answerArray[videoNum][firstAnswerId]; //+
-            //"</font>";
+    //"</font>";
     document.getElementById("gameAnswer2").innerHTML = //"<font size=\"5\">" +
             answerArray[videoNum][(firstAnswerId + 1) % 4]; //+
-            //"</font>";
+    //"</font>";
     document.getElementById("gameAnswer3").innerHTML = //"<font size=\"5\">" +
             answerArray[videoNum][(firstAnswerId + 2) % 4]; //+
-            //"</font>";
+    //"</font>";
     document.getElementById("gameAnswer4").innerHTML = //"<font size=\"5\">" +
             answerArray[videoNum][(firstAnswerId + 3) % 4]; //+
-	    //"</font>";
+    //"</font>";
     m_isCanClick = true;
     if (firstAnswerId === 0) {
         correctAnswerId = "gameAnswer1";
@@ -445,10 +456,10 @@ function myHandler() {
 }
 
 // start to show videos + answers. 
-function startPlay() {
+function startPlay(demo) {
 
+    isDemo = demo;
     document.getElementById("timer").style.display = "none";
-    isDemo = false;
     currVideoId = 0;
     // Hiding buttons
     document.getElementById("repeat").style.display = "none";
@@ -457,7 +468,7 @@ function startPlay() {
     order = generateOrder();
     setTimeout(function() {
         count = timePerRound;
-        counter = setInterval(timer, 1000); //1000 will run it every 1 second 
+        // counter = setInterval(timer, 1000); //1000 will run it every 1 second 
         videoPlay(order[currVideoId]);
     }, 1000);
 }
@@ -520,7 +531,7 @@ function onClick_checkAnswer(object) {
             }
         });
         score += gameDetails[order[currVideoId]][4];
-        
+
         if (gameFlowData.initiatorId == currentPlayerId) {
             document.getElementById("Game_LeftScore").innerHTML = score;
             // TODO: add bool value false (don't need to update the rival score
@@ -530,7 +541,7 @@ function onClick_checkAnswer(object) {
             document.getElementById("Game_RightScore").innerHTML = '0'; // TODO: sum rival score
             // TODO: add bool value true (need to update the rival score
         }
-        
+
         continueToNextQuestion(object);
     }
 }
@@ -543,10 +554,10 @@ function continueToNextQuestion(object) {
     document.getElementById("timer").style.display = "none";
 
     /*document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
-    document.getElementById(correctAnswerId).style.background = "gray"; //"green";
-    document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
-    document.getElementById(correctAnswerId).style.background = "gray"; //"green";
-    document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";*/
+     document.getElementById(correctAnswerId).style.background = "gray"; //"green";
+     document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";
+     document.getElementById(correctAnswerId).style.background = "gray"; //"green";
+     document.getElementById(correctAnswerId).style.background = "#B5EAAA"; //"green";*/
     document.getElementById(correctAnswerId).style.backgroundImage = "url(css/RightAnswer.png)";
 
     console.log(score);
@@ -1201,12 +1212,29 @@ function checkRefresh()
 
 function videoPlay(videoNum)
 {
-    allreadyPlayed = false;
-    document.getElementById("timer").style.display = "none";
-    document.getElementById("myVideo").style.display = "block";
-    document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
-    //document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
-    show4possibleAnswers(videoNum);
+    if (isDemo) {
+//      document.getElementById("title").innerHTML = "נסו לזכור את המילים הבאות";
+        document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
+        document.getElementById("myVideo").style.display = "block";
+        // Showing the translation
+        document.getElementById("translatedWord").style.display = "block";
+        document.getElementById("translatedWord").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
+        document.getElementById("play").style.display = "block";
+
+        // Hiding the options
+        //document.getElementById("answers").style.display = "none";
+       // show4possibleAnswers(videoNum);
+
+
+    } else {
+        clearInterval(counter);
+        allreadyPlayed = false;
+        document.getElementById("timer").style.display = "none";
+        document.getElementById("myVideo").style.display = "block";
+        document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
+        //document.getElementById("title").innerHTML = "בחרו את התשובה הנכונה";
+        show4possibleAnswers(videoNum);
+    }
 
 }
 

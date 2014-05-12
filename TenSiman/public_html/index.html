@@ -207,17 +207,24 @@ works with FaceBook
                     <div id="Game_RightName">Rival</div>
                 </div>
             </div>
-                                
+
             <div id="GameMainContainer">
                 <div id="GameVideoContainer">
                     <center>
-                    <video id="myVideo" autoplay poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
-                        <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
-                        Your browser does not support the video tag.
-                    </video>
+                        <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
+                            <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
+                            Your browser does not support the video tag.
+                        </video>
+                        <button onclick="playVideo()">play</button>
+
+
+                        <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
+                        <span id="translatedWord"></span>
+
                     </center>
                 </div>
                 <div id="GameAnswers">
+
                     <div id="TopLeftAnswer" class="GameAnswerContainer">
                         <!--<a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>-->
                         <a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>
@@ -233,70 +240,65 @@ works with FaceBook
                     </div>
                 </div>
             </div>
+
             <div id="Game_LeftScore" class="GameScore">12
             </div>
             <div id="Game_RightScore" class="GameScore">27
             </div>
             <div id="left_score_bar" class="GameScoreBar"> </div>
             <div id="right_score_bar" class="GameScoreBar"></div>
-            <div align="center" id="translation" style="display: none;">
-                        <input type="button" id="repeat" onclick="showVideos();" style="display: none">
-                        <span id="translatedWord"></span>
-                        <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
-                         <!--display should be none, it's block only for debug-->
-                        <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
-                    </div>
-<!--            <center>
-                <header data-role="header">
-                    <span id="title">
-                        נסו לזכור את המילים הבאות
-                    </span>
-                </header>
 
-
-                <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
-                </video>
-                        <button onclick="playVideo()">play()</button>
-
-                    <div align="center" id="translation">
-                        <input type="button" id="repeat" onclick="showVideos();" style="display: none">
-                        <button
-                        <span id="translatedWord"></span>
-                        <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
-                         display should be none, it's block only for debug
-                        <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
-                    </div>
-                    <br/><br/>
-                    <div align="center" id="answers">
-                        <table width="100%">
-                            <tr>
-                                <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
-                                <td width="10%"></td>
-                                <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
-                            </tr>
-                            <tr>
-                                <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
-                                <td width="10%"></td>
-                                <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <br>
-                    <center><span id="timer"></span></center>
-                    <br>
-                     </div>
-                         </td></tr></table>
-                    </center>-->
+            <!--            <center>
+                            <header data-role="header">
+                                <span id="title">
+                                    נסו לזכור את המילים הבאות
+                                </span>
+                            </header>
+            
+            
+                            <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
+                            </video>
+                                    <button onclick="playVideo()">play()</button>
+            
+                                <div align="center" id="translation">
+                                    <input type="button" id="repeat" onclick="showVideos();" style="display: none">
+                                    <button
+                                    <span id="translatedWord"></span>
+                                    <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
+                                     display should be none, it's block only for debug
+                                    <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
+                                </div>
+                                <br/><br/>
+                                <div align="center" id="answers">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
+                                            <td width="10%"></td>
+                                            <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
+                                            <td width="10%"></td>
+                                            <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+            
+                                <br>
+                                <center><span id="timer"></span></center>
+                                <br>
+                                 </div>
+                                     </td></tr></table>
+                                </center>-->
         </div>
 
 
-                    <!-- Summary Page -->
+        <!-- Summary Page -->
         <div id="summary" data-role="page">
-        <!--            <header data-role="header">
-                        <h1>תן סימן</h1>
-                        <a href="#settings" data-icon="gear" data-role="button" class="ui-btn-right" data-theme="b">הגדרות</a>
-                    </header>-->
+            <!--            <header data-role="header">
+                            <h1>תן סימן</h1>
+                            <a href="#settings" data-icon="gear" data-role="button" class="ui-btn-right" data-theme="b">הגדרות</a>
+                        </header>-->
 
             <div id="header">
                 <div class="main-header">
@@ -316,7 +318,7 @@ works with FaceBook
                     <div class="top-container" >
                     </div>
                     <div class="white-container">
-
+                        
                         <div class="red-container">
                             <span id="score2" class="totalScore">
                             </span>
@@ -378,34 +380,34 @@ works with FaceBook
                 <br/><br/>
             </div>
 
-                        <br/><br/>
-                        <div class="MainFotter">
-                            <div class="ExpertsZone">
-                                <table>
-                                    <tr><td><img class="ExpertsZone" src="css/ExpertZone.png" /></td><td>איזור<br>מומחה</td></tr>
-                                </table>
-                            </div>
-                            <div class="MainFooterCenterBackground"></div>
-                            <div class="MainFooterCenterDiv"></div>
-                            <div class="MainFooterCenter">
-                                <button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>
-                            </div>
-                            <div class="HallOfFameZone">
-                                <table>
-                                    <tr><td>היכל<br>התהילה</td><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td></tr>
-                                </table>
-                            </div>
-                        </div>
-                        <!--<footer data-role="footer">
-                            <div data-role="navbar">
-                                <ul>
-                                    <li><a href=""><font size="4">איזור מומחה</font></a></li>
-                        <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
-                        <!--<li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
-                        <li><a href="#"><font size="4">היכל התהילה</font></a></li>
-                    </ul>
+                <br/><br/>
+            <div class="MainFotter">
+                <div class="ExpertsZone">
+                    <table>
+                        <tr><td><img class="ExpertsZone" src="css/ExpertZone.png" /></td><td>איזור<br>מומחה</td></tr>
+                    </table>
                 </div>
-            </footer> -->
+                <div class="MainFooterCenterBackground"></div>
+                <div class="MainFooterCenterDiv"></div>
+                <div class="MainFooterCenter">
+                    <button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>
+                </div>
+                <div class="HallOfFameZone">
+                    <table>
+                        <tr><td>היכל<br>התהילה</td><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td></tr>
+                    </table>
+                </div>
+            </div>
+            <!--<footer data-role="footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href=""><font size="4">איזור מומחה</font></a></li>
+            <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
+            <!--<li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
+            <li><a href="#"><font size="4">היכל התהילה</font></a></li>
+        </ul>
+    </div>
+</footer> -->
         </div>
 
 
