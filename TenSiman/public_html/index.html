@@ -270,17 +270,24 @@ works with FaceBook
                     <div id="Game_RightName">Rival</div>
                 </div>
             </div>
-                                
+
             <div id="GameMainContainer">
                 <div id="GameVideoContainer">
                     <center>
-                    <video id="myVideo" autoplay poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
-                        <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
-                        Your browser does not support the video tag.
-                    </video>
+                        <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
+                            <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
+                            Your browser does not support the video tag.
+                        </video>
+                        <button onclick="playVideo()">play</button>
+
+
+                        <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
+                        <span id="translatedWord"></span>
+
                     </center>
                 </div>
                 <div id="GameAnswers">
+
                     <div id="TopLeftAnswer" class="GameAnswerContainer">
                         <!--<a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>-->
                         <a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>
@@ -296,208 +303,203 @@ works with FaceBook
                     </div>
                 </div>
             </div>
+
             <div id="Game_LeftScore" class="GameScore">12
             </div>
             <div id="Game_RightScore" class="GameScore">27
             </div>
             <div id="left_score_bar" class="GameScoreBar"> </div>
             <div id="right_score_bar" class="GameScoreBar"></div>
-            <div align="center" id="translation" style="display: none;">
-                        <input type="button" id="repeat" onclick="showVideos();" style="display: none">
-                        <span id="translatedWord"></span>
-                        <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
-                         <!--display should be none, it's block only for debug-->
-                        <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
-                    </div>
-<!--            <center>
-                <header data-role="header">
-                    <span id="title">
-                        נסו לזכור את המילים הבאות
-                    </span>
-                </header>
 
-
-                <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
-                </video>
-                        <button onclick="playVideo()">play()</button>
-
-                    <div align="center" id="translation">
-                        <input type="button" id="repeat" onclick="showVideos();" style="display: none">
-                        <button
-                        <span id="translatedWord"></span>
-                        <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
-                         display should be none, it's block only for debug
-                        <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
-                    </div>
-                    <br/><br/>
-                    <div align="center" id="answers">
-                        <table width="100%">
-                            <tr>
-                                <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
-                                <td width="10%"></td>
-                                <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
-                            </tr>
-                            <tr>
-                                <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
-                                <td width="10%"></td>
-                                <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <br>
-                    <center><span id="timer"></span></center>
-                    <br>
-                     </div>
-                         </td></tr></table>
-                    </center>-->
+            <!--            <center>
+                            <header data-role="header">
+                                <span id="title">
+                                    נסו לזכור את המילים הבאות
+                                </span>
+                            </header>
+            
+            
+                            <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
+                            </video>
+                                    <button onclick="playVideo()">play()</button>
+            
+                                <div align="center" id="translation">
+                                    <input type="button" id="repeat" onclick="showVideos();" style="display: none">
+                                    <button
+                                    <span id="translatedWord"></span>
+                                    <a data-role="button" id="repeat" onclick="videoPlay(0);" data-inline="true" style="display: none;">נגן שוב</a>
+                                     display should be none, it's block only for debug
+                                    <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
+                                </div>
+                                <br/><br/>
+                                <div align="center" id="answers">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="45%"><a data-role="button" id="answer1" class="answer" onclick="onClick_checkAnswer(this);">Answer1</a> </td>
+                                            <td width="10%"></td>
+                                            <td width="45%"><a data-role="button" id="answer2" class="answer" onclick="onClick_checkAnswer(this);">Answer2</a> </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="45%"><a data-role="button" id="answer3" class="answer" onclick="onClick_checkAnswer(this);">Answer3</a> </td>
+                                            <td width="10%"></td>
+                                            <td width="45%"><a data-role="button" id="answer4" class="answer" onclick="onClick_checkAnswer(this);">Answer4</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+            
+                                <br>
+                                <center><span id="timer"></span></center>
+                                <br>
+                                 </div>
+                                     </td></tr></table>
+                                </center>-->
         </div>
 
 
-                    <!-- Summary Page -->
-                    <div id="summary" data-role="page">
-                        <!--            <header data-role="header">
-                                        <h1>תן סימן</h1>
-                                        <a href="#settings" data-icon="gear" data-role="button" class="ui-btn-right" data-theme="b">הגדרות</a>
-                                    </header>-->
+        <!-- Summary Page -->
+        <div id="summary" data-role="page">
+            <!--            <header data-role="header">
+                            <h1>תן סימן</h1>
+                            <a href="#settings" data-icon="gear" data-role="button" class="ui-btn-right" data-theme="b">הגדרות</a>
+                        </header>-->
 
-                        <div id="header">
-                            <div class="main-header">
-                                <div id='logo'>
-
-
-
-                                    <div id="header-top">
-                                        <div class="fr header-right" >
-                                            <a href="#matchups"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
-                                        </div>
-                                        <div class="header-center" style="display:inline-block;color: white;font-size:2em;">
-                                            ten siman
-                                        </div>
-                                        <div class="fl header-left" style="display:inline-block;float: left;">
-                                            <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
-                                        </div>
-                                    </div>
+            <div id="header">
+                <div class="main-header">
+                    <div id='logo'>
 
 
-                                    <!--
-                                    
-                                                            <div style="border: none;float: left;width: 5em;height: 5em;margin-left: 4.5em;">
-                                                            </div>-->
 
-                                </div>
-
+                        <div id="header-top">
+                            <div class="fr header-right" >
+                                <a href="#matchups"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
-                            <div class="top-container" style="border-bottom: solid 0.3em black;
-                                 width: 90%;
-                                 border-radius: 0 0 3em 3em;
-                                 text-shadow: none !important;
-                                 box-shadow: none !important;
-                                 background: #F3F3F3;
-                                 border-left: solid 0.3em black;
-                                 margin-top: -2.1em;
-                                 border-right: solid 0.3em black;
-                                 margin-left: 5%;
-                                 ">
-
-                                <div class="white-container" style="background: white;border: solid 2px black;margin: 1.9em;border-radius: 3em;height: 3.2em; display: block">
-
-                                    <div class="red-container" style=" border: solid 2px black;margin: 30px;
-                                         border-top-left-radius: 4em;border-bottom-left-radius: 4em;height: 50px;width: 50%;margin-top: -0.1em;float: left;margin-left: -0.2em;background-color: #ff4c65;      background-image: repeating-linear-gradient(136deg, transparent, transparent 31px, rgba(255,255,255,0.5) 29px, rgba(255,255,255,.5) 52px);">
-                                        <div id="score" style="
-                                             margin-left: 50%;
-                                             float: left;
-                                             font-size: 3em;
-                                             font-family: 'Asap', sans-serif;
-
-                                             "></div>
-                                    </div>
-
-                                    <div id="level" style="
-                                         float: right;
-                                         margin-top: -0.1em;
-                                         font-size: 2em;
-                                         width: 35%;
-                                         text-align: right;
-                                         font-family: 'Asap', sans-serif;
-
-                                         ">    </div>
-
-
-                                    <div id="star" style="
-
-                                         float: right;
-                                         margin-right: -10%;
-                                         background: url('images/Profressbarstar.png') no-repeat;
-                                         width: 15%;
-                                         height: 4em;
-                                         display:inline-block;
-                                         position: relative;
-
-                                         "> 
-                                        <div class="nextLevel" style="
-                                             font-size: 2.5em;
-                                             margin-left: 0.4em;
-                                             line-height: 1.4em;
-                                             display:inline-block;
-                                             position: relative;
-                                             font-family: 'Asap', sans-serif;
-
-                                             "> 4 </div>
-                                    </div>
-                                </div>
+                            <div class="header-center" style="display:inline-block;color: white;font-size:2em;">
+                                ten siman
                             </div>
-
-                        </div>
-
-                        <div data-role="content" id="matchups_pagecontent">
-                            <div id="playerBar" dir="rtl">
-
-                            </div>
-                            <br/><br/>
-                            <div id="summary_table_content" dir="rtl" align="center">
-
-                                <table width="50%" id="summary_bar_table"></table>
-
-                                <table width="50%" id="summary_table"></table>
-
-                            </div>
-
-
-                            <br/><br/>
-                        </div>
-
-                        <br/><br/>
-                        <div class="MainFotter">
-                            <div class="ExpertsZone">
-                                <table>
-                                    <tr><td><img class="ExpertsZone" src="css/ExpertZone.png" /></td><td>איזור<br>מומחה</td></tr>
-                                </table>
-                            </div>
-                            <div class="MainFooterCenterBackground"></div>
-                            <div class="MainFooterCenterDiv"></div>
-                            <div class="MainFooterCenter">
-                                <button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>
-                            </div>
-                            <div class="HallOfFameZone">
-                                <table>
-                                    <tr><td>היכל<br>התהילה</td><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td></tr>
-                                </table>
+                            <div class="fl header-left" style="display:inline-block;float: left;">
+                                <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
                             </div>
                         </div>
-                        <!--<footer data-role="footer">
-                            <div data-role="navbar">
-                                <ul>
-                                    <li><a href=""><font size="4">איזור מומחה</font></a></li>
-                        <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
-                        <!--<li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
-                        <li><a href="#"><font size="4">היכל התהילה</font></a></li>
-                    </ul>
-                </div>
-            </footer> -->
+
+
+                        <!--
+                        
+                                                <div style="border: none;float: left;width: 5em;height: 5em;margin-left: 4.5em;">
+                                                </div>-->
+
                     </div>
 
+                </div>
+                <div class="top-container" style="border-bottom: solid 0.3em black;
+                     width: 90%;
+                     border-radius: 0 0 3em 3em;
+                     text-shadow: none !important;
+                     box-shadow: none !important;
+                     background: #F3F3F3;
+                     border-left: solid 0.3em black;
+                     margin-top: -2.1em;
+                     border-right: solid 0.3em black;
+                     margin-left: 5%;
+                     ">
+
+                    <div class="white-container" style="background: white;border: solid 2px black;margin: 1.9em;border-radius: 3em;height: 3.2em; display: block">
+
+                        <div class="red-container" style=" border: solid 2px black;margin: 30px;
+                             border-top-left-radius: 4em;border-bottom-left-radius: 4em;height: 50px;width: 50%;margin-top: -0.1em;float: left;margin-left: -0.2em;background-color: #ff4c65;      background-image: repeating-linear-gradient(136deg, transparent, transparent 31px, rgba(255,255,255,0.5) 29px, rgba(255,255,255,.5) 52px);">
+                            <div id="score" style="
+                                 margin-left: 50%;
+                                 float: left;
+                                 font-size: 3em;
+                                 font-family: 'Asap', sans-serif;
+
+                                 "></div>
+                        </div>
+
+                        <div id="level" style="
+                             float: right;
+                             margin-top: -0.1em;
+                             font-size: 2em;
+                             width: 35%;
+                             text-align: right;
+                             font-family: 'Asap', sans-serif;
+
+                             ">    </div>
 
 
-                    </body>
-                    </html> 
+                        <div id="star" style="
+
+                             float: right;
+                             margin-right: -10%;
+                             background: url('images/Profressbarstar.png') no-repeat;
+                             width: 15%;
+                             height: 4em;
+                             display:inline-block;
+                             position: relative;
+
+                             "> 
+                            <div class="nextLevel" style="
+                                 font-size: 2.5em;
+                                 margin-left: 0.4em;
+                                 line-height: 1.4em;
+                                 display:inline-block;
+                                 position: relative;
+                                 font-family: 'Asap', sans-serif;
+
+                                 "> 4 </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div data-role="content" id="matchups_pagecontent">
+                <div id="playerBar" dir="rtl">
+
+                </div>
+                <br/><br/>
+                <div id="summary_table_content" dir="rtl" align="center">
+
+                    <table width="50%" id="summary_bar_table"></table>
+
+                    <table width="50%" id="summary_table"></table>
+
+                </div>
+
+
+                <br/><br/>
+            </div>
+
+            <br/><br/>
+            <div class="MainFotter">
+                <div class="ExpertsZone">
+                    <table>
+                        <tr><td><img class="ExpertsZone" src="css/ExpertZone.png" /></td><td>איזור<br>מומחה</td></tr>
+                    </table>
+                </div>
+                <div class="MainFooterCenterBackground"></div>
+                <div class="MainFooterCenterDiv"></div>
+                <div class="MainFooterCenter">
+                    <button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>
+                </div>
+                <div class="HallOfFameZone">
+                    <table>
+                        <tr><td>היכל<br>התהילה</td><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td></tr>
+                    </table>
+                </div>
+            </div>
+            <!--<footer data-role="footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href=""><font size="4">איזור מומחה</font></a></li>
+            <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
+            <!--<li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
+            <li><a href="#"><font size="4">היכל התהילה</font></a></li>
+        </ul>
+    </div>
+</footer> -->
+        </div>
+
+
+
+    </body>
+</html> 
