@@ -10,6 +10,10 @@ and open the template in the editor.
 
 @import url(http://fonts.googleapis.com/earlyaccess/alefhebrew.css);
 
+.page {
+    background: #f2f2f2;
+}
+
 .video_container {
     border: 1px solid silver;
     height: fit-content;
@@ -78,6 +82,7 @@ td.matchButton button.waitForRival:active {
 #matchups_pagecontent {
     position: absolute;
     top: 15%;
+    background: #f2f2f2;
 }
 
 /****** Player Bar : START ********/
@@ -503,15 +508,18 @@ img.profile {
 //font-size: 18em !important;
 //height: 20px !important;
 
+/****** HEADER : START   ******/
+
 #header {
     display: block;
     left: 0;
+    top: 0;
     /*    background-image:url('images/header.png');*/
     /*    background-size: 100%;
         background-size:80px 60px;*/
     /*    background-color: white;*/
     /*    background-repeat: no-repeat; 
-    */      position: left top;
+    */      //position: left top;
     /*
             padding-top:68px; 
             margin-bottom:50px; */
@@ -542,12 +550,23 @@ img.profile {
     z-index: 1;
 }
 #summary .main-header {
-    border-top:solid 4px black;
+    border-top:solid 0px black;
     border-bottom: solid 4px black;
-    height: 8em;
+    /* height: 8em; */
     width: 100%;
+    height: 13%;
+    position: fixed;
+    z-index: 1;
+}
 
-
+.main-header #logo {
+    background-color: #f2f2f2;
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    position: absolute;
+    top:0;
+    z-index: 2;
 }
 
 .fl {
@@ -582,6 +601,79 @@ img.profile {
     display: inline-block !important;
 
 }
+
+.main-header .top-container { 
+    z-index: 1;
+    border-bottom: solid 0.3em black;
+    width: 90%;
+    max-height: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    border-radius: 0 0 3em 3em; //TODO: % insteadof em!
+    text-shadow: none !important;
+    box-shadow: none !important;
+    background: #F3F3F3;
+    border-left: solid 0.3em black; //TODO: % insteadof em!
+    //margin-top: -2.1em;
+
+    border-right: solid 0.3em black; //TODO: % insteadof em!
+    //margin-left: 5%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-header .white-container {
+    width: 80%;
+    max-height: 100%;
+    height: 50%;
+    top: 75%;
+    position: absolute;
+    background-color: white;
+    border: solid 2px black;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    //                         margin: 1.9em;
+    border-radius: 5em; // TODO: % instread em
+    //height: 3.2em;
+    //display: block;
+    z-index: 4; 
+}
+
+.main-header .red-container {
+    border: solid 2px black;//margin: 30px;
+    border-radius: 5em 5em 5em 5em;
+    //border-top-left-radius: 4em;border-bottom-left-radius: 4em;
+    height: 100%;
+    width: 33%;
+    //margin-top: -0.1em;float: left;margin-left: -0.2em;
+    position: absolute;
+    top: -2px;
+    margin-top: auto;
+    margin-bottom: auto;
+    left: 0;
+    //margin: -0.5px;
+    //background-color: #ff4c65;
+    text-align: center;
+    //line-height: 200%;
+    background-image: repeating-linear-gradient(45deg, #ff4c65, rgba(255,70,95,0.8), #ff4c65,  rgba(255,70,95,0.8) 3%);
+}
+
+.main-header .totalScore {
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: x-large;
+    font-family: 'Asap', sans-serif;
+}
+
+/****** HEADER : END   ******/
+
 
 /// summary Table - start////
 

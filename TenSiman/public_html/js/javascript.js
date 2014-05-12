@@ -172,6 +172,7 @@ function buildPlayerBar(userData) {
 
 
     document.getElementById("score").innerHTML = userData["score"];
+    document.getElementById("score2").innerHTML = userData["score"];
     document.getElementById("level").innerHTML = "120";
     // document.getElementById("nextLevel").innerHTML = userData["level"];
 
