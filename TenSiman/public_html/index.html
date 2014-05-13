@@ -31,16 +31,18 @@ works with FaceBook
 
 
                 <div data-role="content" id="login_pagecontent">
-                    <img src="images/logo.png" width="67%">
-
-                    <div class="buttons">
-                        <a href="game.html" >התחבר</a>
-                        <button onclick="getLoginStatus()">התחבר</button>
-                        <button onclick="logout()">Logout</button>
-                    </div>
-
-
+                    <img src="images/logo2.png" width="67%" style="margin-top: 10%">
                 </div>
+
+                <div class="buttons" style="margin-top: 10%;" >
+                    <button class="connect" onclick="getLoginStatus()">
+                        <img src="images/play.png" width="100%%">
+
+                    </button>
+                </div>
+
+                <img src="images/Shemalogo.png" width="30%" style="margin-top: 15%">
+
             </center>
         </div>
 
@@ -56,52 +58,61 @@ works with FaceBook
                 <div class="main-header">
                     <div id='logo'>
                         <div id="header-top">
+
                             <div class="fr header-right" >
                                 <a href="" class="ui-btn" data-rel="back"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
                             <div class="header-center" style="display:inline-block;color: white;font-size:2em;">
-                                ten siman
                             </div>
                             <div class="fl header-left" style="display:inline-block;float: left;">
                                 <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
                             </div>
+
+                            <div id='logoApp' style="text-align: center"> <img src="images/logo2.png" style="
+                                                                               display: block;     
+                                                                               max-width: 210px;     
+                                                                               max-height: 60px;     width: auto;     height: auto;
+                                                                               margin: auto;
+                                                                               "> </div>
+
                         </div>
                     </div>
-                    <div id="top-container" class="top-container">                        
+                    <div id="top-container" class="top-container">       
                     </div>
-                    <div class="white-container">
+                    <div class="white-container" style="text-align: center">
                         <div class="red-container">
-                            <span id="score" class="totalScore">
+                            <span id="score" class="totalScore" style="position: relative; top:30%">
                             </span>
-                            <!--<div style="position: absolute; height: 100%;">50</div>-->
                         </div>
 
                         <div id="level" style="
                              float: right;
                              margin-top: -0.1em;
-                             font-size: 2em;
+                             font-size: 1.5em;
                              width: 35%;
                              text-align: right;
-                             ">   לשלב   - 43  </div>
+                             font-family: 'Asap', sans-serif;
+                             position: relative; 
+                             top:30%;
+                             right: 0.5em;
+                             direction: rtl;
+
+                             ">    </div>
 
 
                         <div id="star" style="
-
-                             float: right;
-                             margin-right: -10%;
                              background: url('images/Profressbarstar.png') no-repeat;
-                             width: 15%;
+                             width: 3.4em;
                              height: 4em;
-                             display:inline-block;
-                             position: relative;
-
+                             margin: auto;
+                             text-align: center;
                              "> 
+
                             <span class="nextLevel" style="
                                   font-size: 2.5em;
-                                  margin-left: 0.4em;
                                   line-height: 1.4em;
-                                  display:inline-block;
-                                  position: relative;
+                                  margin: auto;
+                                  font-family: 'Asap', sans-serif;
                                   "> 4 </span>
                         </div>
                     </div>
@@ -170,6 +181,9 @@ works with FaceBook
                             <td><a data-role="button" id="playWithFrineds" onclick="refreshFriendsZone(false);">שחק עם חברים</a></td>
                             <td><a data-role="button" id="inviteFrineds" onclick="refreshFriendsZone(true);">הזמן חברים</a></td>
 
+                            <td><a data-role="button" id="getMoreFriends">עוד חברים</a></td>
+
+
                         </tr>
                     </table>
                     <br /> <br />
@@ -178,16 +192,38 @@ works with FaceBook
                 </div>
                 <br/><br/>
             </div>
-            <footer data-role="footer"> 
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href=""><font size="4">איזור מומחה</font></a></li>
-                        <!--<li> <a href=""><font size="4">צור משחק</font></a></li>-->
-                        <li><a data-role="button" id="inviteFriends" onclick="refreshFriendsZone(false);">צור משחק  חדש</a></li>
-                        <li><a href="#"><font size="4">היכל התהילה</font></a></li>
-                    </ul>
+            <div class="MainFotter">
+                <div class="ExpertsZone">
+                    <table>
+                        <tr><td><img class="ExpertsZone" src="css/ExpertZone.png" /></td><td class="bottomText">איזור<br>מומחה</td></tr>
+                    </table>
                 </div>
-            </footer> 
+                <div class="MainFooterCenterBorder"></div>
+                <div class="MainFooterCenterBackground"></div>
+                <script>
+                    /*var backgroundCircleWidth = $('.MainFooterCenterBackground').width();
+                     $('.MainFooterCenterBackground').css({
+                     'height': backgroundCircleWidth + '%'
+                     });
+                     
+                     var summaryButtonWidth = $('butoon.summary').width();
+                     $('.summary').css({
+                     'height': summaryButtonWidth + '%'
+                     });*/
+                </script>
+                <div class="MainFooterCenterDiv"></div>
+                <div class="MainFooterCenter">
+                    <!--<button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>-->
+                    <!--<div class="NewGameTxtBtn">משחק<br>חדש</div>
+                    <img class="NewGameImgBtn" src="css/CreateGame.png" onclick="refreshFriendsZone(false);" />-->
+                    <a data-role="button" id="NewGameBtn" class="answer" onclick="refreshMatchups();">מסך<br>ראשי</a>
+                </div>
+                <div class="HallOfFameZone">
+                    <table>
+                        <tr><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td><td>היכל<br>התהילה</td></tr>
+                    </table>
+                </div>
+            </div> 
 
         </div>
 
@@ -210,20 +246,21 @@ works with FaceBook
 
             <div id="GameMainContainer">
                 <div id="GameVideoContainer">
-                    <center>
-                        <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
-                            <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
-                            Your browser does not support the video tag.
-                        </video>
+                    <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
+                        <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
+                        Your browser does not support the video tag.
+                    </video>
+                    <center style="position: absolute; width: 100%; top:254px;">
+
                         <button id="repeat" onclick="showVideos();" style="display: none">repeat</button>
                         <button onclick="playVideo()">play</button>
 
-
                         <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
-                        <span id="translatedWord"></span>
+                        <span id="translatedWord" style="font-family: 'Asap', sans-serif;"></span>
 
                     </center>
                 </div>
+
                 <div id="GameAnswers">
 
                     <div id="TopLeftAnswer" class="GameAnswerContainer">
@@ -318,8 +355,8 @@ works with FaceBook
                     </div>
                     <div class="top-container" >
                     </div>
-                    <div class="white-container">
-                        
+                    <div class="white-container" style="text-align: center">
+
                         <div class="red-container">
                             <span id="score2" class="totalScore">
                             </span>
@@ -328,7 +365,7 @@ works with FaceBook
                         <div id="level" style="
                              float: right;
                              margin-top: -0.1em;
-                             font-size: 2em;
+                             font-size: 1.7em;
                              width: 35%;
                              text-align: right;
                              font-family: 'Asap', sans-serif;
@@ -337,31 +374,25 @@ works with FaceBook
                         </div>
 
                         <div id="star" style="
-
-                             float: right;
-                             margin-right: -10%;
+                             text-align: center;
+                             margin: auto;
                              background: url('images/Profressbarstar.png') no-repeat;
-                             width: 15%;
+                             width: 18%;
                              height: 4em;
-                             display:inline-block;
-                             position: relative;
+
 
                              "> 
                             <div class="nextLevel" style="
                                  font-size: 2.5em;
-                                 margin-left: 0.4em;
-                                 line-height: 1.4em;
-                                 display:inline-block;
-                                 position: relative;
+                                 margin: auto;
                                  font-family: 'Asap', sans-serif;
-
                                  ">
                                 4
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
             <div data-role="content" id="matchups_pagecontent">
@@ -381,7 +412,7 @@ works with FaceBook
                 <br/><br/>
             </div>
 
-                <br/><br/>
+            <br/><br/>
             <div class="MainFotter">
                 <div class="ExpertsZone">
                     <table>

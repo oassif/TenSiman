@@ -63,7 +63,7 @@ $(document).ready(function()
     myVideo.addEventListener("ended", function() {
         if (isDemo) {
             videoPlay(order[2]);
-        } 
+        }
     }, false);
 
 
@@ -140,7 +140,10 @@ $(document).ready(function()
     //document.getElementById('myVideo').addEventListener('ended', myHandler, false);
 
 });
+
 function refreshMatchups() {
+    window.location = "#matchups";
+
     var htmlCode = "";
     setTimeout(function() {
         ref();
@@ -184,7 +187,7 @@ function buildPlayerBar(userData) {
 
     document.getElementById("score").innerHTML = userData["score"];
     document.getElementById("score2").innerHTML = userData["score"];
-    document.getElementById("level").innerHTML = "120";
+    document.getElementById("level").innerHTML =  " 43 " +  "לשלב "; 
     // document.getElementById("nextLevel").innerHTML = userData["level"];
 
 }
@@ -654,44 +657,44 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-        if (response.error) {
-
-        } else {
-            var data = document.getElementById('data');
-            fdata = response.data;
-            friends = response.data;
-            var friendIDs = [];
-            for (var k = 0; k < friends.length; k++) {
-                var friend = friends[k];
-                friendIDs[k] = friend.id;
-            }
-        }
-        //friendIDs = [659746939, 848234613, 1157420811, 644771584, 12323145, 12323146];
-        $.ajax({
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-            method: 'POST',
-            data: {
-                userId: currentPlayerId,
-                facebookFriends: friendIDs
-            },
-            success: function(data) {
-                //alert("connected!")
-                var jason = JSON.parse(data);
-                if (jason.success === 1) {
-                    //alert("ok!");
-                    if (toInvite) {
-                        buildFriendsTable(jason.toInvite, toInvite);
-                    } else {
-                        buildFriendsTable(jason.matches, toInvite);
-                    }
+//    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+//        if (response.error) {
+//
+//        } else {
+//            var data = document.getElementById('data');
+//            fdata = response.data;
+//            friends = response.data;
+//            var friendIDs = [];
+//            for (var k = 0; k < friends.length; k++) {
+//                var friend = friends[k];
+//                friendIDs[k] = friend.id;
+//            }
+//        }
+    friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
+    $.ajax({
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+        method: 'POST',
+        data: {
+            userId: currentPlayerId,
+            facebookFriends: friendIDs
+        },
+        success: function(data) {
+            //alert("connected!")
+            var jason = JSON.parse(data);
+            if (jason.success === 1) {
+                //alert("ok!");
+                if (toInvite) {
+                    buildFriendsTable(jason.toInvite, toInvite, 0);
+                } else {
+                    buildFriendsTable(jason.matches, toInvite, 0);
                 }
-            },
-            error: function() {
-                //alert("error in login");
             }
-        });
+        },
+        error: function() {
+            //alert("error in login");
+        }
     });
+    //});
     document.getElementById("friends_table").innerHTML = "";
 }
 
@@ -709,8 +712,8 @@ function buildFriendsBar(matchup) {
 
     play_button.appendChild(textInvite);
     invite_button.appendChild(textPlay);
-    play_button.setAttribute("onClick", buildFriendsTable(matchup, false));
-    invite_button.onClick = buildFriendsTable(matchup, true);
+    play_button.setAttribute("onClick", buildFriendsTable(matchup, false, 0));
+    invite_button.onClick = buildFriendsTable(matchup, true, 0);
     var row = document.createElement("tr");
     var button_col = document.createElement("td");
     button_col.appendChild(play_button);
@@ -721,19 +724,25 @@ function buildFriendsBar(matchup) {
     table.appendChild(row);
 }
 
-function buildFriendsTable(matchesData, toInvite) {
+function buildFriendsTable(matchesData, toInvite, start) {
+
+    if (start > size) {
+        return;
+    }
 
     document.getElementById("friends_bar").style.display = "block";
     document.getElementById("friends_table").innerHTML = "";
     var table = document.getElementById("friends_table");
     var numOfMatchups = matchesData.length;
     var size = numOfMatchups;
-    if (size > 20) {
-        size = 20;
+    var amountOfShow = 20;
+    if (size > start + amountOfShow) {
+        size = start + amountOfShow;
     }
 
     var index;
-    for (index = 0; index < size; ++index) {
+    var nextRow = false;
+    for (index = start; index < size; ++index) {
         var text = "";
         var buttonProperty = "";
         // Decide button
@@ -748,19 +757,26 @@ function buildFriendsTable(matchesData, toInvite) {
         if (toInvite) {
 
             var userId = "/" + matchesData[index];
-//            id = matchesData[index];
-//            name = "stav";
+            var userId = "/" + matchesData[index + 1];
 
-            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
-                name = response.name;
-                id = response.id;
-                picture = response.picture;
+            name = nextRow;
+            id = matchesData[index];
 
-                $("#friends_table").append("<tr align=\"center\">" +
-                        "<td><button " + buttonProperty + " >" + text + "</button></td>" +
-                        "<td><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
-                        "<div class=\"friendName\">" + name + "</div></td></tr>");
-            });
+
+//            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
+//                name = response.name;
+//                id = response.id;
+//                picture = response.picture;
+
+
+            //           });
+
+            if (nextRow)
+            $("#friends_table").append("<tr>" +
+                    "<td><button " + buttonProperty + " >" + text + "</button></td>" +
+                    "<td><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
+                    "<div class=\"friendName\">" + name + "</div></td></tr>");
+
 
         } else {
             $("#friends_table").append("<tr align=\"center\">" +
@@ -768,6 +784,14 @@ function buildFriendsTable(matchesData, toInvite) {
                     "<td><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" />" +
                     "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td></tr>");
         }
+    }
+
+    start = index;
+
+    if (numOfMatchups < start) {
+        var button = document.getElementById("getMoreFriend");
+        button.style.display = "block";
+        button.setAttribute("onClick", "buildFriendsTable(start)")
     }
 }
 
@@ -859,8 +883,7 @@ function createNewGame(matchId) {
  */
 function createGameDetails() {
 
-    //alert("test1");
-    // building an array of answers. The right answer is ALWAYS in index 0
+    //alert("test1");     // building an array of answers. The right answer is ALWAYS in index 0
     for (var index = 0; index < videoCount; ++index) {
         //alert("test2");
         var wrongOptions = videoArray[index]["wrongOptions"].split(":");
@@ -874,11 +897,10 @@ function createGameDetails() {
 
     for (var index = 0; index < videoCount; ++index) {
         //alert("test3");
-//        // video source, right answer, user's answer, time, points
-//        gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
+        //        // video source, right answer, user's answer, time, points
+        //        gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
 
-        // sectiodId, right answer, answered right? , user's Answer, score
-        gameDetails[index] = [videoArray[index]["sectionId"], answerArray[index][0], false, "", 0];
+        // sectiodId, right answer, answered right? , user's Answer, score         gameDetails[index] = [videoArray[index]["sectionId"], answerArray[index][0], false, "", 0];
     }
 }
 
@@ -921,8 +943,7 @@ function playTurn(game_id) {
  * @param {type} imgUrl
  * @param {type} email
  * @returns {undefined}
- */
-function signUp(email, firstName, LastName, facebookId, imgUrl) {
+ */ function signUp(email, firstName, LastName, facebookId, imgUrl) {
     var gender = "F";
     var birthDay = "29.9.1989";
     $.ajax({
@@ -930,12 +951,10 @@ function signUp(email, firstName, LastName, facebookId, imgUrl) {
         method: 'POST',
         data: {
             email: email,
-            userFirstName: firstName,
-            userLastName: LastName,
+            userFirstName: firstName, userLastName: LastName,
             userFacebookId: facebookId,
             imgUrl: imgUrl,
-            userGender: gender,
-            userBirthday: birthDay
+            userGender: gender, userBirthday: birthDay
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -965,8 +984,7 @@ function getLoginStatus() {
                         facebookId: fbId,
                     },
                     success: function(data) {
-                        //alert("connected!")
-                        var jason = JSON.parse(data);
+                        //alert("connected!")                         var jason = JSON.parse(data);
                         if (jason.success === 1) {
                             currentPlayerId = jason.userId;
                             window.location = "#matchups";
@@ -988,7 +1006,7 @@ function getLoginStatus() {
     }
     catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
-        loginFromWeb();
+       loginFromWeb();
     }
 }
 
@@ -1021,9 +1039,7 @@ function me() {
 }
 
 function logout() {
-    FB.logout(function(response) {
-        //alert('logged out');
-    });
+
 }
 
 function login() {
@@ -1099,7 +1115,7 @@ function publishStoryFriend(friendID) {
             to: friendID.toString(),
             name: 'Ten Siman',
             link: 'https://www.facebook.com/tensiman',
-            picture: 'images/logo.png',
+            picture: 'http://placehold.it/350x150',
             caption: 'TEN SIMAN',
             description: 'I invite you to play with me and learn sign language'
         };
@@ -1107,7 +1123,16 @@ function publishStoryFriend(friendID) {
             console.log(obj);
         });
     }
+
+//    FB.ui({method: 'apprequests',
+//        message: 'lalala'
+//    },
+//    function(response) {
+//        alert(response);
+//    }
+//    );
 }
+
 
 document.addEventListener('deviceready', function() {
     try {
@@ -1147,16 +1172,16 @@ function getSummary(gameId, turn) {
         error: function() {
         }
     });
+
 }
 
 
 function buildSummaryTable(matchesData, turn) {
 
-//    var table = document.getElementById("summary_table");
-//    table.innerHTML = "";
+    //    var table = document.getElementById("summary_table");
+    //    table.innerHTML = "";
     $("#summary_table").html("");
     $("#summary_bar_table").html("");
-
     var numOfWords = 5;
     var index;
 
@@ -1190,8 +1215,7 @@ function buildSummaryTable(matchesData, turn) {
         $("#summary_table").append("<tr align=\"center\">" +
                 "<td class=\"scoreP1\">" + player2score + "<div class=sec> שניות</div></td>" +
                 "<td class=\"word\">" + sections[index]["word"] + "</td>" +
-                "<td class=\"scoreP1\">" + sections[index]["scoreP1"] + "<div class=sec> שניות</div></td>" +
-                "</tr>");
+                "<td class=\"scoreP1\">" + sections[index]["scoreP1"] + "<div class=sec> שניות</div></td>" + "</tr>");
     }
 }
 
@@ -1202,7 +1226,7 @@ function showGameSummary(gameId, turn) {
 
 function checkRefresh()
 {
-    // Checking that we are in the matchups page, else there is not point to call the refresh php
+// Checking that we are in the matchups page, else there is not point to call the refresh php
     if (window.location.toString().match("\#matchups$"))
     {
         ref();
@@ -1221,11 +1245,6 @@ function videoPlay(videoNum)
         document.getElementById("translatedWord").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
         document.getElementById("play").style.display = "block";
 
-        // Hiding the options
-        //document.getElementById("answers").style.display = "none";
-       // show4possibleAnswers(videoNum);
-
-
     } else {
         clearInterval(counter);
         allreadyPlayed = false;
@@ -1242,9 +1261,6 @@ function playVideo() {
     document.getElementById("myVideo").play();
 }
 
-function onClick_moreFriends() {
-
-}
 
 function markTheRightAnswer() {
     var counter = 0;
