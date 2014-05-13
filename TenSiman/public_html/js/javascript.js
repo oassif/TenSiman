@@ -657,20 +657,20 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-//    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-//        if (response.error) {
-//
-//        } else {
-//            var data = document.getElementById('data');
-//            fdata = response.data;
-//            friends = response.data;
-//            var friendIDs = [];
-//            for (var k = 0; k < friends.length; k++) {
-//                var friend = friends[k];
-//                friendIDs[k] = friend.id;
-//            }
-//        }
-    friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
+    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+        if (response.error) {
+
+        } else {
+            var data = document.getElementById('data');
+            fdata = response.data;
+            friends = response.data;
+            var friendIDs = [];
+            for (var k = 0; k < friends.length; k++) {
+                var friend = friends[k];
+                friendIDs[k] = friend.id;
+            }
+        }
+//    friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
     $.ajax({
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
         method: 'POST',
@@ -694,7 +694,7 @@ function refreshFriendsZone(toInvite) {
             //alert("error in login");
         }
     });
-    //});
+    });
     document.getElementById("friends_table").innerHTML = "";
 }
 
@@ -763,15 +763,12 @@ function buildFriendsTable(matchesData, toInvite, start) {
             id = matchesData[index];
 
 
-//            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
-//                name = response.name;
-//                id = response.id;
-//                picture = response.picture;
-
-
-            //           });
-
-            if (nextRow)
+            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
+                name = response.name;
+                id = response.id;
+                picture = response.picture;
+            });
+            
             $("#friends_table").append("<tr>" +
                     "<td><button " + buttonProperty + " >" + text + "</button></td>" +
                     "<td><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
