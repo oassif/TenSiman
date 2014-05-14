@@ -969,7 +969,8 @@ function getLoginStatus() {
                         facebookId: fbId,
                     },
                     success: function(data) {
-                        alert("connected!");                         var jason = JSON.parse(data);
+                        alert("connected!");                         
+                        var jason = JSON.parse(data);
                         if (jason.success === 1) {
                             currentPlayerId = jason.userId;
                             refreshMatchups();
@@ -1056,7 +1057,6 @@ function login() {
                                     });
                                 }
 
-                                window.location = "#matchups";
                                 refreshMatchups();
                             }
                         },
