@@ -718,7 +718,7 @@ img.profile {
     line-height: 185%;
 }
 
-.main-header #level
+.main-header .level
 {
     float: right;
     margin-top: -0.1em;
@@ -732,7 +732,7 @@ img.profile {
     direction: rtl;
 }
 
-.main-header #star
+.main-header .star
 {
     position: absolute;
     background: url('../images/Profressbarstar.png') no-repeat;
@@ -745,7 +745,7 @@ img.profile {
     //text-align: center;
 }
 
-.main-header #star .nextLevel
+.main-header .star .nextLevel
 {
     /* font-size: 100%; */
     //line-height: 1.4em;

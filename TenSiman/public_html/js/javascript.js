@@ -169,8 +169,14 @@ function buildPlayerBar(userData) {
     document.getElementById("score").innerHTML = userData["score"];
     document.getElementById("score2").innerHTML = userData["score"];
     var level = parseInt(userData["level"]);
+    var score = parseInt(userData["score"]);
+    var leftToNextLevel = (level * 100 * 1.5) - score;
     document.getElementById("nextLevel").innerHTML = level + 1;
-    document.getElementById("level").innerHTML = " 43 " + "לשלב ";
+    document.getElementById("nextLevel2").innerHTML = level + 1;
+
+    document.getElementById("level").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
+    document.getElementById("level2").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
+
     // document.getElementById("nextLevel").innerHTML = userData["level"];
 
 }
@@ -641,7 +647,7 @@ function refreshFriendsZone(toInvite) {
                 friendIDs[k] = friend.id;
             }
         }
-        // friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
+   //    friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
@@ -666,7 +672,7 @@ function refreshFriendsZone(toInvite) {
             error: function() {
                 //alert("error in login");
             }
-        });
+    });
     });
     document.getElementById("friends_table").innerHTML = "";
 }
@@ -705,7 +711,7 @@ function buildFriendsTable(toInvite, start) {
 
 
     document.getElementById("friends_bar").style.display = "none";
-    document.getElementById("loading").style.display ="block";
+    document.getElementById("loading").style.display = "block";
     if (start == 0) {
         document.getElementById("friends_table").innerHTML = "";
     }
@@ -734,8 +740,8 @@ function buildFriendsTable(toInvite, start) {
         if (toInvite) {
 
             var userId = "/" + matchesData[index];
-//            name = "stav";
-//            id = matchesData[index];
+            name = "stav";
+            id = matchesData[index];
             FB.api(userId, {fields: 'id, name, picture'}, function(response) {
                 name = response.name;
                 id = response.id;
@@ -744,7 +750,7 @@ function buildFriendsTable(toInvite, start) {
                 if (index < size) {
                     buttonProperty2 = "onClick=\"publishStoryFriend(" + matchesData[index] + ")\"";
                     var userId2 = "/" + matchesData[index];
-//                    name2 = "oren";
+                    name2 = "oren";
                     id2 = matchesData[index];
                     FB.api(userId2, {fields: 'id, name, picture'}, function(response) {
                         name2 = response.name;
@@ -795,10 +801,10 @@ function buildFriendsTable(toInvite, start) {
         $("#moreFriends").append("<tr align=\"center\">" +
                 "<td><button " + buttonProperty + " >עוד חברים</button></td></tr>");
     }
-    
 
-        document.getElementById("loading").style.display ="none";
-        document.getElementById("friends_bar").style.display = "block";
+
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("friends_bar").style.display = "block";
 
 }
 
