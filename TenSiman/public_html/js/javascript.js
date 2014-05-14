@@ -114,30 +114,10 @@ $(document).ready(function()
 
 
     getLoginStatus();
-    //   refreshMatchups();
-//    videoSource[0] = 'movies/new.gif';
-//    videoSource[1] = 'movies/after.gif';
-//    videoSource[2] = 'movies/long.gif';
-//    videoSource[3]= 'movies/middle.gif';
-//    videoSource[4]= 'movies/last.gif';
 
-    /*    answerArray[0] = ["חדש", "חתך", "אמצע", "חצה"];
-     answerArray[1] = ["אחרי", "מחר", "אחרון", "אמצע"];
-     answerArray[2] = ["ארוך", "חדש", "למתוח", "אחרי"];
-     answerArray[3] = ["אמצע", "חדש", "אחרי", "חתך"];
-     answerArray[4] = ["אחרון", "לפני", "אחרי", "לחתוך"];
-     */
     // Generate Random number
     videoCount = NUMBER_SECTIONS;
-    /*
-     for (var index = 0; index < videoCount; ++index) {
-     // video source, right answer, user's answer, time, points
-     gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
-     }
-     */
-    //videoPlay(0);
-    //  document.getElementById("myVideo").setAttribute("src", videoSource[0]);
-    //document.getElementById('myVideo').addEventListener('ended', myHandler, false);
+
 
 });
 
@@ -187,7 +167,7 @@ function buildPlayerBar(userData) {
 
     document.getElementById("score").innerHTML = userData["score"];
     document.getElementById("score2").innerHTML = userData["score"];
-    document.getElementById("level").innerHTML =  " 43 " +  "לשלב "; 
+    document.getElementById("level").innerHTML = " 43 " + "לשלב ";
     // document.getElementById("nextLevel").innerHTML = userData["level"];
 
 }
@@ -438,7 +418,6 @@ function show4possibleAnswers(videoNum) {
     document.getElementById("GameAnswers").style.display = "block";
 }
 
-
 function myHandler() {
 
 //alert("im called");
@@ -489,7 +468,7 @@ function generateOrder(numberOfVideos) {
  *
  */
 function onClick_checkAnswer(object) {
-console.log(object);
+    console.log(object);
 // TODO: disable all buttons and enabling them only when creating the new buttons for the next answer
 //    gameDetails[order[currVideoId]][3] = count;
 // Saving user's answer
@@ -499,6 +478,9 @@ console.log(object);
     if (m_isCanClick)
     {
         m_isCanClick = false;
+        console.log(object.text.toString());
+        console.log("currentVideoId: " + currVideoId);
+        console.log("order: " + order[currVideoId]);
         gameDetails[order[currVideoId]][3] = object.text.toString();
         console.trace(object.text.toString() + " <- user  answer ttttttttt right answer ->" + answerArray[order[currVideoId]][0])
 
@@ -671,29 +653,29 @@ function refreshFriendsZone(toInvite) {
             }
         }
 //    friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
-    $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-        method: 'POST',
-        data: {
-            userId: currentPlayerId,
-            facebookFriends: friendIDs
-        },
-        success: function(data) {
-            //alert("connected!")
-            var jason = JSON.parse(data);
-            if (jason.success === 1) {
-                //alert("ok!");
-                if (toInvite) {
-                    buildFriendsTable(jason.toInvite, toInvite, 0);
-                } else {
-                    buildFriendsTable(jason.matches, toInvite, 0);
+        $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+            method: 'POST',
+            data: {
+                userId: currentPlayerId,
+                facebookFriends: friendIDs
+            },
+            success: function(data) {
+                //alert("connected!")
+                var jason = JSON.parse(data);
+                if (jason.success === 1) {
+                    //alert("ok!");
+                    if (toInvite) {
+                        buildFriendsTable(jason.toInvite, toInvite, 0);
+                    } else {
+                        buildFriendsTable(jason.matches, toInvite, 0);
+                    }
                 }
+            },
+            error: function() {
+                //alert("error in login");
             }
-        },
-        error: function() {
-            //alert("error in login");
-        }
-    });
+        });
     });
     document.getElementById("friends_table").innerHTML = "";
 }
@@ -768,7 +750,7 @@ function buildFriendsTable(matchesData, toInvite, start) {
                 id = response.id;
                 picture = response.picture;
             });
-            
+
             $("#friends_table").append("<tr>" +
                     "<td><button " + buttonProperty + " >" + text + "</button></td>" +
                     "<td><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
@@ -893,11 +875,8 @@ function createGameDetails() {
     }
 
     for (var index = 0; index < videoCount; ++index) {
-        //alert("test3");
-        //        // video source, right answer, user's answer, time, points
-        //        gameDetails[index] = [index, answerArray[index][0], false, 0, 0];
-
-        // sectiodId, right answer, answered right? , user's Answer, score         gameDetails[index] = [videoArray[index]["sectionId"], answerArray[index][0], false, "", 0];
+        // sectiodId, right answer, answered right? , user's Answer, score         
+        gameDetails[index] = [videoArray[index]["sectionId"], answerArray[index][0], false, "", 0];
     }
 }
 
@@ -1003,7 +982,7 @@ function getLoginStatus() {
     }
     catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
-       loginFromWeb();
+        loginFromWeb();
     }
 }
 
