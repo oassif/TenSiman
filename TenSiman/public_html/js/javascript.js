@@ -489,7 +489,7 @@ function generateOrder(numberOfVideos) {
  *
  */
 function onClick_checkAnswer(object) {
-
+console.log(object);
 // TODO: disable all buttons and enabling them only when creating the new buttons for the next answer
 //    gameDetails[order[currVideoId]][3] = count;
 // Saving user's answer
