@@ -739,23 +739,32 @@ function buildFriendsTable(matchesData, toInvite, start) {
         if (toInvite) {
 
             var userId = "/" + matchesData[index];
-            var userId = "/" + matchesData[index + 1];
+            var userId2 = "/" + matchesData[index + 1];
 
-            name = nextRow;
+            name = stav;
             id = matchesData[index];
 
+            name2 = oren;
+            id2 = matchesData[index + 1];
 
             FB.api(userId, {fields: 'id, name, picture'}, function(response) {
                 name = response.name;
                 id = response.id;
-                picture = response.picture;
             });
 
+            FB.api(userId2, {fields: 'id, name, picture'}, function(response) {
+                name2 = response.name;
+                id2 = response.id;
+            });
+
+
+            index++;
             $("#friends_table").append("<tr>" +
                     "<td><button " + buttonProperty + " >" + text + "</button></td>" +
                     "<td><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
+                    "<div class=\"friendName\">" + name + "</div></td><td><button " + buttonProperty + " >" + text + "</button></td>" +
+                    "<td><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" />" +
                     "<div class=\"friendName\">" + name + "</div></td></tr>");
-
 
         } else {
             $("#friends_table").append("<tr align=\"center\">" +
@@ -960,12 +969,11 @@ function getLoginStatus() {
                         facebookId: fbId,
                     },
                     success: function(data) {
-                        //alert("connected!")                         var jason = JSON.parse(data);
+                        alert("connected!");                         var jason = JSON.parse(data);
                         if (jason.success === 1) {
                             currentPlayerId = jason.userId;
-                            window.location = "#matchups";
                             refreshMatchups();
-                            //alert(currentPlayerId);
+                            alert(currentPlayerId);
                         }
                     },
                     error: function() {
@@ -1123,7 +1131,6 @@ document.addEventListener('deviceready', function() {
 
 function loginFromWeb() {
     currentPlayerId = 1;
-    window.location = "#matchups";
     refreshMatchups();
 }
 
