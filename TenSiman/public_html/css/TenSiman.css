@@ -510,13 +510,12 @@ div.MainFotter div.HallOfFameZone {
 /****** MAIN FOOTER : END   ************/
 
 img.profile {
-    border: solid black;
+    border: solid black !important;
     border-radius: 50% 50% 50% 50%;
     //width: 80px;
     width: 50%;
 }
-//font-size: 18em !important;
-//height: 20px !important;
+
 
 /****** HEADER : START   ******/
 
