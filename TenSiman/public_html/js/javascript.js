@@ -168,6 +168,8 @@ function buildPlayerBar(userData) {
             "</tr></table>";
     document.getElementById("score").innerHTML = userData["score"];
     document.getElementById("score2").innerHTML = userData["score"];
+    var level = parseInt(userData["level"]);
+    document.getElementById("nextLevel").innerHTML = level + 1;
     document.getElementById("level").innerHTML = " 43 " + "לשלב ";
     // document.getElementById("nextLevel").innerHTML = userData["level"];
 
@@ -701,15 +703,16 @@ function buildFriendsTable(toInvite, start) {
         return;
     }
 
-    console.log("start: " + start);
-    document.getElementById("friends_bar").style.display = "block";
+
+    document.getElementById("friends_bar").style.display = "none";
+    document.getElementById("loading").style.display ="block";
     if (start == 0) {
         document.getElementById("friends_table").innerHTML = "";
     }
     var table = document.getElementById("friends_table");
     var numOfMatchups = matchesData.length;
     var size = numOfMatchups;
-    var amountOfShow = 2;
+    var amountOfShow = 20;
     if (size > start + amountOfShow) {
         size = start + amountOfShow;
     }
@@ -731,35 +734,36 @@ function buildFriendsTable(toInvite, start) {
         if (toInvite) {
 
             var userId = "/" + matchesData[index];
-            name = "stav";
-            id = matchesData[index];
+//            name = "stav";
+//            id = matchesData[index];
             FB.api(userId, {fields: 'id, name, picture'}, function(response) {
                 name = response.name;
                 id = response.id;
+
+                index++;
+                if (index < size) {
+                    buttonProperty2 = "onClick=\"publishStoryFriend(" + matchesData[index] + ")\"";
+                    var userId2 = "/" + matchesData[index];
+//                    name2 = "oren";
+                    id2 = matchesData[index];
+                    FB.api(userId2, {fields: 'id, name, picture'}, function(response) {
+                        name2 = response.name;
+                        id2 = response.id;
+
+                        $("#friends_table").append("<tr>" +
+                                "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
+                                "<div class=\"friendName\">" + name + "</div></td>" +
+                                "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id2 + "/picture/" + "\" /></a>" +
+                                "<div class=\"friendName\">" + name2 + "</div></td></tr>");
+                    });
+
+
+                } else {
+                    $("#friends_table").append("<tr>" +
+                            "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
+                            "<div class=\"friendName\">" + name + "</div></td></tr>");
+                }
             });
-
-            index++;
-            if (index < size) {
-                buttonProperty2 = "onClick=\"publishStoryFriend(" + matchesData[index] + ")\"";
-                var userId2 = "/" + matchesData[index];
-                name2 = "oren";
-                id2 = matchesData[index];
-                FB.api(userId2, {fields: 'id, name, picture'}, function(response) {
-                    name2 = response.name;
-                    id2 = response.id;
-                });
-
-
-                $("#friends_table").append("<tr>" +
-                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
-                        "<div class=\"friendName\">" + name + "</div></td>" +
-                        "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id2 + "/picture/" + "\" /></a>" +
-                        "<div class=\"friendName\">" + name2 + "</div></td></tr>");
-            } else {
-                $("#friends_table").append("<tr>" +
-                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
-                        "<div class=\"friendName\">" + name + "</div></td></tr>");
-            }
 
         } else {
             if ((index + 1) < size) {
@@ -791,6 +795,11 @@ function buildFriendsTable(toInvite, start) {
         $("#moreFriends").append("<tr align=\"center\">" +
                 "<td><button " + buttonProperty + " >עוד חברים</button></td></tr>");
     }
+    
+
+        document.getElementById("loading").style.display ="none";
+        document.getElementById("friends_bar").style.display = "block";
+
 }
 
 
@@ -1239,7 +1248,7 @@ function videoPlay(videoNum)
         document.getElementById("gameAnswer2").style.display = "none";
         document.getElementById("gameAnswer3").style.display = "none";
         document.getElementById("gameAnswer4").style.display = "none";
-        
+
         clearInterval(counter);
         allreadyPlayed = false;
         document.getElementById("timer").style.display = "none";
