@@ -178,6 +178,12 @@ function buildPlayerBar(userData) {
     document.getElementById("level2").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
 
     // document.getElementById("nextLevel").innerHTML = userData["level"];
+    
+    document.getElementById("MessageFullName").innerHTML = userData["fullName"];
+    document.getElementById("MessageProfilePic").innerHTML = "<img class=\"profile\" src=\"" + userData["imgURL"] + "\"/>";
+    /* BETTER PICTURE SIZE! 
+     * document.getElementById().innerHTML = "<img class=\"profile\" src=\"https://graph.facebook.com/assif/picture?width=200&height=200\"/>";
+     */
 
 }
 
@@ -336,7 +342,8 @@ function startGame()
                     document.getElementById("Game_RightScore").innerHTML = '0';
                     // TODO: add bool value true (need to update the rival score
                 }
-                window.location = "#game";
+                //window.location = "#game";
+                document.getElementById("preGame").style.visibility = "visible";
             }
         },
         error: function() {

@@ -523,6 +523,7 @@ img.profile {
     display: block;
     left: 0;
     top: 0;
+    z-index: 2;
     /*    background-image:url('images/header.png');*/
     /*    background-size: 100%;
         background-size:80px 60px;*/
@@ -557,7 +558,7 @@ img.profile {
     width: 100%;
     height: 13%;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
 }
 #summary .main-header {
     border-top:solid 0px black;
@@ -715,7 +716,7 @@ img.profile {
     margin-right: 0;
     font-size: x-large;
     font-family: 'Asap', sans-serif;
-    line-height: 185%;
+    /*line-height: 185%;*/
 }
 
 .main-header .level
@@ -1125,3 +1126,245 @@ img.GameProfile {
     font-family: "Alef Hebrew";
     font-size: x-large;
 }
+
+/****** PREGAME : START   ******/
+
+#preGame {
+    visibility: hidden;
+    z-index: 1;
+    position: fixed;
+    width:100%;
+    height: 100%;
+    bottom: 0;
+    background-color: white;
+}
+
+#preGame .MessageBackground {
+    position: absolute;
+    width: 92%;
+    height: 75%;
+    left: 4%;
+    bottom: 2.5%;
+    background-color: #f2f2f2;
+    border: 2px solid black;   
+    border-bottom-left-radius: 7.5% 5.3%;
+    border-bottom-right-radius: 7.5% 5.3%;
+    border-top-left-radius: 7.5% 5.3%;
+    border-top-right-radius: 7.5% 5.3%;
+}
+
+#preGame .MessageHead {
+    position: absolute;
+    top: 0;
+    /*background: green;*/
+    width: 100%;
+    height: 45%;
+}
+
+#preGame .MessageHeadline {
+    position: absolute;
+    /*width: 97%;*/
+    left: -3%;
+    top: 5%;
+    /*right: 0;
+    margin-left: auto;
+    margin-right:  auto;*/
+    width: 104%;
+    height: 95%;
+    z-index: 2;
+    /*background: url("../images/Headline.png") no-repeat;
+    background-position: center;
+    background-size: contain;*/
+    background: white;
+    border: 2px solid black;
+    overflow: visible;
+    border-top-left-radius: 50% 5%;
+    border-top-right-radius: 50% 5%;
+    //border-bottom-left-radius: 50% 15%;
+    //border-bottom-right-radius: 50% 15%;
+}
+
+#preGame .DummyMessageHeadline {
+    position: absolute;
+    /*width: 97%;*/
+    bottom: -2px;
+    /*right: 0;
+    margin-left: auto;
+    margin-right:  auto;*/
+    width: 100%;
+    height: 5%;
+    z-index: 2;
+    /*background: url("../images/Headline.png") no-repeat;
+    background-position: center;
+    background-size: contain;*/
+    background: #f2f2f2;
+    border-top: 2px solid black;
+    overflow: visible;
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
+}
+
+#preGame .MessageInnerHeadline {
+    position: absolute;
+    /*width: 97%;
+    left: -3%;*/
+    /*right: 0;
+    margin-left: auto;
+    margin-right:  auto;*/
+    left: -0.5%;
+    width: 100%;
+    top: 5%;
+    height: 88%;
+    z-index: 2;
+    /*background: url("../images/Headline.png") no-repeat;
+    background-position: center;
+    background-size: contain;*/
+    background: #cccccc;
+    border: 2px solid black;
+    overflow: visible;
+    border-top-left-radius: 50% 5%;
+    border-top-right-radius: 50% 5%;
+    //border-bottom-left-radius: 50% 15%;
+    //border-bottom-right-radius: 50% 15%;
+}
+
+#preGame .DummyMessageInnerHeadline {
+    position: absolute;
+    /*width: 97%;*/
+    bottom: -2px;
+    /*right: 0;
+    margin-left: auto;
+    margin-right:  auto;*/
+    width: 100%;
+    height: 5%;
+    z-index: 2;
+    /*background: url("../images/Headline.png") no-repeat;
+    background-position: center;
+    background-size: contain;*/
+    background: white;
+    border-top: 2px solid black;
+    overflow: visible;
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
+}
+
+#preGame .MessageBottom {
+    position: absolute;
+    bottom: 0;
+    /*background: yellow;*/
+    width: 100%;
+    height: 55%;
+}
+
+#preGame .Shalom {
+    width: 100%;
+    position: absolute;
+    height: 40%;
+    top: -8%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Alef Hebrew";
+    -webkit-text-stroke-width: 2px;     
+    -webkit-text-stroke-color: black;
+    -webkit-text-fill-color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 400%;
+}
+
+#preGame .MessageFullName {
+    width:100%;
+    position: absolute;
+    height: 20%;
+    top: 30%;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    font-family: 'Asap', sans-serif;
+    text-align: center;
+    /* font-weight: bold; */
+    font-size: 185%;
+}
+
+#preGame .MessageProfilePic {
+    width: 40%;
+    position: absolute;
+    height: 45%;
+    left: 30%;
+    top: 50%;
+    /* left: 0; */
+    /* right: 0; */
+    /* margin-left: 0; */
+    /* margin-right: 0; */
+    text-align: center;
+}
+
+#preGame #MessageFirst {
+    width: 100%;
+    position: absolute;
+    height: 33%;
+    top: 3%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Alef Hebrew";
+    /*-webkit-text-stroke-width: 2px;     
+    -webkit-text-stroke-color: black;
+    -webkit-text-fill-color: white;*/
+    text-align: center;
+    /*font-weight: bold;*/
+    font-size: 100%;
+    direction: rtl;
+}
+
+#preGame #MessageSecond {
+    width: 100%;
+    position: absolute;
+    height: 33%;
+    top: 33%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Alef Hebrew";
+    /*-webkit-text-stroke-width: 2px;     
+    -webkit-text-stroke-color: black;
+    -webkit-text-fill-color: white;*/
+    text-align: center;
+    /*font-weight: bold;*/
+    font-size: 100%; 
+    direction: rtl;
+}
+
+#preGame .MessageButton {
+    width: 40%;
+    position: absolute;
+    height: 20%;
+    top: 66%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: "Alef Hebrew";
+    font-size: 100%; 
+    direction: rtl;
+}
+
+#preGame .MessageButtonText {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    text-align: center;
+    font-family: "Alef Hebrew";
+    font-weight: bold;
+    font-size: 150%; 
+    color: black;
+}
+
+/****** PREGAME : END   ******/
