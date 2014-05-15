@@ -65,7 +65,7 @@ works with FaceBook
                             <div class="header-center">
                             </div>
                             <div class="fl header-left" style="display:inline-block;float: left;">
-                                <a href="" class="ui-btn" data-rel="back"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                                <a onClick="refreshMatchups()" class="ui-btn" data-rel="back"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
 
                         </div>
@@ -110,9 +110,9 @@ works with FaceBook
 
                 <br/><br/>
             </div>
-            
+
             <div id="preGame">
-                
+
                 <div id="MessageBackground" class="MessageBackground">
                     <div id="MessageHead" class="MessageHead">
                         <div id="MessageHeadline" class="MessageHeadline">
@@ -262,14 +262,14 @@ works with FaceBook
 
             <div id="GameMainContainer">
                 <div id="GameVideoContainer">
-                    <video id="myVideo" poster="http://opi.mt.gov/Images/Video/click_to_play_640x360.jpg" src="">
+                    <video id="myVideo" poster="http://stavoren.milab.idc.ac.il/public_html/img/clickyoplay.png" src="">
                         <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
                         Your browser does not support the video tag.
                     </video>
                     <center style="position: absolute; width: 100%; top:254px;">
 
-                        <button id="repeat" onclick="showVideos();" style="display: none">repeat</button>
-                        <button onclick="playVideo()">play</button>
+<!--                        <button id="repeat" onclick="showVideos();" style="display: none">repeat</button>
+                        <button onclick="playVideo()">play</button>-->
 
                         <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
                         <span id="translatedWord" style="font-family: 'Asap', sans-serif;"></span>
@@ -359,12 +359,12 @@ works with FaceBook
                     <div id='logo'>
                         <div id="header-top">
                             <div class="fr header-right" >
-                                <a href="#matchups"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                                <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
                             </div>
                             <div class="header-center">
                             </div>
                             <div class="fl header-left" style="display:inline-block;float: left;">
-                                <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
+                                <a onclick="refreshMatchups()"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
                         </div>
                     </div>
@@ -383,9 +383,9 @@ works with FaceBook
                         </div>
 
                         <div id="star2" class="star"> 
-                            
+
                             <div id="nextLevel2" class="nextLevel">
-                
+
                             </div>
                         </div>
                     </div>
@@ -420,7 +420,7 @@ works with FaceBook
                 <div class="MainFooterCenterBackground"></div>
                 <div class="MainFooterCenterDiv"></div>
                 <div class="MainFooterCenter">
-                    <button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>
+                    <button class="NewGameZone" id="inviteFriends" onclick="refreshMatchups();">מסך<br>ראשי</button>
                 </div>
                 <div class="HallOfFameZone">
                     <table>

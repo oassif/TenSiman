@@ -6,7 +6,7 @@ var NUMBER_SECTIONS = 5;
 var currentPlayerId = 0;
 var timePerRound = 10;
 var delayBetweenQuestions = 1250; // in milliseconds
-
+var loading = false;
 var currVideoId = 0;
 var correctAnswerId;
 var order;
@@ -29,6 +29,7 @@ var turn = 0;
 var player1or2 = 0;
 var matchesData = new Array();
 var videoNumber = 0;
+var web = 0;
 
 function pageY(elem) {
     return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
@@ -126,7 +127,9 @@ $(document).ready(function()
     videoCount = NUMBER_SECTIONS;
 });
 function refreshMatchups() {
+
     window.location = "#matchups";
+    document.getElementById('preGame').style.visibility = 'hidden';
     var htmlCode = "";
     setTimeout(function() {
         ref();
@@ -256,6 +259,7 @@ function buildMatchesTable(matchesData) {
                 "</td></tr>");
     }
 }
+
 
 function timer() {
     if (window.location.toString().match("\#game$"))
@@ -641,46 +645,75 @@ function refreshFriendsZone(toInvite) {
     window.location = "#friends";
     //alert("player" + currentPlayerId);
 
-    FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-        if (response.error) {
+    if (!web) {
+        FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+            if (response.error) {
 
-        } else {
-            var data = document.getElementById('data');
-            fdata = response.data;
-            friends = response.data;
-            var friendIDs = [];
-            for (var k = 0; k < friends.length; k++) {
-                var friend = friends[k];
-                friendIDs[k] = friend.id;
-            }
-        }
-   // friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
-    $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-        method: 'POST',
-        data: {
-            userId: currentPlayerId,
-            facebookFriends: friendIDs
-        },
-        success: function(data) {
-            //alert("connected!")
-            var jason = JSON.parse(data);
-            if (jason.success === 1) {
-                //alert("ok!");
-                if (toInvite) {
-                    matchesData = jason.toInvite;
-                    buildFriendsTable(toInvite, 0);
-                } else {
-                    matchesData = jason.matches;
-                    buildFriendsTable(toInvite, 0);
+            } else {
+                var data = document.getElementById('data');
+                fdata = response.data;
+                friends = response.data;
+                var friendIDs = [];
+                for (var k = 0; k < friends.length; k++) {
+                    var friend = friends[k];
+                    friendIDs[k] = friend.id;
                 }
             }
-        },
-        error: function() {
-            //alert("error in login");
-        }
-    });
-    });
+//            friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
+            $.ajax({
+                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+                method: 'POST',
+                data: {
+                    userId: currentPlayerId,
+                    facebookFriends: friendIDs
+                },
+                success: function(data) {
+                    //alert("connected!")
+                    var jason = JSON.parse(data);
+                    if (jason.success === 1) {
+                        //alert("ok!");
+                        if (toInvite) {
+                            matchesData = jason.toInvite;
+                            buildFriendsTable(toInvite, 0);
+                        } else {
+                            matchesData = jason.matches;
+                            buildFriendsTable(toInvite, 0);
+                        }
+                    }
+                },
+                error: function() {
+                    //alert("error in login");
+                }
+            });
+        });
+    } else {
+        friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
+        $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+            method: 'POST',
+            data: {
+                userId: currentPlayerId,
+                facebookFriends: friendIDs
+            },
+            success: function(data) {
+                //alert("connected!")
+                var jason = JSON.parse(data);
+                if (jason.success === 1) {
+                    //alert("ok!");
+                    if (toInvite) {
+                        matchesData = jason.toInvite;
+                        buildFriendsTable(toInvite, 0);
+                    } else {
+                        matchesData = jason.matches;
+                        buildFriendsTable(toInvite, 0);
+                    }
+                }
+            },
+            error: function() {
+                //alert("error in login");
+            }
+        });
+    }
     document.getElementById("friends_table").innerHTML = "";
 }
 
@@ -711,15 +744,14 @@ function buildFriendsBar(matchup) {
 }
 
 function buildFriendsTable(toInvite, start) {
-
+    var size = matchesData.length;
     if (start > size) {
         return;
     }
-
-
+    document.getElementById("moreFriends").innerHTML = "";
+    document.getElementById("moreFriends").style.display = "none";
     document.getElementById("friends_bar").style.display = "none";
     document.getElementById("loading").style.display = "block";
-    document.getElementById("moreFriends").innerHTML = "";
 
     if (start == 0) {
         document.getElementById("friends_table").innerHTML = "";
@@ -749,33 +781,38 @@ function buildFriendsTable(toInvite, start) {
         if (toInvite) {
 
             var userId = "/" + matchesData[index];
-            name = "stav";
-            id = matchesData[index];
-
-            FB.api(userId, {fields: 'id, name, picture'}, function(response) {
-                name = response.name;
-                id = response.id;
-            });
+            if (web) {
+                name = "stav";
+                id = matchesData[index];
+            }
+            if (!web) {
+                FB.api(userId, {fields: 'id, name, picture'}, function(response) {
+                    name = response.name;
+                    id = response.id;
+                });
+            }
 
             index++;
             if (index < size) {
                 buttonProperty2 = "onClick=\"publishStoryFriend(" + matchesData[index] + ")\"";
                 var userId2 = "/" + matchesData[index];
-                name2 = "oren";
-                id2 = matchesData[index];
+                if (web) {
+                    name2 = "oren";
+                    id2 = matchesData[index];
+                }
 
-                FB.api(userId2, {fields: 'id, name, picture'}, function(response) {
-                    name2 = response.name;
-                    id2 = response.id;
-                });
+                if (!web) {
+                    FB.api(userId2, {fields: 'id, name, picture'}, function(response) {
+                        name2 = response.name;
+                        id2 = response.id;
+                    });
+                }
 
                 $("#friends_table").append("<tr>" +
                         "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
                         "<div class=\"friendName\">" + name + "</div></td>" +
                         "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id2 + "/picture/" + "\" /></a>" +
                         "<div class=\"friendName\">" + name2 + "</div></td></tr>");
-
-
             } else {
                 $("#friends_table").append("<tr>" +
                         "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
@@ -793,20 +830,18 @@ function buildFriendsTable(toInvite, start) {
                         "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + matchesData[index + 1]["rivalImg"] + "\" /></a>" +
                         "<br /><div class=\"friendName\">" + matchesData[index + 1]["rivalName"] + "</div></td>" +
                         "</tr>");
-
                 index++;
             } else {
                 $("#friends_table").append("<tr align=\"center\">" +
                         "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" /></a>" +
                         "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td>" +
                         "</tr>");
-
             }
         }
     }
 
     start = size;
-    console.log("start: " + start + " numOfMatch: " + numOfMatchups);
+    document.getElementById("moreFriends").style.display = "block";
     if (numOfMatchups > start) {
         buttonProperty = "\onClick=\"buildFriendsTable(" + toInvite + "," + start + ")\"";
         $("#moreFriends").append("<tr align=\"center\">" +
@@ -816,7 +851,6 @@ function buildFriendsTable(toInvite, start) {
     document.getElementById("loading").style.display = "none";
     document.getElementById("friends_bar").style.display = "block";
 }
-
 
 /**
  * Create new MatchUp between 2 users who never played before.
@@ -849,6 +883,7 @@ function startGameWithNewPlayer(rivalId) {
             //alert("error in match");
         }
     });
+    window.location = "#matchups";
 }
 
 /**
@@ -1128,30 +1163,34 @@ function facebookWallPost() {
 }
 
 function publishStoryFriend(friendID) {
-    if (friendID == undefined) {
+    if (!web) {
+        if (friendID == undefined) {
 //alert('please click the me button to get a list of friends first');
-    } else {
-        console.log("friend id: " + friendID);
-        console.log('Opening a dialog for friendID: ', friendID);
-        var params = {
-            method: 'feed',
-            to: friendID.toString(),
-            name: 'Ten Siman',
-            link: 'https://www.facebook.com/tensiman',
-            picture: 'http://placehold.it/350x150',
-            caption: 'TEN SIMAN',
-            description: 'I want to invite you to play with me and learn sign language'
-        };
-        FB.ui(params, function(obj) {
-            console.log(obj);
+        } else {
+            console.log("friend id: " + friendID);
+            console.log('Opening a dialog for friendID: ', friendID);
+            var params = {
+                method: 'feed',
+                to: friendID.toString(),
+                name: 'Ten Siman',
+                link: 'https://www.facebook.com/tensiman',
+                picture: 'http://stavoren.milab.idc.ac.il/public_html/img/logo.png',
+                caption: 'TEN SIMAN',
+                description: 'I want to invite you to play with me and learn sign language'
+            };
+            FB.ui(params, function(obj) {
+                console.log(obj);
+            });
+        }
+
+        FB.api(friendID, {fields: 'id, first_name, last_name, picture, email'}, function(response) {
+            var img_link = "http://graph.facebook.com/" + response.id + "/picture";
+            signUp(response.email, response.first_name, response.last_name, response.id, img_link, true);
         });
+    } else {
+        var img_link = "http://graph.facebook.com/" + friendID + "/picture";
+        signUp("response.email", "response.first_name", "response.last_name", friendID, img_link, true);
     }
-
-    FB.api(friendID, {fields: 'id, first_name, last_name, picture, email'}, function(response) {
-        var img_link = "http://graph.facebook.com/" + response.id + "/picture";
-        signUp(response.email, response.first_name, response.last_name, response.id, img_link, true);
-
-    });
 }
 
 
@@ -1266,7 +1305,6 @@ function videoPlay(videoNum)
         document.getElementById("gameAnswer2").style.display = "none";
         document.getElementById("gameAnswer3").style.display = "none";
         document.getElementById("gameAnswer4").style.display = "none";
-
         clearInterval(counter);
         allreadyPlayed = false;
         document.getElementById("timer").style.display = "none";
