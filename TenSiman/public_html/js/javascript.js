@@ -657,7 +657,7 @@ function refreshFriendsZone(toInvite) {
                 for (var k = 0; k < friends.length; k++) {
                     var friend = friends[k];
                     friendIDs[k] = friend.id;
-                    friendName[k] = friend.name;
+                    friendName[k] = friend.first_name;
                 }
             }
             $.ajax({
@@ -754,8 +754,8 @@ function buildFriendsTable(toInvite, start) {
         return;
     }
 
-//    document.getElementById("moreFriends").innerHTML = "";
-//    document.getElementById("moreFriends").style.display = "none";
+    document.getElementById("moreFriends").innerHTML = "";
+    document.getElementById("moreFriends").style.display = "none";
     document.getElementById("friends_bar").style.display = "none";
     document.getElementById("loading").style.display = "block";
 
