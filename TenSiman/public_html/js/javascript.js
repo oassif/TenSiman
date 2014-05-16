@@ -1028,12 +1028,12 @@ function getLoginStatus() {
                         facebookId: fbId,
                     },
                     success: function(data) {
-                        alert("connected!");
+//                        alert("connected!");
                         var jason = JSON.parse(data);
                         if (jason.success === 1) {
                             currentPlayerId = jason.userId;
                             refreshMatchups();
-                            alert(currentPlayerId);
+//                            alert(currentPlayerId);
                         }
                     },
                     error: function() {
