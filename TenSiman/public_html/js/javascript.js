@@ -463,7 +463,7 @@ function startPlay(demo) {
     document.getElementById("timer").style.display = "none";
     currVideoId = 0;
     // Hiding buttons
-    document.getElementById("repeat").style.display = "none";
+//    document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
 // call for the first video
     order = generateOrder();
@@ -1283,6 +1283,7 @@ function videoPlay(videoNum)
         document.getElementById("translatedWord").style.display = "block";
         document.getElementById("translatedWord").innerHTML = "<H1>" + answerArray[videoNum][0] + "</H1>";
         document.getElementById("play").style.display = "block";
+//        document.getElementById("repeat").style.display = "none";
     } else {
 
         document.getElementById("translatedWord").style.display = "none";
@@ -1295,6 +1296,7 @@ function videoPlay(videoNum)
         document.getElementById("timer").style.display = "none";
         document.getElementById("myVideo").style.display = "block";
         document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
+//        document.getElementById("myVideo").setAttribute("onerror", continueToNextQuestion(null));
     }
 
 }
