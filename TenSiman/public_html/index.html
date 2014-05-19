@@ -268,8 +268,9 @@ works with FaceBook
                     </video>
                     <center style="position: absolute; width: 100%; top:254px;">
 
-<!--                        <button id="repeat" onclick="showVideos();" style="display: none">repeat</button>
-                        <button onclick="playVideo()">play</button>-->
+                        
+                        <button id="repeat" onclick="showVideos();" style="display: none">repeat</button>
+                        <button onclick="playVideo()">play</button>
 
                         <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
                         <span id="translatedWord" style="font-family: 'Asap', sans-serif;"></span>
@@ -364,7 +365,7 @@ works with FaceBook
                             <div class="header-center">
                             </div>
                             <div class="fl header-left" style="display:inline-block;float: left;">
-                                <a onclick="refreshMatchups()"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                                <a onClick="refreshMatchups()" class="ui-btn" data-rel="back"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
                         </div>
                     </div>

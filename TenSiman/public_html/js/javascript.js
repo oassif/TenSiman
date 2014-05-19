@@ -657,7 +657,7 @@ function refreshFriendsZone(toInvite) {
                 for (var k = 0; k < friends.length; k++) {
                     var friend = friends[k];
                     friendIDs[k] = friend.id;
-                    friendName[k] = friend.first_name;
+                    friendName[k] = friend.name;
                 }
             }
             $.ajax({
