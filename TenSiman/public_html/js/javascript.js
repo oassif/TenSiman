@@ -1234,7 +1234,7 @@ document.addEventListener('deviceready', function() {
     }
 }, false);
 function loginFromWeb() {
-    currentPlayerId = 12;
+    currentPlayerId = 1;
     refreshMatchups();
 }
 
