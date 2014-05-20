@@ -1459,7 +1459,7 @@ img.GameProfile {
     top: 10%;
     right: 2%;
     height: auto;
-    width: 95%;
+    width: 100%;
 }
 
 .About_Logos {
@@ -1469,7 +1469,7 @@ img.GameProfile {
     height: 40%;
     right: 0;
     left: 0;
-    width:100%;
+    width: 100%;
     background: #f2f2f2;
 }
 
@@ -1482,8 +1482,8 @@ img.GameProfile {
 #about_left_logo {
     background: url('../images/Shemalogo.png') no-repeat;
     position: absolute;
-    width: 30%;
-    left: 3%;
+    width: 28%;
+    left: 4%;
     background-size: contain;
     background-position: center;
 }
