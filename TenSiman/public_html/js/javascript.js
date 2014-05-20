@@ -647,8 +647,8 @@ function endGame() {
         document.getElementById("gameAnswer3").style.display = "none";
         document.getElementById("gameAnswer4").style.display = "none";
         document.getElementById("translatedWord").style.display = "block";
-        score *= 10;
-        document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";
+        /*score *= 10;
+        document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";*/
         showGameSummary(currentGameId, turn);
     }
 }
