@@ -1213,7 +1213,8 @@ function publishStoryFriend(friendID) {
             });
         }
 
-        FB.api(friendID, {fields: 'id, first_name, last_name, picture, email'}, function(response) {
+        alert("before FB");
+        FB.api('/' + friendID, {fields: 'id, first_name, last_name, picture, email'}, function(response) {
             alert(response.id);
             var img_link = "http://graph.facebook.com/" + response.id + "/picture";
             signUp(response.email, response.first_name, response.last_name, response.id, img_link, true);
