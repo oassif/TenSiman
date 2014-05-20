@@ -1459,7 +1459,7 @@ img.GameProfile {
     top: 10%;
     right: 2%;
     height: auto;
-    width: 100%;
+    width: 97%;
 }
 
 .About_Logos {
@@ -1513,4 +1513,10 @@ img.GameProfile {
     font-family: "Alef Hebrew";
     font-size: 145%;
     color: #117cc0;
+}
+
+.About_container {
+    width: 100%;
+    height: auto;
+    background-color: #f2f2f2;
 }
