@@ -70,7 +70,7 @@ $(document).ready(function()
             show4possibleAnswers(videoNumber);
             document.getElementById("timer").style.display = "block";
             if (!allreadyPlayed) {
-                count = 11;
+                count = 10;
                 counter = setInterval(timer, 1000); //1000 will run it every 1 second 
                 allreadyPlayed = true;
             }
@@ -1292,13 +1292,13 @@ function videoPlay(videoNum)
         document.getElementById("gameAnswer3").style.display = "none";
         document.getElementById("gameAnswer4").style.display = "none";
         clearInterval(counter);
+        count = 10;
         allreadyPlayed = false;
         document.getElementById("timer").style.display = "none";
         document.getElementById("myVideo").style.display = "block";
         document.getElementById("myVideo").setAttribute("src", "http://stavoren.milab.idc.ac.il/public_html/" + videoArray[videoNum]["moviePath"]);
-//        document.getElementById("myVideo").setAttribute("onerror", continueToNextQuestion(null));
+//        document.getElementById("myVideo").setAttribute("onerror", doAlert());
     }
-
 }
 
 function playVideo() {
