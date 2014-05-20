@@ -1041,9 +1041,7 @@ function playTurn(game_id) {
         },
         success: function(data) {
             var jason = JSON.parse(data);
-            alert("sucess in signup");
             if (jason.success === 1) {
-                alert("sucess is 1");
                 if (!playToInvite) {
                     currentPlayerId = jason.userId;
                     window.location = "#matchups";
@@ -1054,7 +1052,7 @@ function playTurn(game_id) {
             }
         },
         error: function() {
-            alert("error in signup");
+            //alert("error in signup");
         }
     });
 }
@@ -1192,7 +1190,6 @@ function facebookWallPost() {
 }
 
 function publishStoryFriend(friendID) {
-    alert("test");
     if (!web) {
         if (friendID == undefined) {
 //alert('please click the me button to get a list of friends first');
@@ -1213,9 +1210,7 @@ function publishStoryFriend(friendID) {
             });
         }
 
-        alert("before FB");
         FB.api('/' + friendID, {fields: 'id, first_name, last_name'}, function(response) {
-            alert(response.id + " -- " + response.first_name + "--" + response.last_name + "--" + response.email + "--");
             var img_link = "http://graph.facebook.com/" + response.id + "/picture";
             signUp("email", response.first_name, response.last_name, response.id, img_link, true);
         });
