@@ -603,6 +603,7 @@ img.profile {
 #header-top .header-right {
 
     display:inline-block;
+    z-index: 2;
 
 }
 #header-top .header-center {
@@ -625,7 +626,7 @@ img.profile {
 }
 #header-top .header-left {
     display: inline-block !important;
-
+    z-index: 2;
 }
 
 .main-header .top-container { 
@@ -1450,3 +1451,63 @@ img.GameProfile {
     margin-right: auto;
     text-align: center;
 }*/
+
+.About_Content {
+    direction: rtl;
+    font-family: "Alef Hebrew";
+    position: absolute;
+    top: 10%;
+    right: 2%;
+    height: auto;
+    width: 100%;
+}
+
+.About_Logos {
+    display: inline-block;
+    position: absolute;
+    top:100%;
+    height: 40%;
+    right: 0;
+    left: 0;
+    width:100%;
+    background: #f2f2f2;
+}
+
+.about_logo {
+    /* background-size: cover; */
+    height: 100%;
+    width: 33%;
+}
+
+#about_left_logo {
+    background: url('../images/Shemalogo.png') no-repeat;
+    position: absolute;
+    left: 0;
+    background-size: contain;
+    background-position: center;
+}
+
+#about_center_logo {
+    background: url('../images/milab-logo.png') no-repeat;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-size: contain;
+    background-position: center;
+}
+
+#about_right_logo {
+    background: url('../images/Bluelogo.png') no-repeat;
+    position: absolute;
+    right: 0;
+    background-size: contain;
+    background-position: center;
+}
+
+.main_shema {
+    font-family: "Alef Hebrew";
+    font-size: 200%;
+    color: dodgerblue;
+}

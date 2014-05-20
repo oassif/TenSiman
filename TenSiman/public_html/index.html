@@ -32,6 +32,7 @@ works with FaceBook
 
                 <div data-role="content" id="login_pagecontent">
                     <img src="images/Logo2.png" width="67%" style="margin-top: 10%">
+                    
                 </div>
 
                 <div class="buttons" style="margin-top: 10%;" >
@@ -40,9 +41,9 @@ works with FaceBook
                     </button>
 
                 </div>
-
-                <img src="images/Shemalogo.png" width="30%" style="margin-top: 15%">
-
+                <div class="main_shema">
+                <img src="images/Shemalogo.png" width="30%" style="margin-top: 15%">בשיתוף עם עמותת 
+                </div>
             </center>
         </div>
 
@@ -58,13 +59,12 @@ works with FaceBook
                 <div class="main-header">
                     <div id='logo'>
                         <div id="header-top">
-
-                            <div class="fr header-right" >
-                                <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
-                            </div>
                             <div class="header-center">
                             </div>
-                            <div class="fl header-left" style="display:inline-block;float: left;">
+                            <div class="fr header-right">
+                                <a href="#about" class="ui-btn" data-transition="flip"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
+                            </div>
+                            <div class="fl header-left">
                                 <a onClick="refreshMatchups()" class="ui-btn" data-rel="back"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
 
@@ -373,10 +373,10 @@ works with FaceBook
                 <div class="main-header">
                     <div id='logo'>
                         <div id="header-top">
-                            <div class="fr header-right" >
-                                <a href="#" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
-                            </div>
                             <div class="header-center">
+                            </div>
+                            <div class="fr header-right" >
+                                <a href="#about" class="ui-btn"  data-transition="flip"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
                             </div>
                             <div class="fl header-left" style="display:inline-block;float: left;">
                                 <a onlick="refreshMatchups()"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
@@ -455,6 +455,35 @@ works with FaceBook
         </ul>
     </div>
 </footer> -->
+        </div>
+        
+        <div id="about" data-role="page"  >
+            <div class="fl header-left" style="display:inline-block;float: left;">
+                            <a href="#matchups" class="ui-btn" data-transition="flip"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+            </div>
+            <div class="About_Content">
+                <b>הסבר כללי:</b>
+                <br>
+                תן סימן הינו משחק תורות חברתי ייחודי ללימוד שפת הסימנים בעברית.  המשחק מתנהל בצורה א-סינכרונית בו כל שחקן משחק מול שחקנים אחרים בתורות. 
+                <br>
+                כל שחקן צופה בסרטון בו מוצגת מילה בשפת הסימנים ומטרת המשחק היא לענות על התשובה הנכונה מתוך 4 אפשרויות בזמן המהיר ביותר.
+                <br>המשתמש שענה על כל השאלות נכון ובזמן הטוב ביותר הוא המנצח.
+                <br>תוכן האפליקציה פותח בסיוע עמותת "שמע".
+                <br><br>
+                <b>צוות תן סימן:</b>
+                <br>אורן אסיף, אמיר גלמן, גיא קורן, יותם נוימן, מאי בר חן, ניצן ברוק, סתיו מוסקוביץ, עומרי שאולי, קרן ברגר
+                <br><b>מנחה:</b>דובב גולדשטיין
+                <br><b>מנחים טכנולוגים:</b>ערן אילני, אדם רוזנטל, עדו אורלובסקי, עז רדיאנו
+                <br><b>עיצוב מוצר גרפי:</b>סטודיו חמוצים
+                <br><b>שותפי תוכן:</b><u>עמותת שמע</u>
+                <br><br>עקבו אחרינו בפייסבוק: <a href="https://www.facebook.com/tensiman">תן סימן</a><br><br>
+                <div class="About_Logos">
+                    <div id="about_left_logo" class="about_logo"></div>
+                    <div id="about_center_logo" class="about_logo"></div>
+                    <div id="about_right_logo" class="about_logo"></div>
+                    <!--<img src="images/Shemalogo.png" width="%" style="margin-top: 15%">-->
+                </div>
+            </div>
         </div>
 
 
