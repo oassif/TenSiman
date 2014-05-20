@@ -1214,10 +1214,10 @@ function publishStoryFriend(friendID) {
         }
 
         alert("before FB");
-        FB.api('/' + friendID, {fields: 'id, first_name, last_name, email'}, function(response) {
+        FB.api('/' + friendID, {fields: 'id, first_name, last_name'}, function(response) {
             alert(response.id + " -- " + response.first_name + "--" + response.last_name + "--" + response.email + "--");
             var img_link = "http://graph.facebook.com/" + response.id + "/picture";
-            signUp(response.email, response.first_name, response.last_name, response.id, img_link, true);
+            signUp("email", response.first_name, response.last_name, response.id, img_link, true);
         });
     } else {
         var img_link = "http://graph.facebook.com/" + friendID + "/picture";
