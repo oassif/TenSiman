@@ -1459,7 +1459,7 @@ img.GameProfile {
     top: 10%;
     right: 2%;
     height: auto;
-    width: 100%;
+    width: 95%;
 }
 
 .About_Logos {
@@ -1482,7 +1482,8 @@ img.GameProfile {
 #about_left_logo {
     background: url('../images/Shemalogo.png') no-repeat;
     position: absolute;
-    left: 0;
+    width: 30%;
+    left: 3%;
     background-size: contain;
     background-position: center;
 }
@@ -1490,6 +1491,7 @@ img.GameProfile {
 #about_center_logo {
     background: url('../images/milab-logo.png') no-repeat;
     position: absolute;
+    width: 25%;
     left: 0;
     right: 0;
     margin-left: auto;
@@ -1501,13 +1503,14 @@ img.GameProfile {
 #about_right_logo {
     background: url('../images/Bluelogo.png') no-repeat;
     position: absolute;
-    right: 0;
+    width: 30%;
+    right: 3%;
     background-size: contain;
     background-position: center;
 }
 
 .main_shema {
     font-family: "Alef Hebrew";
-    font-size: 200%;
-    color: dodgerblue;
+    font-size: 145%;
+    color: #117cc0;
 }
