@@ -79,6 +79,7 @@ $(document).ready(function()
                 if ((currentGameId % 2) == 0)
                 {
                     videoPlay((currentGameId + 2) % 5);
+
                 }
                 else
                 {
@@ -87,8 +88,8 @@ $(document).ready(function()
                 isLastDemo = true;
             }
             /*
-            videoPlay(order[2]);
-            */
+             videoPlay(order[2]);
+             */
         } else {
             show4possibleAnswers(videoNumber);
             document.getElementById("timer").innerHTML = "<br>10";
@@ -486,6 +487,8 @@ function myHandler() {
 // start to show videos + answers. 
 function startPlay(demo) {
 
+    isLastDemo = false;
+
     isDemo = demo;
     document.getElementById("timer").style.display = "none";
     currVideoId = 0;
@@ -660,7 +663,7 @@ function endGame() {
         document.getElementById("gameAnswer4").style.display = "none";
         document.getElementById("translatedWord").style.display = "block";
         /*score *= 10;
-        document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";*/
+         document.getElementById("translatedWord").innerHTML = "<H1>" + score + "              :" + "ניקוד</H1>";*/
         showGameSummary(currentGameId, turn);
     }
 }
