@@ -950,6 +950,15 @@ td.scoreP1 div.sec {
     height: 5%;
 }*/
 
+.trainingSection {
+    position: absolute;
+    width: 100%;
+    top:254px;
+    height: 30%;
+    top: 72%;
+    alignment-adjust: central;
+}
+
 #GameAnswers {
     position: absolute;
     top: 72%;

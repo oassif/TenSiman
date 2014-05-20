@@ -33,6 +33,7 @@ var matchesData = new Array();
 var videoNumber = 0;
 var web = 0;
 var friendName = new Array();
+var isLastDemo = false;
 
 function pageY(elem) {
     return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
@@ -67,13 +68,22 @@ $(document).ready(function()
     }, false);
     myVideo.addEventListener("ended", function() {
         if (isDemo) {
-            if ((currentGameId % 2) == 0)
+            if (isLastDemo)
             {
-                videoPlay((currentGameId + 2) % 5);
+                document.getElementById("translatedWord").style.display = "none";
+                document.getElementById("myVideo").style.display = "none";
             }
             else
             {
-                videoPlay((currentGameId - 2) % 5);
+                if ((currentGameId % 2) == 0)
+                {
+                    videoPlay((currentGameId + 2) % 5);
+                }
+                else
+                {
+                    videoPlay((currentGameId - 2) % 5);
+                }
+                isLastDemo = true;
             }
             /*
             videoPlay(order[2]);
@@ -1222,7 +1232,7 @@ document.addEventListener('deviceready', function() {
     }
 }, false);
 function loginFromWeb() {
-    currentPlayerId = 1;
+    currentPlayerId = 12;
     refreshMatchups();
 }
 
