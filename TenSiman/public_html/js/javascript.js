@@ -67,9 +67,20 @@ $(document).ready(function()
     }, false);
     myVideo.addEventListener("ended", function() {
         if (isDemo) {
+            if ((currentGameId % 2) == 0)
+            {
+                videoPlay((currentGameId + 2) % 5);
+            }
+            else
+            {
+                videoPlay((currentGameId - 2) % 5);
+            }
+            /*
             videoPlay(order[2]);
+            */
         } else {
             show4possibleAnswers(videoNumber);
+            document.getElementById("timer").innerHTML = "<br>10";
             document.getElementById("timer").style.display = "block";
             if (!allreadyPlayed) {
                 count = 10;
@@ -467,6 +478,10 @@ function startPlay(demo) {
     isDemo = demo;
     document.getElementById("timer").style.display = "none";
     currVideoId = 0;
+    if (isDemo)
+    {
+        currVideoId = currentGameId % 5;
+    }
     // Hiding buttons
 //    document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
@@ -479,7 +494,7 @@ function startPlay(demo) {
 
 // randomly decide the order of the videos.
 function generateOrder(numberOfVideos) {
-    var videosOrder = [1, 0, 2, 4, 3];
+    var videosOrder = [0, 1, 2, 3, 4];
     // Math.floor((Math.random()*videoCount)+1); 
     return videosOrder;
 }
@@ -567,9 +582,17 @@ function continueToNextQuestion(object) {
     // continte to the next question.
     ++currVideoId;
     if (currVideoId === videoCount) {
-// If all the questions were showed, end game
-        clearInterval(counter);
-        endGame();
+        // If all the questions were showed, end game
+        setTimeout(function() {
+            if (object !== null) {
+//document.getElementById(object.id).style.background = "";
+                document.getElementById(object.id).style.backgroundImage = "url(css/NeutralAnswer.png)";
+            }
+//document.getElementById(correctAnswerId).style.background = "";
+            document.getElementById(correctAnswerId).style.backgroundImage = "url(css/NeutralAnswer.png)";
+            clearInterval(counter);
+            endGame();
+        }, delayBetweenQuestions);
     }
     else {
 // Awaits half a second before showing the next question
