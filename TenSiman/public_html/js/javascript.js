@@ -72,6 +72,7 @@ $(document).ready(function()
             {
                 document.getElementById("translatedWord").style.display = "none";
                 document.getElementById("myVideo").style.display = "none";
+                document.getElementById("play").innerHTML = "התחל לשחק";
             }
             else
             {
@@ -495,6 +496,7 @@ function startPlay(demo) {
     // Hiding buttons
 //    document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
+    document.getElementById("play").innerHTML = "דלג על לימוד";
 // call for the first video
     order = generateOrder();
     setTimeout(function() {
