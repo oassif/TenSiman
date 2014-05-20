@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+var k_MaxScore = 50;
 var NUMBER_SECTIONS = 5;
 var currentPlayerId = 0;
 var timePerRound = 10;
@@ -20,6 +21,7 @@ var isDemo = true;
 var count;
 var counter;
 var score = 0;
+var g_TempRivalScore = 0;
 var buffer = 20; //scroll bar buffer
 var m_isCanClick; // Used to prevent user from clicking multiple times on the answer (couldn't disabled the buttons for some reason)
 
@@ -312,6 +314,9 @@ function startGame()
     // Setting video element to "" so the video won't jump when clicking "start game" while demo is running
     document.getElementById("myVideo").setAttribute("src", "");
     score = 0;
+    g_TempRivalScore = 0;
+    document.getElementById("left_score_indicator").style.height = "0%";
+    document.getElementById("right_score_indicator").style.height = "0%";
     currVideoId = 0;
 //    isDemo = true;
     document.getElementById("play").style.display = "none";
@@ -531,11 +536,15 @@ function onClick_checkAnswer(object) {
         score += gameDetails[order[currVideoId]][4];
         if (gameFlowData.initiatorId == currentPlayerId) {
             document.getElementById("Game_LeftScore").innerHTML = score;
+            document.getElementById("left_score_indicator").style.height = (score * 100 / k_MaxScore) + "%";
             // TODO: add bool value false (don't need to update the rival score
         }
         else {
+            g_TempRivalScore += +gameFlowData.sections[currVideoId]["scoreP1"];
             document.getElementById("Game_LeftScore").innerHTML = score;
-            document.getElementById("Game_RightScore").innerHTML = '0'; // TODO: sum rival score
+            document.getElementById("left_score_indicator").style.height = (score * 100 / k_MaxScore) + "%";
+            document.getElementById("Game_RightScore").innerHTML = g_TempRivalScore; //'0'; // TODO: sum rival score
+            document.getElementById("right_score_indicator").style.height = (g_TempRivalScore * 100 / k_MaxScore) + "%";
             // TODO: add bool value true (need to update the rival score
         }
 

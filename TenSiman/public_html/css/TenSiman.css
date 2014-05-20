@@ -905,13 +905,43 @@ td.scoreP1 div.sec {
     position: absolute;
     width: 2.5%;
     left: 3%;
+    overflow: hidden;
 }
 
 #right_score_bar
 {
     position: absolute;
     width: 2.5%;
-    right: 3%
+    right: 3%;
+    overflow: hidden;
+}
+
+#left_score_indicator {
+    position: absolute;
+    width: 108%;
+    height: 0%;
+    /* height: 100%; */
+    left: -2%;
+    right: -2%;
+    margin-left: auto;
+    margin-right:  auto;
+    background-color: #3abe8b;
+    bottom: 0;
+    /* display: block; */
+}
+
+#right_score_indicator {
+    position: absolute;
+    width: 108%;
+    height: 0%;
+    /* height: 100%; */
+    left: -2%;
+    right: -2%;
+    margin-left: auto;
+    margin-right:  auto;
+    background-color: #3abe8b;
+    bottom: 0;
+    /* display: block; */ 
 }
 
 /*#divider {
@@ -1368,3 +1398,46 @@ img.GameProfile {
 }
 
 /****** PREGAME : END   ******/
+
+.SoonLeft {
+    position: absolute;
+    /*left: 0;*/
+    left: 2%;
+    top: 40%;
+    /*margin-left: auto;
+    margin-right: auto;*/
+    direction: rtl;
+    font-family: "Alef Hebrew";
+    -webkit-text-stroke-width: 1px;     
+    -webkit-text-stroke-color: #00c8f8;
+    -webkit-text-fill-color: white;
+    font-weight: bold;
+    font-size: 180%;
+    -webkit-transform: rotate(-10deg);
+}
+
+.SoonRight {
+    position: absolute;
+    /*left: 0;*/
+    right: 2%;
+    top: 40%;
+    /*margin-left: auto;
+    margin-right: auto;*/
+    direction: rtl;
+    font-family: "Alef Hebrew";
+    -webkit-text-stroke-width: 1px;     
+    -webkit-text-stroke-color: #00c8f8;
+    -webkit-text-fill-color: white;
+    font-weight: bold;
+    font-size: 180%;
+    -webkit-transform: rotate(10deg); /* Chrome, Safari, Opera */
+}
+
+/*.HallOfFameContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}*/
