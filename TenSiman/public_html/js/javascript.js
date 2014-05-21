@@ -735,8 +735,8 @@ function refreshFriendsZone(toInvite) {
             });
         });
     } else {
-        friendName = ["s", "h", "a", "b", "c", "d", "6f", "g", "f", "fg", "gf", "dd"];
-        friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
+        friendName = ["shai", "hi", "alon lavi", "ben ron", "cs tav", "dss tav", "st", "ben livni", "df asif", "stav mos", "oren stern", "db hi", "shaia", "hia", "aalon lavi", "aben ron", "cs atav", "dss atav", "sta", "ben aalivni", "dfa asif", "stav amos", "oren astern", "barbar", "ssssss", "Assif"];
+        friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146, 259746939, 248234613, 2157420811, 244771584, 244771586, 244771586, 244771586, 244771586, 244771587, 244771584, 12323140, 12323140, 999992922, 757317102];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
@@ -809,6 +809,13 @@ function buildFriendsTable(toInvite, start) {
     if (start == 0) {
         document.getElementById("friends_table").innerHTML = "";
     }
+    
+    if (toInvite) {
+        document.getElementById("searchFriends").setAttribute("onClick", "searchFriend(true)");
+    } else {
+        document.getElementById("searchFriends").setAttribute("onClick", "searchFriend(false)");
+    }
+
 
     var table = document.getElementById("friends_table");
     var numOfMatchups = matchesData.length;
@@ -1391,4 +1398,42 @@ function ChangePlayersButton_onClick(i_CllickButtonIndication) {
         document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOff";
         // TODO: loat friend list
     }
+}
+
+function searchFriend(toInvite) {
+    text = $("#the-search-input").val();
+    var lowerCaseText = text.toLowerCase();
+    if (toInvite) {
+        console.log("true " + text);
+    } else {
+        console.log("false " + text);
+
+    }
+
+    var currName;
+    document.getElementById("friends_table").innerHTML = "";
+    for (index = 0; index < matchesData.length; ++index) {
+        console.log(matchesData[index]["name"]);
+        currName = matchesData[index]["name"].toLowerCase();
+        if (currName.indexOf(text) >= 0) {
+            console.log(matchesData[index]["name"]);
+
+            if (toInvite) {
+                buttonProperty = "onClick=\"publishStoryFriend(" + matchesData[index]["id"] + ")\"";
+                id = matchesData[index]["id"];
+                name = matchesData[index]["name"];
+                $("#friends_table").append("<tr>" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
+                        "<div class=\"friendName\">" + name + "</div></td></tr>");
+            } else {
+                buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
+                $("#friends_table").append("<tr align=\"center\">" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" /></a>" +
+                        "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td>" +
+                        "</tr>");
+            }
+
+        }
+    }
+
 }

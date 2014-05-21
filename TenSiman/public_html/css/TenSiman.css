@@ -1668,6 +1668,7 @@ img.GameProfile {
 }
 
 .challange_players_table .challange_table_row {
+    position: relative;
     height: 25%;
     width: 100%;
     /*font-family: "Alef Hebrew";*/
@@ -1677,14 +1678,16 @@ img.GameProfile {
 
 .challange_players_table .left_player_cell {
     position: absolute;
-    height: 100%;
+    height: 80%;
     width: 50%;
     right: 50%;
+    max-width: 100%;
 }
 
 .challange_players_table .right_player_cell {
     position: absolute;
-    height: 100%;
+    height: 80%;
     width: 50%;
     left: 50%;
+    max-width: 80%;
 }
