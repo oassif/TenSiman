@@ -31,10 +31,9 @@ var turn = 0;
 var player1or2 = 0;
 var matchesData = new Array();
 var videoNumber = 0;
-var web = 0;
+var web = 1;
 var friendName = new Array();
 var isLastDemo = false;
-
 function pageY(elem) {
     return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
 }
@@ -79,7 +78,6 @@ $(document).ready(function()
                 if ((currentGameId % 2) == 0)
                 {
                     videoPlay((currentGameId + 2) % 5);
-
                 }
                 else
                 {
@@ -202,10 +200,8 @@ function buildPlayerBar(userData) {
     var leftToNextLevel = (level * 100 * 1.5) - score;
     document.getElementById("nextLevel").innerHTML = level + 1;
     document.getElementById("nextLevel2").innerHTML = level + 1;
-
     document.getElementById("level").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
     document.getElementById("level2").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
-
     // document.getElementById("nextLevel").innerHTML = userData["level"];
 
     document.getElementById("MessageFullName").innerHTML = userData["fullName"];
@@ -488,7 +484,6 @@ function myHandler() {
 function startPlay(demo) {
 
     isLastDemo = false;
-
     isDemo = demo;
     document.getElementById("timer").style.display = "none";
     currVideoId = 0;
@@ -496,7 +491,7 @@ function startPlay(demo) {
     {
         currVideoId = currentGameId % 5;
     }
-    // Hiding buttons
+// Hiding buttons
 //    document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
     document.getElementById("play").innerHTML = "דלג על לימוד";
@@ -521,7 +516,6 @@ function generateOrder(numberOfVideos) {
  */
 function onClick_checkAnswer(object) {
     console.log(object);
-
     document.getElementById("timer").style.display = "none";
     if (m_isCanClick)
     {
@@ -597,7 +591,7 @@ function continueToNextQuestion(object) {
     // continte to the next question.
     ++currVideoId;
     if (currVideoId === videoCount) {
-        // If all the questions were showed, end game
+// If all the questions were showed, end game
         setTimeout(function() {
             if (object !== null) {
 //document.getElementById(object.id).style.background = "";
@@ -735,7 +729,7 @@ function refreshFriendsZone(toInvite) {
             });
         });
     } else {
-        friendName = ["s", "h", "a", "b", "c", "d", "6f", "g", "f", "fg", "gf", "dd"];
+        friendName = ["shai", "hi", "alon lavi", "ben ron", "cs tav", "dss tav", "st", "ben livni", "df asif", "stav mos", "oren stern", "db hi"];
         friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
@@ -796,6 +790,7 @@ function buildFriendsBar(matchup) {
 
 function buildFriendsTable(toInvite, start) {
 
+
     var size = matchesData.length;
     if (start > size) {
         return;
@@ -805,11 +800,16 @@ function buildFriendsTable(toInvite, start) {
     document.getElementById("moreFriends").style.display = "none";
     document.getElementById("friends_bar").style.display = "none";
     document.getElementById("loading").style.display = "block";
-
     if (start == 0) {
         document.getElementById("friends_table").innerHTML = "";
     }
 
+    if (toInvite) {
+        document.getElementById("searchFriends").setAttribute("onClick", "searchFriend(true)");
+    } else {
+        document.getElementById("searchFriends").setAttribute("onClick", "searchFriend(false)");
+
+    }
     var table = document.getElementById("friends_table");
     var numOfMatchups = matchesData.length;
     var size = numOfMatchups;
@@ -840,13 +840,11 @@ function buildFriendsTable(toInvite, start) {
                 id2 = matchesData[index]["id"];
                 name2 = matchesData[index]["name"];
                 buttonProperty2 = "onClick=\"publishStoryFriend(" + id2 + ")\"";
-
                 $("#friends_table").append("<tr>" +
                         "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
                         "<div class=\"friendName\">" + name + "</div></td>" +
                         "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id2 + "/picture/" + "\" /></a>" +
                         "<div class=\"friendName\">" + name2 + "</div></td></tr>");
-
             } else {
                 $("#friends_table").append("<tr>" +
                         "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
@@ -1370,3 +1368,39 @@ function markTheRightAnswer() {
         }
     }, 200);
 }
+
+
+function searchFriend(toInvite) {
+    text = $("#the-search-input").val();
+    if (toInvite) {
+        console.log("true " + text);
+    } else {
+        console.log("false " + text);
+
+    }
+
+    document.getElementById("friends_table").innerHTML = "";
+    for (index = 0; index < matchesData.length; ++index) {
+        if (matchesData[index]["name"].indexOf(text) >= 0) {
+            console.log(matchesData[index]["name"]);
+
+            if (toInvite) {
+                buttonProperty = "onClick=\"publishStoryFriend(" + matchesData[index]["id"] + ")\"";
+                id = matchesData[index]["id"];
+                name = matchesData[index]["name"];
+                $("#friends_table").append("<tr>" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
+                        "<div class=\"friendName\">" + name + "</div></td></tr>");
+            } else {
+                buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
+                $("#friends_table").append("<tr align=\"center\">" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" /></a>" +
+                        "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td>" +
+                        "</tr>");
+            }
+
+        }
+    }
+
+}
+

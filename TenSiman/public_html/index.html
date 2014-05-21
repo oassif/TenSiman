@@ -32,7 +32,7 @@ works with FaceBook
 
                 <div data-role="content" id="login_pagecontent">
                     <img src="images/Logo2.png" width="67%" style="margin-top: 10%">
-                    
+
                 </div>
 
                 <div class="buttons" style="margin-top: 10%;" >
@@ -42,7 +42,7 @@ works with FaceBook
 
                 </div>
                 <div class="main_shema">
-                <img src="images/Shemalogo.png" width="30%" style="margin-top: 15%">בשיתוף עם עמותת 
+                    <img src="images/Shemalogo.png" width="30%" style="margin-top: 15%">בשיתוף עם עמותת 
                 </div>
             </center>
         </div>
@@ -175,9 +175,9 @@ works with FaceBook
                 </div>
                 <div class="HallOfFameZone">
                     <div class="HallOfFameContainer">
-                    <table>
-                        <tr><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td><td>היכל<br>התהילה</td></tr>
-                    </table>
+                        <table>
+                            <tr><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td><td>היכל<br>התהילה</td></tr>
+                        </table>
                     </div>
                     <div class="SoonRight">בקרוב...</div>
                 </div>
@@ -194,8 +194,18 @@ works with FaceBook
                             <td><a data-role="button" id="playWithFrineds" onclick="refreshFriendsZone(false);">שחק עם חברים</a></td>
                             <td><a data-role="button" id="inviteFrineds" onclick="refreshFriendsZone(true);">הזמן חברים</a></td>
 
-                            <!--                            <td><a data-role="button" id="getMoreFriends">עוד חברים</a></td>-->
+                            <!--                        <form action="http://stavoren.milab.idc.ac.il/public_html/php/getGameDetails.php" method="post">
+                                                        <input type="search" name="search!!!" data-inline="true"> 
+                                                        <input type="submit" value="Search" data-inline="true">
+                                                    </form>-->
 
+                            <!--                        <input type="search" name="search" id="searc-basic" value="" />
+                                                    <a data-role="button" id="playWithFrineds" onclick="searchFriend();">חפש</a>-->
+
+                       <input id="the-search-input" type="text" data-type="search">
+                        <a data-role="button" id="searchFriends">חפש</a>
+
+                        <!--                            <td><a data-role="button" id="getMoreFriends">עוד חברים</a></td>-->
 
                         </tr>
                     </table>
@@ -274,18 +284,18 @@ works with FaceBook
                     </video>
                     <!--<center style="position: absolute; width: 100%; top:254px;">-->
 
-                        
-<!--                        <button id="repeat" onclick="showVideos();" style="display: none">repeat</button>
-                        <button onclick="playVideo()">play</button>-->
 
-                       <!-- <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
-                        <span id="translatedWord" style="font-family: 'Asap', sans-serif;"></span>-->
+                    <!--                        <button id="repeat" onclick="showVideos();" style="display: none">repeat</button>
+                                            <button onclick="playVideo()">play</button>-->
+
+                    <!-- <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">התחל</a>
+                     <span id="translatedWord" style="font-family: 'Asap', sans-serif;"></span>-->
 
                     <!--</center>-->
                 </div>
                 <div id="trainingSection" class="trainingSection">
-                        <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">דלג על לימוד</a>
-                        <span id="translatedWord" style="font-family: 'Asap', sans-serif; text-align: center"></span>
+                    <a data-role="button" id="play" onclick="startPlay();" data-inline="true" style="display: block;">דלג על לימוד</a>
+                    <span id="translatedWord" style="font-family: 'Asap', sans-serif; text-align: center"></span>
                 </div>
 
                 <div id="GameAnswers">
@@ -456,10 +466,10 @@ works with FaceBook
     </div>
 </footer> -->
         </div>
-        
+
         <div id="about" data-role="page"  >
             <div class="fl header-left" style="display:inline-block;float: left;">
-                            <a href="#matchups" class="ui-btn"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                <a href="#matchups" class="ui-btn"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
             </div>
             <div class="About_container">
                 <div class="About_Content">
