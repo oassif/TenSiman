@@ -209,7 +209,7 @@ function buildPlayerBar(userData) {
     // document.getElementById("nextLevel").innerHTML = userData["level"];
 
     document.getElementById("MessageFullName").innerHTML = userData["fullName"];
-    document.getElementById("MessageProfilePic").innerHTML = "<img class=\"profile\" src=\"" + userData["imgURL"] + "\"/>";
+    document.getElementById("MessageProfilePic").innerHTML = "<img class=\"profile\" src=\"" + userData["imgURL"] + "?width=100&height=100\"/>";
     /* BETTER PICTURE SIZE! 
      * document.getElementById().innerHTML = "<img class=\"profile\" src=\"https://graph.facebook.com/assif/picture?width=200&height=200\"/>";
      */
@@ -849,14 +849,14 @@ function buildFriendsTable(toInvite, start) {
                 buttonProperty2 = "onClick=\"publishStoryFriend(" + id2 + ")\"";
 
                 $("#friends_table").append("<tr>" +
-                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture?width=100&height=100" + "\" /></a>" +
                         "<div class=\"friendName\">" + name + "</div></td>" +
-                        "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id2 + "/picture/" + "\" /></a>" +
+                        "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id2 + "/picture?width=100&height=100" + "\" /></a>" +
                         "<div class=\"friendName\">" + name2 + "</div></td></tr>");
 
             } else {
                 $("#friends_table").append("<tr>" +
-                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture?width=100&height=100" + "\" /></a>" +
                         "<div class=\"friendName\">" + name + "</div></td></tr>");
             }
 
@@ -864,15 +864,15 @@ function buildFriendsTable(toInvite, start) {
             if ((index + 1) < size) {
                 buttonProperty2 = "onClick=\"startGameWithNewPlayer(" + matchesData[index + 1]["rivalId"] + ")\"";
                 $("#friends_table").append("<tr align=\"center\">" +
-                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" /></a>" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" /></a>" +
                         "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td>" +
-                        "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + matchesData[index + 1]["rivalImg"] + "\" /></a>" +
+                        "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + matchesData[index + 1]["rivalImg"] + "?width=100&height=100\" /></a>" +
                         "<br /><div class=\"friendName\">" + matchesData[index + 1]["rivalName"] + "</div></td>" +
                         "</tr>");
                 index++;
             } else {
                 $("#friends_table").append("<tr align=\"center\">" +
-                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" /></a>" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" /></a>" +
                         "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td>" +
                         "</tr>");
             }
@@ -1289,12 +1289,12 @@ function buildSummaryTable(matchesData, turn) {
     }
 
     $("#summary_bar_table").append("<tr align=\"center\">" +
-            "<td class=\"playerPic\"><img class=\"pic \" src=\"" + player2array[0]["pic"] + "\">" +
+            "<td class=\"playerPic\"><img class=\"pic \" src=\"" + player2array[0]["pic"] + "?width=100&height=100\">" +
             "<div class=\"playerName\">" + player2array[0]["name"] + "</div></td>" +
             "<td class=\"scoreP1\">" + player2score + "</td>" +
             "<td class=\"scoreP1\">" + ":" + "</td>" +
             "<td class=\"scoreP1\">" + player1array[0]["score"] + "</td>" +
-            "<td class=\"playerPic\"><img class=\"pic \"  src=\"" + player1array[0]["pic"] + "\">" +
+            "<td class=\"playerPic\"><img class=\"pic \"  src=\"" + player1array[0]["pic"] + "?width=100&height=100\">" +
             "<div class=\"playerName\">" + player1array[0]["name"] + "</div></td>" +
             "</tr>"
             );
@@ -1423,12 +1423,12 @@ function searchFriend(toInvite) {
                 id = matchesData[index]["id"];
                 name = matchesData[index]["name"];
                 $("#friends_table").append("<tr>" +
-                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture/" + "\" /></a>" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture?width=100&height=100" + "\" /></a>" +
                         "<div class=\"friendName\">" + name + "</div></td></tr>");
             } else {
                 buttonProperty = "onClick=\"startGameWithNewPlayer(" + matchesData[index]["rivalId"] + ")\"";
                 $("#friends_table").append("<tr align=\"center\">" +
-                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "\" /></a>" +
+                        "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" /></a>" +
                         "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td>" +
                         "</tr>");
             }
