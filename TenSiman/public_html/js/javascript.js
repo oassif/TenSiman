@@ -291,6 +291,7 @@ function timer() {
     if (window.location.toString().match("\#game$"))
     {
         if (count <= 0) {
+            count = 10; /* Added to prevent this part to happen twice in a row before question changes */
             markTheRightAnswer();
             continueToNextQuestion(null);
             return;
@@ -1361,18 +1362,18 @@ function playVideo() {
 
 
 function markTheRightAnswer() {
-    var counter = 0;
+    var innerCounter = 0;
     var timerId = 0;
     timerId = setInterval(function() {
-        ++counter;
-        if (counter % 2 === 0) {
+        ++innerCounter;
+        if (innerCounter % 2 === 0) {
             document.getElementById(correctAnswerId).style.backgroundImage = "url(css/RightAnswer.png)";
         }
         else {
             document.getElementById(correctAnswerId).style.backgroundImage = "url(css/NeutralAnswer.png)";
         }
 
-        if (counter == 2) {
+        if (innerCounter == 2) {
             clearInterval(timerId);
         }
     }, 200);
