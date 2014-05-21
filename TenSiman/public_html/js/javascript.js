@@ -275,7 +275,7 @@ function buildMatchesTable(matchesData) {
                  "</table>" +
                  "</td>" +*/
                 "<td class=\"matchRival\">" +
-                "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "\" class=\"profile\"/>" +
+                "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" class=\"profile\"/>" +
                 //"<div class=\"rivalRank\"><img src=\"css/Profressbarstar.png\" width=\"100%\" class=\"imgStar\"/>" + matchesData[index]["rivalLevel"] + 
                 "<div class=\"rivalRank\">" + matchesData[index]["rivalLevel"] +
                 "<div class=\"rivalName\">" + matchesData[index]["rivalFirstName"] + "</div>" +
@@ -1369,4 +1369,26 @@ function markTheRightAnswer() {
             clearInterval(timerId);
         }
     }, 200);
+}
+
+function ChangePlayersButton_onClick(i_CllickButtonIndication) {
+    var k_InviteButton = "invite";
+    var k_PlayButton = "play";
+    
+    if (i_CllickButtonIndication == k_InviteButton)
+    {
+        document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_On.png");
+        document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOn";
+        document.getElementById(k_PlayButton + "_button_img").setAttribute("src", "images/Play_Off.png");
+        document.getElementById(k_PlayButton + "_button_txt").className = "challangeButtonOff";
+        // TODO: load invite list
+    }
+    else
+    {
+        document.getElementById(k_PlayButton + "_button_img").setAttribute("src", "images/Play_On.png");
+        document.getElementById(k_PlayButton + "_button_txt").className = "challangeButtonOn";
+        document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_Off.png");
+        document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOff";
+        // TODO: loat friend list
+    }
 }
