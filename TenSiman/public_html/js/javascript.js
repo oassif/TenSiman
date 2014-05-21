@@ -91,10 +91,10 @@ $(document).ready(function()
              videoPlay(order[2]);
              */
         } else {
-            show4possibleAnswers(videoNumber);
-            document.getElementById("timer").innerHTML = "<br>10";
-            document.getElementById("timer").style.display = "block";
             if (!allreadyPlayed) {
+                show4possibleAnswers(videoNumber);
+                document.getElementById("timer").innerHTML = "<br>10";
+                document.getElementById("timer").style.display = "block";
                 count = 10;
                 counter = setInterval(timer, 1000); //1000 will run it every 1 second 
                 allreadyPlayed = true;
