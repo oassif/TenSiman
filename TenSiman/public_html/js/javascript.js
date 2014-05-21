@@ -31,7 +31,7 @@ var turn = 0;
 var player1or2 = 0;
 var matchesData = new Array();
 var videoNumber = 0;
-var web = 1;
+var web = 0;
 var friendName = new Array();
 var isLastDemo = false;
 function pageY(elem) {
