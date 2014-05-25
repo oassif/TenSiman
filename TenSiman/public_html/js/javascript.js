@@ -267,7 +267,7 @@ function buildMatchesTable(matchesData) {
         $("#matchups_tableNew").append("<tr align=\"center\">" +
                 "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
                 "<td class=\"matchScore\">" + matchesData[index]["userScore"] + "</td>" +
-                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["LiveGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
+                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["lastGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
                 "<td class=\"matchScore\">" + matchesData[index]["rivalScore"] + "</td>" +
                 /*"<td class=\"matchInner\">" +
                  "<table class=\"matchInnerTable\">" +
@@ -810,7 +810,7 @@ function buildFriendsTable(toInvite, start) {
     if (start == 0) {
         document.getElementById("friends_table").innerHTML = "";
     }
-    
+
     if (toInvite) {
         document.getElementById("searchFriends").setAttribute("onClick", "searchFriend(true)");
     } else {
@@ -1313,8 +1313,10 @@ function buildSummaryTable(matchesData, turn) {
 }
 
 function showGameSummary(gameId, turn) {
-    window.location = "#summary";
-    getSummary(gameId, turn);
+    if (gameId != 0) {
+        window.location = "#summary";
+        getSummary(gameId, turn);
+    }
 }
 
 function checkRefresh()
@@ -1382,7 +1384,7 @@ function markTheRightAnswer() {
 function ChangePlayersButton_onClick(i_CllickButtonIndication) {
     var k_InviteButton = "invite";
     var k_PlayButton = "play";
-    
+
     if (i_CllickButtonIndication == k_InviteButton)
     {
         document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_On.png");
@@ -1414,11 +1416,8 @@ function searchFriend(toInvite) {
     var currName;
     document.getElementById("friends_table").innerHTML = "";
     for (index = 0; index < matchesData.length; ++index) {
-        console.log(matchesData[index]["name"]);
         currName = matchesData[index]["name"].toLowerCase();
         if (currName.indexOf(text) >= 0) {
-            console.log(matchesData[index]["name"]);
-
             if (toInvite) {
                 buttonProperty = "onClick=\"publishStoryFriend(" + matchesData[index]["id"] + ")\"";
                 id = matchesData[index]["id"];
