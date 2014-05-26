@@ -512,7 +512,11 @@ div.MainFotter div.HallOfFameZone {
 img.profile {
     border: solid black !important;
     /*border-radius: 50% 50% 50% 50%;*/
-    -webkit-border-radius: 50% 50% 50% 50%;
+    /*-webkit-border-radius: 50% 50% 50% 50%;*/
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
     //width: 80px;
     width: 50%;
 }
@@ -1623,6 +1627,11 @@ img.GameProfile {
     width: 98%;
     left: 1%;
     right: 1%;
+    /*overflow: scroll;*/
+    display: block;
+    border-collapse: separate;
+    overflow: visible;
+    overflow-x: hidden;
 }
 
 .challange_buttons #invite_new {
@@ -1676,6 +1685,12 @@ img.GameProfile {
     text-align: center;
 }
 
+.challange_table_row_seperator {
+    position: relative;
+    height: 2%;
+    width: 100%;
+}
+
 .challange_players_table .left_player_cell {
     position: absolute;
     height: 80%;
@@ -1690,4 +1705,16 @@ img.GameProfile {
     width: 50%;
     left: 50%;
     max-width: 80%;
+}
+
+.challange_button_invite {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.challange_button_exist {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
 }
