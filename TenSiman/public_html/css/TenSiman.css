@@ -1718,3 +1718,18 @@ img.GameProfile {
     left: 0px;
     bottom: 0px;
 }
+
+.no_friends_found_msg {
+    direction: rtl;
+    position: absolute;
+    top: 15%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: "Alef Hebrew";
+    font-size: 120%;
+    color: darkslategrey;
+    font-weight: normal;   
+}

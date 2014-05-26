@@ -2,6 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+var k_InviteButton = "invite";
+var k_PlayButton = "play";
 var k_MaxScore = 50;
 var NUMBER_SECTIONS = 5;
 var currentPlayerId = 0;
@@ -1440,8 +1442,6 @@ function markTheRightAnswer() {
 }
 
 function ChangePlayersButton_onClick(i_CllickButtonIndication) {
-    var k_InviteButton = "invite";
-    var k_PlayButton = "play";
 
     if (i_CllickButtonIndication == k_InviteButton)
     {
@@ -1536,7 +1536,22 @@ function refreshChallangePage(toInvite) {
                             buildFriendsTable(toInvite, 0);
                         } else {
                             matchesData = jason.matches;
-                            buildFriendsTable(toInvite, 0);
+                            if (matchesData.length != 0)
+                            {
+                                buildFriendsTable(toInvite, 0);
+                            }
+                            else
+                            {
+                            document.getElementById("ChallangePlayersTable").innerHTML = 
+                                    "<div class=\"no_friends_found_msg\">" +
+                                    "לא נמצאו חברים למשחק.<br>" +
+                                    "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
+                                    "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
+                                    "<br>" +
+                                    "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
+                                    "</div>";
+                            //ChangePlayersButton_onClick(k_InviteButton);
+                            }
                         }
                     }
                 },
@@ -1567,7 +1582,22 @@ function refreshChallangePage(toInvite) {
                         buildFriendsTable(toInvite, 0);
                     } else {
                         matchesData = jason.matches;
-                        buildFriendsTable(toInvite, 0);
+                        if (matchesData.length != 0)
+                        {
+                            buildFriendsTable(toInvite, 0);
+                        }
+                        else
+                        {
+                            document.getElementById("ChallangePlayersTable").innerHTML = 
+                                    "<div class=\"no_friends_found_msg\">" +
+                                    "לא נמצאו חברים למשחק.<br>" +
+                                    "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
+                                    "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
+                                    "<br>" +
+                                    "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
+                                    "</div>";
+                            //ChangePlayersButton_onClick(k_InviteButton);
+                        }
                     }
                 }
             },
@@ -1583,5 +1613,13 @@ function refreshChallangePage(toInvite) {
 function loadChallangesPage(isInvite)
 {
     window.location = "#OrenTest";
-    refreshChallangePage(isInvite);
+    if (isInvite)
+    {
+        ChangePlayersButton_onClick(k_InviteButton);
+    }
+    else
+    {
+        ChangePlayersButton_onClick(k_PlayButton);
+    }
+    //refreshChallangePage(isInvite);
 }
