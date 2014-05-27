@@ -7,6 +7,10 @@ var k_PlayButton = "play";
 var k_IsInInviteState = false;
 var k_MaxNumberOfFriendsInBulk = 20;
 var k_MaxScore = 50;
+var k_ExpertChallangeMatchupType = "3";
+var k_YourTurnMatchupType = "1";
+var k_TenSimanMatchupType = "0";
+var k_WaitForRivalMatchupType = "2";
 var NUMBER_SECTIONS = 5;
 var currentPlayerId = 0;
 var timePerRound = 10;
@@ -229,69 +233,100 @@ function buildMatchesTable(matchesData) {
     table.innerHTML = "";
     $("#matchups_tableNew").html("");
     $("#matchups_tableNew").addClass("matches");
-    var numOfMatchups = matchesData.length;
+    //var numOfMatchups = matchesData.length;
     var index;
-    //table.innerHTML = "";
-    for (index = 0; index < numOfMatchups; ++index) {
-
+    
+    // Copying the array
+    var tmpMatchupsCopy = matchesData.slice();
+    
+    // Generating a matchups array sorted by matchup's type
+    var sorted_MatchupArray = new Array();
+    // TODO: uncomment the next line when we want to enable the experts challange (Also need to allow a game of expert first)
+    //sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_ExpertChallangeMatchupType));
+    sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_YourTurnMatchupType));
+    sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_TenSimanMatchupType));
+    sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_WaitForRivalMatchupType));
+    
+    for (index = 0; index < sorted_MatchupArray.length; ++index) {
         var text = ""; // This
         var buttonClass = "";
-        var textValue = "";
+        //var textValue = "";
         var buttonProperty = "";
         var playerTurn = 2;
         // Todo: see if it's the first player or sceond player and according to it decide.
         // Decide button
-        if (matchesData[index]["gameStatus"] === "0") {
+        if (sorted_MatchupArray[index]["gameStatus"] === k_TenSimanMatchupType) {
             text = "תן סימן";
             buttonClass = "newGame";
-            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["matchupId"] + ")\"";
+            buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
         }
-        else if (matchesData[index]["gameStatus"] === "1") {
+        else if (sorted_MatchupArray[index]["gameStatus"] === k_YourTurnMatchupType) {
             text = "תורך";
             buttonClass = "yourTurn";
             //alert("your turn:" + matchesData[index]["LiveGameId"]);
-            buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameId"] + ")\"";
+            buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameId"] + ")\"";
             playerTurn = 1;
         }
-        else if (matchesData[index]["gameStatus"] === "2") {
+        else if (sorted_MatchupArray[index]["gameStatus"] === k_WaitForRivalMatchupType) {
             text = "המתן";
             buttonClass = "waitForRival";
             buttonProperty = "disabled";
             playerTurn = 1;
         }
-        else if (matchesData[index]["gameStatus"] === "3") {
+        else if (sorted_MatchupArray[index]["gameStatus"] === k_ExpertChallangeMatchupType) {
             text = "הזמנה ממומחה";
             buttonClass = "expertChallange";
-            buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameID"] + ")\"";
+            buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameID"] + ")\"";
         }
         else {
 // default status
-            text = "תן סימן " + matchesData[index]["gameStatus"];
-            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["matchupId"] + ")\"";
+            text = "תן סימן " + sorted_MatchupArray[index]["gameStatus"];
+            buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
         }
 
         $("#matchups_tableNew").append("<tr align=\"center\">" +
                 "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
-                "<td class=\"matchScore\">" + matchesData[index]["userScore"] + "</td>" +
-                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["lastGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
-                "<td class=\"matchScore\">" + matchesData[index]["rivalScore"] + "</td>" +
+                "<td class=\"matchScore\">" + sorted_MatchupArray[index]["userScore"] + "</td>" +
+                "<td class=\"summary\"><button onClick=\"showGameSummary(" + sorted_MatchupArray[index]["lastGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
+                "<td class=\"matchScore\">" + sorted_MatchupArray[index]["rivalScore"] + "</td>" +
                 /*"<td class=\"matchInner\">" +
                  "<table class=\"matchInnerTable\">" +
                  
                  "</table>" +
                  "</td>" +*/
                 "<td class=\"matchRival\">" +
-                "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" class=\"profile\"/>" +
+                "<div class=\"rivalPic\"><img src=\"" + sorted_MatchupArray[index]["rivalImg"] + "?width=100&height=100\" class=\"profile\"/>" +
                 //"<div class=\"rivalRank\"><img src=\"css/Profressbarstar.png\" width=\"100%\" class=\"imgStar\"/>" + matchesData[index]["rivalLevel"] + 
-                "<div class=\"rivalRank\">" + matchesData[index]["rivalLevel"] +
-                "<div class=\"rivalName\">" + matchesData[index]["rivalFirstName"] + "</div>" +
+                "<div class=\"rivalRank\">" + sorted_MatchupArray[index]["rivalLevel"] +
+                "<div class=\"rivalName\">" + sorted_MatchupArray[index]["rivalFirstName"] + "</div>" +
                 "</div>" +
                 "</div>" +
-                //"<br />" + matchesData[index]["rivalName"] +
                 "</td></tr>");
     }
 }
 
+/***
+* This function removes a specific type of matchups from the given matchups array and return them in a new array
+
+ * @param {Array} i_MatchupsArray - the matchups array (value type to a reference type)
+ * @param {String} i_TypeId - the status the filter out of the given matchuparray
+ * @returns specificMatchupsList|Array - a new array of all the matchups of the given type  */
+function extractMatchupsListWithASpecificStatus(i_MatchupsArray, i_TypeId) {
+    var specificMatchupsList = new Array();
+    var localCopyOfMatchupArray = i_MatchupsArray.slice();
+    var numOfMatchups = localCopyOfMatchupArray.length;
+    
+    for (var index = 0; index < numOfMatchups; ++index) {
+        if (localCopyOfMatchupArray[index]["gameStatus"] == i_TypeId) {
+            specificMatchupsList.push(localCopyOfMatchupArray[index]);
+            
+            // Removes element from the given array
+            i_MatchupsArray.splice(index, 1);
+        }
+    }
+    
+    return specificMatchupsList;
+}
 
 function timer() {
     if (window.location.toString().match("\#game$"))
