@@ -1559,7 +1559,7 @@ img.GameProfile {
     z-index: 2;
 }
 
-#OrenTest .gold_container {
+#ChallangeFriend .gold_container {
     position: absolute;
     border: black 1px solid;
     background-color: #ffc33c;
@@ -1578,8 +1578,11 @@ img.GameProfile {
 .inviteNail {
     border: black 1px solid;
     background: #f2f2f2;
-    height: 7%;
-    top: 100%;
+    border-bottom: 0px;
+    height: 10%;
+    /* height: auto; */
+    /* top: 100%; */
+    bottom: 0;
     width: 1.5%;
 }
 
@@ -1593,7 +1596,7 @@ img.GameProfile {
     right: 20%;
 }
 
-#OrenTest .white_container {
+#ChallangeFriend .white_container {
     position: absolute;
     border: black 1px solid;
     background-color: white;
@@ -1627,13 +1630,12 @@ img.GameProfile {
     position: absolute;
     top: 14%;
     height: 84%;
-    width: 98%;
     left: 1%;
     right: 1%;
     /*overflow: scroll;*/
     display: block;
     border-collapse: separate;
-    overflow: visible;
+    overflow: auto;
     overflow-x: hidden;
 }
 
@@ -1732,7 +1734,45 @@ img.GameProfile {
     margin-right: auto;
     text-align: center;
     font-family: "Alef Hebrew";
-    font-size: 120%;
+    font-size: 115%;
     color: darkslategrey;
     font-weight: normal;   
+}
+
+#challangeSearchBar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0%;
+    width: 90%;
+    text-align: center;
+    /* height: 1%; */
+    z-index: 3;
+}
+
+#challangeSearchBar .ui-input-search {
+    border: #ffc33c solid thin;
+}
+
+#LoadingPage {
+    height: 100%;
+    width: 102%;
+    background: rgba(100, 100, 100, 0.5);
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+#LoadImg {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    width: 20%;
+    /*background: yellow;*/
+    display: table-cell;
+    vertical-align: middle;
 }

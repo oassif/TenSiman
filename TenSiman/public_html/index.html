@@ -171,8 +171,8 @@ works with FaceBook
                     <!--<button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>-->
                     <!--<div class="NewGameTxtBtn">משחק<br>חדש</div>
                     <img class="NewGameImgBtn" src="css/CreateGame.png" onclick="refreshFriendsZone(false);" />-->
-                    <a data-role="button" id="NewGameBtn" class="answer" onclick="refreshFriendsZone(false);">משחק<br>חדש</a>
-                    <!--<a data-role="button" id="NewGameBtn" class="answer" onclick="loadChallangesPage(false);">משחק<br>חדש</a>-->
+                    <!--<a data-role="button" id="NewGameBtn" class="answer" onclick="refreshFriendsZone(false);">משחק<br>חדש</a>-->
+                    <a data-role="button" id="NewGameBtn" class="answer" onclick="loadChallangesPage(false);">משחק<br>חדש</a>
                 </div>
                 <div class="HallOfFameZone">
                     <div class="HallOfFameContainer">
@@ -471,7 +471,7 @@ works with FaceBook
 </footer> -->
         </div>
         
-        <div id="OrenTest" data-role="page">
+        <div id="ChallangeFriend" data-role="page">
             <div id="invite_header" class="header">
                 <div class="main-header">
                     <div id='logo3' class="logo">
@@ -481,9 +481,6 @@ works with FaceBook
                             <div class="fl header-left" style="display:inline-block;float: left;">
                                 <a href="#matchups" onlick="refreshMatchups()" class="ui-btn"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
-                            <!--<div class="fl header-left" style="display:inline-block;float: left; height: 10%;">
-                                <a onlick="refreshMatchups()"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
-                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -526,11 +523,13 @@ works with FaceBook
                                 <br>Oren Assif
                             </div>
                         </div>-->
-                    </div>
-                    
+                    </div>                    
                 </div>
-                <div id="leftNail" class="inviteNail"></div>
-                <div id="rightNail" class="inviteNail"></div>
+            </div>
+            <div id="leftNail" class="inviteNail"></div>
+            <div id="rightNail" class="inviteNail"></div>
+            <div id="challangeSearchBar">
+                <input id="ChallangesSearchBar" type="text" oninput="SearchChanged()" data-type="search">
             </div>
         </div>
         <div id="about" data-role="page"  >
@@ -561,6 +560,12 @@ works with FaceBook
                         <!--<img src="images/Shemalogo.png" width="%" style="margin-top: 15%">-->
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <div id="LoadingPage">
+            <div id="LoadImg">
+                <img src="images/ajax-loader.gif" />
             </div>
         </div>
 
