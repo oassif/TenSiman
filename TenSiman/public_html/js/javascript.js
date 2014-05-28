@@ -1553,7 +1553,10 @@ function searchFriend(toInvite) {
 function refreshChallangePage(toInvite) {
     var htmlCode = "";
     //alert("player" + currentPlayerId);
-
+    $.mobile.loading( 'show', {
+      text: "טוען נתונים",
+      textVisible: true
+      });
     if (!web) {
         FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
             if (response.error) {
@@ -1694,6 +1697,8 @@ function refreshChallangePage(toInvite) {
             }
         });
     }
+    
+    $.mobile.loading("hide");
 }
 
 function loadChallangesPage(isInvite)
