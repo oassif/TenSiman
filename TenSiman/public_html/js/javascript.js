@@ -101,6 +101,7 @@ $(document).ready(function()
              videoPlay(order[2]);
              */
         } else {
+            document.getElementById("myVideo").play();
             if (!allreadyPlayed) {
                 show4possibleAnswers(videoNumber);
                 document.getElementById("timer").innerHTML = "<br>10";
@@ -1455,8 +1456,16 @@ function videoPlay(videoNum)
 }
 
 function playVideo() {
-    alert("play");
-    document.getElementById("myVideo").play();
+    var vid = document.getElementById("myVideo");
+    
+    if (!vid.paused)
+    {
+        vid.currentTime = 0;
+    }
+    else
+    {
+        vid.play();
+    }
 }
 
 
