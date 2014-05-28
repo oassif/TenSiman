@@ -723,7 +723,7 @@ img.profile {
     margin-left: 0;
     margin-right: 0;
     /* font-size: x-large; */
-    font-size: 1.3em;
+    font-size: 1.5em;
     font-family: 'Asap', sans-serif;
     /*line-height: 185%;*/
 }
@@ -1413,7 +1413,7 @@ img.GameProfile {
     width: 40%;
     position: absolute;
     height: 20%;
-    top: 68%;
+    top: 66%;
     left: 0;
     right: 0;
     margin-left: auto;
@@ -1774,7 +1774,8 @@ img.GameProfile {
 }
 
 #challangeSearchBar .ui-input-search {
-    border: #ffc33c solid thin;
+    /*border: #ffc33c dashed 2px;*/
+    border: #117cc0 solid 3px;
 }
 
 #LoadingPage {
