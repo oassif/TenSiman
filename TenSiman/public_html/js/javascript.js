@@ -1621,7 +1621,7 @@ function refreshChallangePage(toInvite) {
                 },
                 complete: function() { // (Happans whether success or error happaned)
                     // Hiding the searchbar when no players found
-                    if (matchesData.length == 0)
+                    if (m_FilterredChallangeData.length == 0)
                     {
                         document.getElementById("challangeSearchBar").style.display = "none";
                     }
@@ -1629,6 +1629,8 @@ function refreshChallangePage(toInvite) {
                     {
                         document.getElementById("challangeSearchBar").style.display = "block";
                     }
+                    
+                    $.mobile.loading("hide");
                 }   
             });
         });
@@ -1686,7 +1688,7 @@ function refreshChallangePage(toInvite) {
             },
             complete: function() { // (Happans whether success or error happaned)
                 // Hiding the searchbar when no players found
-                if (matchesData.length == 0)
+                if (m_FilterredChallangeData.length == 0)
                 {
                     document.getElementById("challangeSearchBar").style.display = "none";
                 }
@@ -1694,11 +1696,11 @@ function refreshChallangePage(toInvite) {
                 {
                     document.getElementById("challangeSearchBar").style.display = "block";
                 }
+                
+                $.mobile.loading("hide");
             }
         });
     }
-    
-    $.mobile.loading("hide");
 }
 
 function loadChallangesPage(isInvite)
