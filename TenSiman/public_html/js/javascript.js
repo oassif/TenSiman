@@ -1455,6 +1455,7 @@ function videoPlay(videoNum)
 }
 
 function playVideo() {
+    alert("play");
     document.getElementById("myVideo").play();
 }
 
