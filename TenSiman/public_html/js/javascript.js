@@ -1557,6 +1557,7 @@ function refreshChallangePage(toInvite) {
       text: "טוען נתונים",
       textVisible: true
       });
+      
     if (!web) {
         FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
             if (response.error) {
@@ -1595,7 +1596,7 @@ function refreshChallangePage(toInvite) {
                             //matchesData = jason.matches;
                             //m_FilterredChallangeData = matchesData;
                             m_FilterredChallangeData = m_PlayersToPlayArray.slice();
-                            if (matchesData.length != 0)
+                            if (m_FilterredChallangeData.length != 0)
                             {
                                 newBuildFriendsTable(toInvite, 0);
                             }
@@ -1662,7 +1663,7 @@ function refreshChallangePage(toInvite) {
                         //matchesData = jason.matches;
                         //m_FilterredChallangeData = matchesData;
                         m_FilterredChallangeData = m_PlayersToPlayArray.slice();
-                        if (matchesData.length != 0)
+                        if (m_FilterredChallangeData.length != 0)
                         {
                             newBuildFriendsTable(toInvite, 0);
                         }
@@ -1773,6 +1774,7 @@ function newBuildFriendsTable(toInvite, start) {
     // If length = 0, informing the user that list is empty
     if (size == 0)
     {
+        document.getElementById("challangeSearchBar").style.display = "none";
         if (!k_IsInInviteState)
         {
             document.getElementById("ChallangePlayersTable").innerHTML = 
@@ -1786,6 +1788,10 @@ function newBuildFriendsTable(toInvite, start) {
         }
         
         // TODO: add message for the invite page?
+    }
+    else
+    {
+        document.getElementById("challangeSearchBar").style.display = "block";
     }
     // Making sure that we won't get out of bounds
     if (size > start + k_MaxNumberOfFriendsInBulk) {
