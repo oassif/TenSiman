@@ -2,7 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+var k_InviteButton = "invite";
+var k_PlayButton = "play";
+var k_IsInInviteState = false;
+var k_MaxNumberOfFriendsInBulk = 20;
 var k_MaxScore = 50;
+var k_ExpertChallangeMatchupType = "3";
+var k_YourTurnMatchupType = "1";
+var k_TenSimanMatchupType = "0";
+var k_WaitForRivalMatchupType = "2";
 var NUMBER_SECTIONS = 5;
 var currentPlayerId = 0;
 var timePerRound = 10;
@@ -22,7 +30,7 @@ var count;
 var counter;
 var score = 0;
 var g_TempRivalScore = 0;
-var buffer = 20; //scroll bar buffer
+var buffer = 20; //scroll bar buffer //unused
 var m_isCanClick; // Used to prevent user from clicking multiple times on the answer (couldn't disabled the buttons for some reason)
 
 var allreadyPlayed = false;
@@ -30,6 +38,8 @@ var currentGameId = -1;
 var turn = 0;
 var player1or2 = 0;
 var matchesData = new Array();
+var m_FilterredChallangeData = new Array();
+var m_NumberOfFriendsShownInTable = 0;
 var videoNumber = 0;
 var web = 0;
 var friendName = new Array();
@@ -223,69 +233,100 @@ function buildMatchesTable(matchesData) {
     table.innerHTML = "";
     $("#matchups_tableNew").html("");
     $("#matchups_tableNew").addClass("matches");
-    var numOfMatchups = matchesData.length;
+    //var numOfMatchups = matchesData.length;
     var index;
-    //table.innerHTML = "";
-    for (index = 0; index < numOfMatchups; ++index) {
-
+    
+    // Copying the array
+    var tmpMatchupsCopy = matchesData.slice();
+    
+    // Generating a matchups array sorted by matchup's type
+    var sorted_MatchupArray = new Array();
+    // TODO: uncomment the next line when we want to enable the experts challange (Also need to allow a game of expert first)
+    //sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_ExpertChallangeMatchupType));
+    sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_YourTurnMatchupType));
+    sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_TenSimanMatchupType));
+    sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_WaitForRivalMatchupType));
+    
+    for (index = 0; index < sorted_MatchupArray.length; ++index) {
         var text = ""; // This
         var buttonClass = "";
-        var textValue = "";
+        //var textValue = "";
         var buttonProperty = "";
         var playerTurn = 2;
         // Todo: see if it's the first player or sceond player and according to it decide.
         // Decide button
-        if (matchesData[index]["gameStatus"] === "0") {
+        if (sorted_MatchupArray[index]["gameStatus"] === k_TenSimanMatchupType) {
             text = "תן סימן";
             buttonClass = "newGame";
-            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["matchupId"] + ")\"";
+            buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
         }
-        else if (matchesData[index]["gameStatus"] === "1") {
+        else if (sorted_MatchupArray[index]["gameStatus"] === k_YourTurnMatchupType) {
             text = "תורך";
             buttonClass = "yourTurn";
             //alert("your turn:" + matchesData[index]["LiveGameId"]);
-            buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameId"] + ")\"";
+            buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameId"] + ")\"";
             playerTurn = 1;
         }
-        else if (matchesData[index]["gameStatus"] === "2") {
+        else if (sorted_MatchupArray[index]["gameStatus"] === k_WaitForRivalMatchupType) {
             text = "המתן";
             buttonClass = "waitForRival";
             buttonProperty = "disabled";
             playerTurn = 1;
         }
-        else if (matchesData[index]["gameStatus"] === "3") {
+        else if (sorted_MatchupArray[index]["gameStatus"] === k_ExpertChallangeMatchupType) {
             text = "הזמנה ממומחה";
             buttonClass = "expertChallange";
-            buttonProperty = "onClick=\"playTurn(" + matchesData[index]["LiveGameID"] + ")\"";
+            buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameID"] + ")\"";
         }
         else {
 // default status
-            text = "תן סימן " + matchesData[index]["gameStatus"];
-            buttonProperty = "onClick=\"createNewGame(" + matchesData[index]["matchupId"] + ")\"";
+            text = "תן סימן " + sorted_MatchupArray[index]["gameStatus"];
+            buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
         }
 
         $("#matchups_tableNew").append("<tr align=\"center\">" +
                 "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
-                "<td class=\"matchScore\">" + matchesData[index]["userScore"] + "</td>" +
-                "<td class=\"summary\"><button onClick=\"showGameSummary(" + matchesData[index]["lastGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
-                "<td class=\"matchScore\">" + matchesData[index]["rivalScore"] + "</td>" +
+                "<td class=\"matchScore\">" + sorted_MatchupArray[index]["userScore"] + "</td>" +
+                "<td class=\"summary\"><button onClick=\"showGameSummary(" + sorted_MatchupArray[index]["lastGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
+                "<td class=\"matchScore\">" + sorted_MatchupArray[index]["rivalScore"] + "</td>" +
                 /*"<td class=\"matchInner\">" +
                  "<table class=\"matchInnerTable\">" +
                  
                  "</table>" +
                  "</td>" +*/
                 "<td class=\"matchRival\">" +
-                "<div class=\"rivalPic\"><img src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" class=\"profile\"/>" +
+                "<div class=\"rivalPic\"><img src=\"" + sorted_MatchupArray[index]["rivalImg"] + "?width=100&height=100\" class=\"profile\"/>" +
                 //"<div class=\"rivalRank\"><img src=\"css/Profressbarstar.png\" width=\"100%\" class=\"imgStar\"/>" + matchesData[index]["rivalLevel"] + 
-                "<div class=\"rivalRank\">" + matchesData[index]["rivalLevel"] +
-                "<div class=\"rivalName\">" + matchesData[index]["rivalFirstName"] + "</div>" +
+                "<div class=\"rivalRank\">" + sorted_MatchupArray[index]["rivalLevel"] +
+                "<div class=\"rivalName\">" + sorted_MatchupArray[index]["rivalFirstName"] + "</div>" +
                 "</div>" +
                 "</div>" +
-                //"<br />" + matchesData[index]["rivalName"] +
                 "</td></tr>");
     }
 }
 
+/***
+* This function removes a specific type of matchups from the given matchups array and return them in a new array
+
+ * @param {Array} i_MatchupsArray - the matchups array (value type to a reference type)
+ * @param {String} i_TypeId - the status the filter out of the given matchuparray
+ * @returns specificMatchupsList|Array - a new array of all the matchups of the given type  */
+function extractMatchupsListWithASpecificStatus(i_MatchupsArray, i_TypeId) {
+    var specificMatchupsList = new Array();
+    var localCopyOfMatchupArray = i_MatchupsArray.slice();
+    var numOfMatchups = localCopyOfMatchupArray.length;
+    
+    for (var index = 0; index < numOfMatchups; ++index) {
+        if (localCopyOfMatchupArray[index]["gameStatus"] == i_TypeId) {
+            specificMatchupsList.push(localCopyOfMatchupArray[index]);
+            
+            // Removes element from the given array
+            i_MatchupsArray.splice(index, 1);
+        }
+    }
+    
+    return specificMatchupsList;
+}
 
 function timer() {
     if (window.location.toString().match("\#game$"))
@@ -689,6 +730,7 @@ function resetButtons() {
  * @param {type} toInvite
  * @returns {undefined}
  */
+// I think that's also irrelevant since we changes the "Invite" page to the "ChallangeFriends"
 function refreshFriendsZone(toInvite) {
     var htmlCode = "";
     window.location = "#friends";
@@ -795,6 +837,7 @@ function buildFriendsBar(matchup) {
     table.appendChild(row);
 }
 
+// Irrelevant - Used when we used the old "InvitePlayer" page. replaced by "ChallangeFriends"
 function buildFriendsTable(toInvite, start) {
 
     var size = matchesData.length;
@@ -819,6 +862,7 @@ function buildFriendsTable(toInvite, start) {
 
 
     var table = document.getElementById("friends_table");
+    //var divTable = document.getElementById("ChallangePlayersTable");
     var numOfMatchups = matchesData.length;
     var size = numOfMatchups;
     var amountOfShow = 20;
@@ -854,11 +898,37 @@ function buildFriendsTable(toInvite, start) {
                         "<div class=\"friendName\">" + name + "</div></td>" +
                         "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id2 + "/picture?width=100&height=100" + "\" /></a>" +
                         "<div class=\"friendName\">" + name2 + "</div></td></tr>");
+//                $("#ChallangePlayersTable").append(
+//                "<div class=\"challange_table_row\">" + 
+//                            "<div class=\"left_player_cell\">" +
+//                                "<a " + buttonProperty + ">" +
+//                                "<img class=\"profile\" src=\"https://graph.facebook.com/" + id + "/picture?width=100&height=100\" />" +
+//                                "</a>" +
+//                                "<br>" + name + //Oren Assif" +
+//                            "</div>" +
+//                            "<div class=\"right_player_cell\">" +
+//                                "<a " + buttonProperty2 + ">" +
+//                                "<img class=\"profile\" src=\"https://graph.facebook.com/" + id2 + "/picture?width=100&height=100\" />" +
+//                                "</a>" +
+//                                "<br>" + name2 + //Oren Assif" +
+//                            "</div>" +
+//                        "</div>");
+//                $("#ChallangePlayersTable").append(
+//                "<div class=\"challange_table_row_seperator\"></div>");
 
             } else {
                 $("#friends_table").append("<tr>" +
                         "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + "https://graph.facebook.com/" + id + "/picture?width=100&height=100" + "\" /></a>" +
                         "<div class=\"friendName\">" + name + "</div></td></tr>");
+//                $("#ChallangePlayersTable").append(
+//                "<div class=\"challange_table_row\">" + 
+//                    "<div class=\"left_player_cell\">" +
+//                        "<a " + buttonProperty + ">" +
+//                        "<img class=\"profile\" src=\"https://graph.facebook.com/" + id + "/picture?width=100&height=100\" />" +
+//                        "</a>" +
+//                        "<br>" + name + //Oren Assif" +
+//                    "</div>" +
+//                "</div>");
             }
 
         } else {
@@ -870,12 +940,38 @@ function buildFriendsTable(toInvite, start) {
                         "<td><a " + buttonProperty2 + "><img class=\"profile\" src=\"" + matchesData[index + 1]["rivalImg"] + "?width=100&height=100\" /></a>" +
                         "<br /><div class=\"friendName\">" + matchesData[index + 1]["rivalName"] + "</div></td>" +
                         "</tr>");
+//                $("#ChallangePlayersTable").append(
+//                "<div class=\"challange_table_row\">" + 
+//                            "<div class=\"left_player_cell\">" +
+//                                "<a " + buttonProperty + ">" +
+//                                "<img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" />" +
+//                                "</a>" +
+//                                "<br>" + matchesData[index]["rivalName"] + //Oren Assif" +
+//                            "</div>" +
+//                            "<div class=\"right_player_cell\">" +
+//                                "<a " + buttonProperty2 + ">" +
+//                                "<img class=\"profile\" src=\"" + matchesData[index + 1]["rivalImg"] + "?width=100&height=100\" />" +
+//                                "</a>" +
+//                                "<br>" + matchesData[index + 1]["rivalName"] + //Oren Assif" +
+//                            "</div>" +
+//                        "</div>");
+//                $("#ChallangePlayersTable").append(
+//                        "<div class=\"challange_table_row_seperator\"></div>");
                 index++;
             } else {
                 $("#friends_table").append("<tr align=\"center\">" +
                         "<td><a " + buttonProperty + "><img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" /></a>" +
                         "<br /><div class=\"friendName\">" + matchesData[index]["rivalName"] + "</div></td>" +
                         "</tr>");
+//                $("#ChallangePlayersTable").append(
+//                "<div class=\"challange_table_row\">" + 
+//                            "<div class=\"left_player_cell\">" +
+//                                "<a " + buttonProperty + ">" +
+//                                "<img class=\"profile\" src=\"" + matchesData[index]["rivalImg"] + "?width=100&height=100\" />" +
+//                                "</a>" +
+//                                "<br>" + matchesData[index]["rivalName"] + //Oren Assif" +
+//                            "</div>" +
+//                    "</div>");
             }
         }
     }
@@ -1359,6 +1455,7 @@ function videoPlay(videoNum)
 }
 
 function playVideo() {
+    alert("play");
     document.getElementById("myVideo").play();
 }
 
@@ -1382,27 +1479,35 @@ function markTheRightAnswer() {
 }
 
 function ChangePlayersButton_onClick(i_CllickButtonIndication) {
-    var k_InviteButton = "invite";
-    var k_PlayButton = "play";
-
+    // Clearing the search box every time a button is changed
+    $("#ChallangesSearchBar").val("");
+    
+    
     if (i_CllickButtonIndication == k_InviteButton)
     {
+        k_IsInInviteState = true;
         document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_On.png");
+        //document.getElementById(k_InviteButton + "_button_img").className = "challange_button_on";
         document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOn";
         document.getElementById(k_PlayButton + "_button_img").setAttribute("src", "images/Play_Off.png");
+        //document.getElementById(k_PlayButton + "_button_img").className = "challange_button_off";
         document.getElementById(k_PlayButton + "_button_txt").className = "challangeButtonOff";
         // TODO: load invite list
     }
     else
     {
+        k_IsInInviteState = false;
         document.getElementById(k_PlayButton + "_button_img").setAttribute("src", "images/Play_On.png");
         document.getElementById(k_PlayButton + "_button_txt").className = "challangeButtonOn";
         document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_Off.png");
         document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOff";
         // TODO: loat friend list
     }
+    
+    refreshChallangePage(k_IsInInviteState);
 }
 
+// Irrelevant - was used for the old "InvitePlayer page"
 function searchFriend(toInvite) {
     text = $("#the-search-input").val();
     var lowerCaseText = text.toLowerCase();
@@ -1437,3 +1542,320 @@ function searchFriend(toInvite) {
     }
 
 }
+
+function refreshChallangePage(toInvite) {
+    var htmlCode = "";
+    //alert("player" + currentPlayerId);
+
+    if (!web) {
+        FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+            if (response.error) {
+
+            } else {
+                var data = document.getElementById('data');
+                friends = response.data;
+                var friendIDs = [];
+                for (var k = 0; k < friends.length; k++) {
+                    var friend = friends[k];
+                    friendIDs[k] = friend.id;
+                    friendName[k] = friend.name;
+                }
+            }
+            $.ajax({
+                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+                method: 'POST',
+                data: {
+                    userId: currentPlayerId,
+                    facebookFriends: friendIDs,
+                    facebookFriendsName: friendName
+                },
+                success: function(data) {
+                    //alert("connected!")
+                    var jason = JSON.parse(data);
+                    if (jason.success === 1) {
+                        //alert("ok!");
+                        if (toInvite) {
+                            matchesData = jason.toInvite;
+                            m_FilterredChallangeData = matchesData;
+                            newBuildFriendsTable(toInvite, 0);
+                        } else {
+                            matchesData = jason.matches;
+                            
+                            m_FilterredChallangeData = matchesData;
+                            if (matchesData.length != 0)
+                            {
+                                newBuildFriendsTable(toInvite, 0);
+                            }
+                            else
+                            {
+                                if (!k_IsInInviteState)
+                                {
+                                    document.getElementById("ChallangePlayersTable").innerHTML = 
+                                            "<div class=\"no_friends_found_msg\">" +
+                                            "לא נמצאו חברים למשחק.<br>" +
+                                            "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
+                                            "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
+                                            "<br>" +
+                                            "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
+                                            "</div>";
+                                }
+                            }
+                        }
+                    }
+                },
+                error: function() {
+                    //alert("error in login");
+                },
+                complete: function() { // (Happans whether success or error happaned)
+                    // Hiding the searchbar when no players found
+                    if (matchesData.length == 0)
+                    {
+                        document.getElementById("challangeSearchBar").style.display = "none";
+                    }
+                    else
+                    {
+                        document.getElementById("challangeSearchBar").style.display = "block";
+                    }
+                }   
+            });
+        });
+    } else {
+        friendName = ["shai", "hi", "alon lavi", "ben ron", "cs tav", "dss tav", "st", "ben livni", "df asif", "stav mos", "oren stern", "db hi", "shaia", "hia", "aalon lavi", "aben ron", "cs atav", "dss atav", "sta", "ben aalivni", "dfa asif", "stav amos", "oren astern", "barbar", "ssssss", "Assif"];
+        friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146, 259746939, 248234613, 2157420811, 244771584, 244771586, 244771586, 244771586, 244771586, 244771587, 244771584, 12323140, 12323140, 999992922, 757317102];
+        $.ajax({
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+            method: 'POST',
+            data: {
+                userId: currentPlayerId,
+                facebookFriends: friendIDs,
+                facebookFriendsName: friendName
+
+            },
+            success: function(data) {
+                //alert("connected!")
+                var jason = JSON.parse(data);
+                if (jason.success === 1) {
+                    //alert("ok!");
+                    if (toInvite) {
+                        matchesData = jason.toInvite;
+                        m_FilterredChallangeData = matchesData;
+                        newBuildFriendsTable(toInvite, 0);
+                    } else {
+                        matchesData = jason.matches;
+                        m_FilterredChallangeData = matchesData;
+                        if (matchesData.length != 0)
+                        {
+                            newBuildFriendsTable(toInvite, 0);
+                        }
+                        else
+                        {
+                            if (!k_IsInInviteState)
+                            {
+                                document.getElementById("ChallangePlayersTable").innerHTML = 
+                                        "<div class=\"no_friends_found_msg\">" +
+                                        "לא נמצאו חברים למשחק.<br>" +
+                                        "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
+                                        "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
+                                        "<br>" +
+                                        "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
+                                        "</div>";
+                            }
+                        }
+                    }
+                }
+            },
+            error: function() {
+                //alert("error in login");
+            },
+            complete: function() { // (Happans whether success or error happaned)
+                // Hiding the searchbar when no players found
+                if (matchesData.length == 0)
+                {
+                    document.getElementById("challangeSearchBar").style.display = "none";
+                }
+                else
+                {
+                    document.getElementById("challangeSearchBar").style.display = "block";
+                }
+            }
+        });
+    }
+}
+
+function loadChallangesPage(isInvite)
+{
+    window.location = "#ChallangeFriend";
+    if (isInvite)
+    {
+        ChangePlayersButton_onClick(k_InviteButton);
+    }
+    else
+    {
+        ChangePlayersButton_onClick(k_PlayButton);
+    }
+    //refreshChallangePage(isInvite);
+}
+
+// Event when search bar changes
+function SearchChanged() {
+    newSearchFriend();
+}
+
+function newSearchFriend() {
+    // Getting the text from the search input in the Challanges page
+    text = $("#ChallangesSearchBar").val();
+    var numberOfMatchedUsers = 0;
+    var lowerCaseText = text.toLowerCase();
+    var currName;
+    
+    if (k_IsInInviteState) {
+        console.log("true " + lowerCaseText);
+    } else {
+        console.log("false " + lowerCaseText);
+    }
+
+    m_FilterredChallangeData = new Array();
+    document.getElementById("ChallangePlayersTable").innerHTML = "";
+    for (index = 0; index < matchesData.length; ++index) {
+        currName = matchesData[index]["name"].toLowerCase();
+        if (currName.indexOf(lowerCaseText) >= 0) {
+            /*console.trace(currName);
+            console.trace(text);*/
+            m_FilterredChallangeData[numberOfMatchedUsers] = matchesData[index];
+            //console.trace(m_FilterredChallangeData[numberOfMatchedUsers]["id"] + "----" + matchesData[index]["id"]);
+            ++numberOfMatchedUsers;
+        }
+    }
+    
+    // After filttering the relevant users according to the search box, building the new list
+    newBuildFriendsTable(k_IsInInviteState, 0);
+}
+
+function newBuildFriendsTable(toInvite, start) {
+    
+    var size = m_FilterredChallangeData.length;
+    if (start > size) {
+        return;
+    }
+
+    //TODO: use this, currently this element is in an inactive page
+    document.getElementById("loading").style.display = "block";
+
+    // Starting a new list. Init relevant data
+    if (start == 0) {
+        m_NumberOfFriendsShownInTable = 0;
+        document.getElementById("ChallangePlayersTable").innerHTML = "";
+    }
+    
+    // Making sure that we won't get out of bounds
+    if (size > start + k_MaxNumberOfFriendsInBulk) {
+        size = start + k_MaxNumberOfFriendsInBulk;
+    }
+
+    // Stav's code modified by Oren to be used in the new Challanges Page
+    var index;
+    for (index = start; index < size; ++index) {
+        var buttonProperty = "";
+        // Decide button
+        if (toInvite) {
+            buttonProperty = "onClick=\"publishStoryFriend(" + m_FilterredChallangeData[index]["id"] + ")\"";
+        } else {
+            buttonProperty = "onClick=\"startGameWithNewPlayer(" + m_FilterredChallangeData[index]["rivalId"] + ")\"";
+        }
+
+        if (toInvite) {
+            id = m_FilterredChallangeData[index]["id"];
+            name = m_FilterredChallangeData[index]["name"];
+            index++;
+            if (index < size) {
+                id2 = m_FilterredChallangeData[index]["id"];
+                name2 = m_FilterredChallangeData[index]["name"];
+                buttonProperty2 = "onClick=\"publishStoryFriend(" + id2 + ")\"";
+
+                $("#ChallangePlayersTable").append(
+                "<div class=\"challange_table_row\">" + 
+                            "<div class=\"left_player_cell\">" +
+                                "<a " + buttonProperty + ">" +
+                                "<img class=\"profile\" src=\"https://graph.facebook.com/" + id + "/picture?width=100&height=100\" />" +
+                                "</a>" +
+                                "<br>" + name + //Oren Assif" +
+                            "</div>" +
+                            "<div class=\"right_player_cell\">" +
+                                "<a " + buttonProperty2 + ">" +
+                                "<img class=\"profile\" src=\"https://graph.facebook.com/" + id2 + "/picture?width=100&height=100\" />" +
+                                "</a>" +
+                                "<br>" + name2 + //Oren Assif" +
+                            "</div>" +
+                        "</div>");
+                $("#ChallangePlayersTable").append(
+                "<div class=\"challange_table_row_seperator\"></div>");
+
+            } else {
+                $("#ChallangePlayersTable").append(
+                "<div class=\"challange_table_row\">" + 
+                    "<div class=\"left_player_cell\">" +
+                        "<a " + buttonProperty + ">" +
+                        "<img class=\"profile\" src=\"https://graph.facebook.com/" + id + "/picture?width=100&height=100\" />" +
+                        "</a>" +
+                        "<br>" + name + //Oren Assif" +
+                    "</div>" +
+                "</div>");
+            }
+
+        } else {
+            if ((index + 1) < size) {
+                buttonProperty2 = "onClick=\"startGameWithNewPlayer(" + m_FilterredChallangeData[index + 1]["rivalId"] + ")\"";
+                $("#ChallangePlayersTable").append(
+                "<div class=\"challange_table_row\">" + 
+                            "<div class=\"left_player_cell\">" +
+                                "<a " + buttonProperty + ">" +
+                                "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index]["rivalImg"] + "?width=100&height=100\" />" +
+                                "</a>" +
+                                "<br>" + m_FilterredChallangeData[index]["rivalName"] + //Oren Assif" +
+                            "</div>" +
+                            "<div class=\"right_player_cell\">" +
+                                "<a " + buttonProperty2 + ">" +
+                                "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index + 1]["rivalImg"] + "?width=100&height=100\" />" +
+                                "</a>" +
+                                "<br>" + m_FilterredChallangeData[index + 1]["rivalName"] + //Oren Assif" +
+                            "</div>" +
+                        "</div>");
+                $("#ChallangePlayersTable").append(
+                        "<div class=\"challange_table_row_seperator\"></div>");
+                index++;
+            } else {
+                $("#ChallangePlayersTable").append(
+                "<div class=\"challange_table_row\">" + 
+                            "<div class=\"left_player_cell\">" +
+                                "<a " + buttonProperty + ">" +
+                                "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index]["rivalImg"] + "?width=100&height=100\" />" +
+                                "</a>" +
+                                "<br>" + m_FilterredChallangeData[index]["rivalName"] + //Oren Assif" +
+                            "</div>" +
+                    "</div>");
+            }
+        }
+    }
+
+    // Updating number of shown friends from the list
+    m_NumberOfFriendsShownInTable = size;
+
+    //TODO: use this, currently this element is in an inactive page
+    document.getElementById("loading").style.display = "none";
+}
+
+// Defining a scorlldown event for the challanges that will load new players if scroll down reaches near bottom of list
+jQuery(
+  function($)
+  {
+    $("#ChallangePlayersTable").bind('scroll', function() {
+        // Checking that the scorrbar reached the last 5% of the current list than loads more users if there are any
+        if(($(this).scrollTop() + $(this).innerHeight()) >= ($(this)[0].scrollHeight * 0.95))
+        {
+            if (m_FilterredChallangeData.length > m_NumberOfFriendsShownInTable) {
+                //alert("load more");
+                newBuildFriendsTable(k_IsInInviteState, m_NumberOfFriendsShownInTable);
+            }
+        }
+    });
+  });

@@ -171,7 +171,8 @@ works with FaceBook
                     <!--<button class="NewGameZone" id="inviteFriends" onclick="refreshFriendsZone(false);">משחק<br>חדש</button>-->
                     <!--<div class="NewGameTxtBtn">משחק<br>חדש</div>
                     <img class="NewGameImgBtn" src="css/CreateGame.png" onclick="refreshFriendsZone(false);" />-->
-                    <a data-role="button" id="NewGameBtn" class="answer" onclick="refreshFriendsZone(false);">משחק<br>חדש</a>
+                    <!--<a data-role="button" id="NewGameBtn" class="answer" onclick="refreshFriendsZone(false);">משחק<br>חדש</a>-->
+                    <a data-role="button" id="NewGameBtn" class="answer" onclick="loadChallangesPage(false);">משחק<br>חדש</a>
                 </div>
                 <div class="HallOfFameZone">
                     <div class="HallOfFameContainer">
@@ -278,7 +279,7 @@ works with FaceBook
 
             <div id="GameMainContainer">
                 <div id="GameVideoContainer">
-                    <video id="myVideo" poster="http://stavoren.milab.idc.ac.il/public_html/img/clickyoplay.png" src="">
+                    <video id="myVideo" onclick="playVideo();" preload="none" poster="http://stavoren.milab.idc.ac.il/public_html/img/clickyoplay.png" src="">
                         <!--<source src="http://stavoren.milab.idc.ac.il/public_html/movies/father.mp4">-->
                         Your browser does not support the video tag.
                     </video>
@@ -389,8 +390,11 @@ works with FaceBook
                                 <a href="#about" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
                             </div>
                             <div class="fl header-left" style="display:inline-block;float: left;">
-                                <a onlick="refreshMatchups()"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                                <a href="#matchups" onlick="refreshMatchups()" class="ui-btn"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
+                            <!--<div class="fl header-left" style="display:inline-block;float: left;">
+                                <a onlick="refreshMatchups()"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                            </div>-->
                         </div>
                     </div>
                     <div class="top-container" >
@@ -466,16 +470,21 @@ works with FaceBook
     </div>
 </footer> -->
         </div>
+<<<<<<< HEAD
 
         <div id="OrenTest" data-role="page">
+=======
+        
+        <div id="ChallangeFriend" data-role="page">
+>>>>>>> f0c7dbd3e9461ae147e431eef532dc4c1d83f853
             <div id="invite_header" class="header">
                 <div class="main-header">
                     <div id='logo3' class="logo">
                         <div id="header-top2" class="header-top">
                             <div class="header-center">
                             </div>
-                            <div class="fl header-left" style="display:inline-block;float: left; height: 10%;">
-                                <a onlick="refreshMatchups()"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                            <div class="fl header-left" style="display:inline-block;float: left;">
+                                <a href="#matchups" onlick="refreshMatchups()" class="ui-btn"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
                         </div>
                     </div>
@@ -484,21 +493,21 @@ works with FaceBook
             <div class="gold_container">
                 <div class="white_container">
                     <div class="challange_buttons">
-                        <div id="invite_new">
-                            <a href='' onclick="ChangePlayersButton_onClick('invite')">
+                        <div id="invite_new" class="challange_button_container">
+                            <a class="challange_button_invite" href='' onclick="ChangePlayersButton_onClick('invite')">
                                 <img id="invite_button_img" class="challange_button" src="images/Invite_Off.png" />
                                 <div id="invite_button_txt" class="challangeButtonOff">הזמן</div>
                             </a>
                         </div>
-                        <div id="play_exist">
-                            <a href ='' onclick="ChangePlayersButton_onClick('play')">
+                        <div id="play_exist" class="challange_button_container">
+                            <a href ='' class="challange_button_exist" onclick="ChangePlayersButton_onClick('play')">
                                 <img id="play_button_img" class="challange_button" src="images/Play_On.png" />
                                 <div id="play_button_txt" class="challangeButtonOn">שחק</div>
                             </a>
                         </div>
                     </div>
-                    <!--<div class="challange_players_table">
-                        <div class="challange_table_row">
+                    <div id="ChallangePlayersTable" class="challange_players_table">
+                        <!--<div class="challange_table_row">
                             <div class="left_player_cell">
                                 <img class="profile" src="https://graph.facebook.com/assif/picture?width=100&height=100" />
                                 <br>Oren Assif
@@ -508,7 +517,8 @@ works with FaceBook
                                 <br>Oren Assif
                             </div>
                         </div>
-                                                <div class="challange_table_row">
+                        <div class="challange_table_row_seperator"></div>
+                        <div class="challange_table_row">
                             <div class="left_player_cell">
                                 <img class="profile" src="https://graph.facebook.com/assif/picture?width=100&height=100" width="50%"/>
                                 <br>Oren Assif
@@ -517,11 +527,14 @@ works with FaceBook
                                 <img class="profile" src="https://graph.facebook.com/assif/picture?width=100&height=100" />
                                 <br>Oren Assif
                             </div>
-                        </div>
-                    </div>-->
+                        </div>-->
+                    </div>                    
                 </div>
-                <div id="leftNail" class="inviteNail"></div>
-                <div id="rightNail" class="inviteNail"></div>
+            </div>
+            <div id="leftNail" class="inviteNail"></div>
+            <div id="rightNail" class="inviteNail"></div>
+            <div id="challangeSearchBar">
+                <input id="ChallangesSearchBar" type="text" oninput="SearchChanged()" data-type="search">
             </div>
         </div>
         <div id="about" data-role="page"  >
@@ -552,6 +565,12 @@ works with FaceBook
                         <!--<img src="images/Shemalogo.png" width="%" style="margin-top: 15%">-->
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <div id="LoadingPage">
+            <div id="LoadImg">
+                <img src="images/ajax-loader.gif" />
             </div>
         </div>
 
