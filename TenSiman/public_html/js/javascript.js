@@ -4,7 +4,6 @@
  */
 var k_InviteButton = "invite";
 var k_PlayButton = "play";
-var k_IsInInviteState = false;
 var k_MaxNumberOfFriendsInBulk = 20;
 var k_MaxScore = 50;
 var k_ExpertChallangeMatchupType = "3";
@@ -41,7 +40,9 @@ var matchesData = new Array(); // Used only for the newSearchFriend function
 var m_PlayersToInviteArray = new Array();
 var m_PlayersToPlayArray = new Array();
 var m_FilterredChallangeData = new Array();
+var m_LastMatchupsArray = new Array();
 var m_NumberOfFriendsShownInTable = 0;
+var m_IsInInviteState = false;
 var videoNumber = 0;
 var web = 0;
 var friendName = new Array();
@@ -85,6 +86,7 @@ $(document).ready(function()
                 document.getElementById("translatedWord").style.display = "none";
                 document.getElementById("myVideo").style.display = "none";
                 document.getElementById("play").innerHTML = "התחל לשחק";
+                document.getElementById("MessageTraining").style.display = "block";
             }
             else
             {
@@ -170,7 +172,15 @@ function refreshMatchups() {
     window.location = "#matchups";
     document.getElementById('preGame').style.visibility = 'hidden';
     var htmlCode = "";
+    $.mobile.loading( 'show', {
+        text: "מעדכן נתונים",
+        textVisible: true
+    });
     setTimeout(function() {
+    $.mobile.loading( 'show', {
+        text: "מעדכן נתונים",
+        textVisible: true
+    });
         ref();
     }, 2000);
     setInterval(checkRefresh, 10000);
@@ -231,81 +241,117 @@ function buildPlayerBar(userData) {
 
 function buildMatchesTable(matchesData) {
 // Clean the table
-
-    var table = document.getElementById("matchups_tableNew");
-    table.innerHTML = "";
-    $("#matchups_tableNew").html("");
-    $("#matchups_tableNew").addClass("matches");
-    //var numOfMatchups = matchesData.length;
-    var index;
-    
+ 
     // Copying the array
     var tmpMatchupsCopy = matchesData.slice();
     
     // Generating a matchups array sorted by matchup's type
     var sorted_MatchupArray = new Array();
-    // TODO: uncomment the next line when we want to enable the experts challange (Also need to allow a game of expert first)
-    //sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_ExpertChallangeMatchupType));
     sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_YourTurnMatchupType));
     sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_TenSimanMatchupType));
     sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_WaitForRivalMatchupType));
+    // TODO: uncomment the next line when we want to enable the experts challange (Also need to allow a game of expert first)
+//    sorted_MatchupArray = extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_ExpertChallangeMatchupType).concat(sorted_MatchupArray);
     
-    for (index = 0; index < sorted_MatchupArray.length; ++index) {
-        var text = ""; // This
-        var buttonClass = "";
-        //var textValue = "";
-        var buttonProperty = "";
-        var playerTurn = 2;
-        // Todo: see if it's the first player or sceond player and according to it decide.
-        // Decide button
-        if (sorted_MatchupArray[index]["gameStatus"] === k_TenSimanMatchupType) {
-            text = "תן סימן";
-            buttonClass = "newGame";
-            buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
-        }
-        else if (sorted_MatchupArray[index]["gameStatus"] === k_YourTurnMatchupType) {
-            text = "תורך";
-            buttonClass = "yourTurn";
-            //alert("your turn:" + matchesData[index]["LiveGameId"]);
-            buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameId"] + ")\"";
-            playerTurn = 1;
-        }
-        else if (sorted_MatchupArray[index]["gameStatus"] === k_WaitForRivalMatchupType) {
-            text = "המתן";
-            buttonClass = "waitForRival";
-            buttonProperty = "disabled";
-            playerTurn = 1;
-        }
-        else if (sorted_MatchupArray[index]["gameStatus"] === k_ExpertChallangeMatchupType) {
-            text = "הזמנה ממומחה";
-            buttonClass = "expertChallange";
-            buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameID"] + ")\"";
-        }
-        else {
-// default status
-            text = "תן סימן " + sorted_MatchupArray[index]["gameStatus"];
-            buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
-        }
+    if (checkIfMatchupsArrayChanged(sorted_MatchupArray, m_LastMatchupsArray))
+    {
+        var table = document.getElementById("matchups_tableNew");
+        table.innerHTML = "";
+        $("#matchups_tableNew").html("");
+        $("#matchups_tableNew").addClass("matches");
+        var index;
 
-        $("#matchups_tableNew").append("<tr align=\"center\">" +
-                "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
-                "<td class=\"matchScore\">" + sorted_MatchupArray[index]["userScore"] + "</td>" +
-                "<td class=\"summary\"><button onClick=\"showGameSummary(" + sorted_MatchupArray[index]["lastGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
-                "<td class=\"matchScore\">" + sorted_MatchupArray[index]["rivalScore"] + "</td>" +
-                /*"<td class=\"matchInner\">" +
-                 "<table class=\"matchInnerTable\">" +
-                 
-                 "</table>" +
-                 "</td>" +*/
-                "<td class=\"matchRival\">" +
-                "<div class=\"rivalPic\"><img src=\"" + sorted_MatchupArray[index]["rivalImg"] + "?width=100&height=100\" class=\"profile\"/>" +
-                //"<div class=\"rivalRank\"><img src=\"css/Profressbarstar.png\" width=\"100%\" class=\"imgStar\"/>" + matchesData[index]["rivalLevel"] + 
-                "<div class=\"rivalRank\">" + sorted_MatchupArray[index]["rivalLevel"] +
-                "<div class=\"rivalName\">" + sorted_MatchupArray[index]["rivalFirstName"] + "</div>" +
-                "</div>" +
-                "</div>" +
-                "</td></tr>");
+        for (index = 0; index < sorted_MatchupArray.length; ++index) {
+            var text = ""; // This
+            var buttonClass = "";
+            //var textValue = "";
+            var buttonProperty = "";
+            var playerTurn = 2;
+            // Todo: see if it's the first player or sceond player and according to it decide.
+            // Decide button
+            if (sorted_MatchupArray[index]["gameStatus"] === k_TenSimanMatchupType) {
+                text = "תן סימן";
+                buttonClass = "newGame";
+                buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
+            }
+            else if (sorted_MatchupArray[index]["gameStatus"] === k_YourTurnMatchupType) {
+                text = "תורך";
+                buttonClass = "yourTurn";
+                //alert("your turn:" + matchesData[index]["LiveGameId"]);
+                buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameId"] + ")\"";
+                playerTurn = 1;
+            }
+            else if (sorted_MatchupArray[index]["gameStatus"] === k_WaitForRivalMatchupType) {
+                text = "המתן";
+                buttonClass = "waitForRival";
+                buttonProperty = "disabled";
+                playerTurn = 1;
+            }
+            else if (sorted_MatchupArray[index]["gameStatus"] === k_ExpertChallangeMatchupType) {
+                text = "הזמנה ממומחה";
+                buttonClass = "expertChallange";
+                buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameID"] + ")\"";
+            }
+            else {
+    // default status
+                text = "תן סימן " + sorted_MatchupArray[index]["gameStatus"];
+                buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
+            }
+
+            $("#matchups_tableNew").append("<tr align=\"center\">" +
+                    "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
+                    "<td class=\"matchScore\">" + sorted_MatchupArray[index]["userScore"] + "</td>" +
+                    "<td class=\"summary\"><button onClick=\"showGameSummary(" + sorted_MatchupArray[index]["lastGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
+                    "<td class=\"matchScore\">" + sorted_MatchupArray[index]["rivalScore"] + "</td>" +
+                    /*"<td class=\"matchInner\">" +
+                     "<table class=\"matchInnerTable\">" +
+
+                     "</table>" +
+                     "</td>" +*/
+                    "<td class=\"matchRival\">" +
+                    "<div class=\"rivalPic\"><img src=\"" + sorted_MatchupArray[index]["rivalImg"] + "?width=100&height=100\" class=\"profile\"/>" +
+                    //"<div class=\"rivalRank\"><img src=\"css/Profressbarstar.png\" width=\"100%\" class=\"imgStar\"/>" + matchesData[index]["rivalLevel"] + 
+                    "<div class=\"rivalRank\">" + sorted_MatchupArray[index]["rivalLevel"] +
+                    "<div class=\"rivalName\">" + sorted_MatchupArray[index]["rivalFirstName"] + "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "</td></tr>");
+        }
     }
+    
+    // Saving the current sortedArray for the next check
+    m_LastMatchupsArray = sorted_MatchupArray;
+    $.mobile.loading( "hide" );
+}
+
+// Checking if there is a need to reload the matchup data
+function checkIfMatchupsArrayChanged(i_NewSortedArray, i_LastSortedArray) {
+    
+    if (i_NewSortedArray.length != i_LastSortedArray.length) {
+        return true;
+    }
+    
+    for (var index = 0; index < i_NewSortedArray.length; ++index) {
+        if (!objectsAreSame(i_NewSortedArray[index], i_LastSortedArray[index])) {
+            return true;
+        }
+    }
+    
+    // If got here, 2 arrays are equal
+    return false;
+}
+
+// Checking that the inner array is the same
+function objectsAreSame(i_FirstObject, i_SecondObject) {
+   var objectsAreSame = true;
+   for(var propertyName in i_FirstObject) {
+      if(i_FirstObject[propertyName] !== i_SecondObject[propertyName]) {
+         objectsAreSame = false;
+         break;
+      }
+   }
+   
+   return objectsAreSame;
 }
 
 /***
@@ -320,6 +366,7 @@ function extractMatchupsListWithASpecificStatus(i_MatchupsArray, i_TypeId) {
     var numOfMatchups = localCopyOfMatchupArray.length;
     
     for (var index = 0; index < numOfMatchups; ++index) {
+        console.trace(localCopyOfMatchupArray[index]["gameStatus"]);
         if (localCopyOfMatchupArray[index]["gameStatus"] == i_TypeId) {
             specificMatchupsList.push(localCopyOfMatchupArray[index]);
             
@@ -1437,7 +1484,7 @@ function videoPlay(videoNum)
         document.getElementById("play").style.display = "block";
 //        document.getElementById("repeat").style.display = "none";
     } else {
-
+        document.getElementById("MessageTraining").style.display = "none";
         document.getElementById("translatedWord").style.display = "none";
         document.getElementById("gameAnswer1").style.display = "none";
         document.getElementById("gameAnswer2").style.display = "none";
@@ -1491,7 +1538,7 @@ function ChangePlayersButton_onClick(i_CllickButtonIndication) {
     
     if (i_CllickButtonIndication == k_InviteButton)
     {
-        k_IsInInviteState = true;
+        m_IsInInviteState = true;
         document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_On.png");
         //document.getElementById(k_InviteButton + "_button_img").className = "challange_button_on";
         document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOn";
@@ -1502,7 +1549,7 @@ function ChangePlayersButton_onClick(i_CllickButtonIndication) {
     }
     else
     {
-        k_IsInInviteState = false;
+        m_IsInInviteState = false;
         document.getElementById(k_PlayButton + "_button_img").setAttribute("src", "images/Play_On.png");
         document.getElementById(k_PlayButton + "_button_txt").className = "challangeButtonOn";
         document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_Off.png");
@@ -1510,8 +1557,8 @@ function ChangePlayersButton_onClick(i_CllickButtonIndication) {
         m_FilterredChallangeData = m_PlayersToPlayArray.slice();
     }
     
-    //refreshChallangePage(k_IsInInviteState);
-    newBuildFriendsTable(k_IsInInviteState, 0);
+    //refreshChallangePage(m_IsInInviteState);
+    newBuildFriendsTable(m_IsInInviteState, 0);
 }
 
 // Irrelevant - was used for the old "InvitePlayer page"
@@ -1559,88 +1606,96 @@ function refreshChallangePage(toInvite) {
       });
       
     if (!web) {
-        FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
-            if (response.error) {
+        try {
+            FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
+                if (response.error) {
 
-            } else {
-                var data = document.getElementById('data');
-                friends = response.data;
-                var friendIDs = [];
-                for (var k = 0; k < friends.length; k++) {
-                    var friend = friends[k];
-                    friendIDs[k] = friend.id;
-                    friendName[k] = friend.name;
+                } else {
+                    var data = document.getElementById('data');
+                    friends = response.data;
+                    var friendIDs = [];
+                    for (var k = 0; k < friends.length; k++) {
+                        var friend = friends[k];
+                        friendIDs[k] = friend.id;
+                        friendName[k] = friend.name;
+                    }
                 }
-            }
-            $.ajax({
-                url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
-                method: 'POST',
-                data: {
-                    userId: currentPlayerId,
-                    facebookFriends: friendIDs,
-                    facebookFriendsName: friendName
-                },
-                success: function(data) {
-                    //alert("connected!")
-                    var jason = JSON.parse(data);
-                    if (jason.success === 1) {
-                        //alert("ok!");
-                        m_PlayersToInviteArray = jason.toInvite;
-                        m_PlayersToPlayArray = jason.matches;
-                        if (toInvite) {
-                            //matchesData = jason.toInvite;
-                            //m_FilterredChallangeData = matchesData;
-                            //newBuildFriendsTable(toInvite, 0);
-                            m_FilterredChallangeData = m_PlayersToInviteArray.slice();
-                        } else {
-                            //matchesData = jason.matches;
-                            //m_FilterredChallangeData = matchesData;
-                            m_FilterredChallangeData = m_PlayersToPlayArray.slice();
-                            if (m_FilterredChallangeData.length != 0)
-                            {
+                $.ajax({
+                    url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
+                    method: 'POST',
+                    async: false,
+                    data: {
+                        userId: currentPlayerId,
+                        facebookFriends: friendIDs,
+                        facebookFriendsName: friendName
+                    },
+                    success: function(data) {
+                        //alert("connected!")
+                        var jason = JSON.parse(data);
+                        if (jason.success === 1) {
+                            //alert("ok!");
+                            m_PlayersToInviteArray = jason.toInvite;
+                            m_PlayersToPlayArray = jason.matches;
+                            if (toInvite) {
+                                //matchesData = jason.toInvite;
+                                //m_FilterredChallangeData = matchesData;
                                 //newBuildFriendsTable(toInvite, 0);
-                            }
-                            else
-                            {
-                                if (!k_IsInInviteState)
+                                m_FilterredChallangeData = m_PlayersToInviteArray.slice();
+                            } else {
+                                //matchesData = jason.matches;
+                                //m_FilterredChallangeData = matchesData;
+                                m_FilterredChallangeData = m_PlayersToPlayArray.slice();
+                                if (m_FilterredChallangeData.length != 0)
                                 {
-                                    document.getElementById("ChallangePlayersTable").innerHTML = 
-                                            "<div class=\"no_friends_found_msg\">" +
-                                            "לא נמצאו חברים למשחק.<br>" +
-                                            "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
-                                            "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
-                                            "<br>" +
-                                            "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
-                                            "</div>";
+                                    //newBuildFriendsTable(toInvite, 0);
+                                }
+                                else
+                                {
+                                    if (!m_IsInInviteState)
+                                    {
+                                        document.getElementById("ChallangePlayersTable").innerHTML = 
+                                                "<div class=\"no_friends_found_msg\">" +
+                                                "לא נמצאו חברים למשחק.<br>" +
+                                                "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
+                                                "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
+                                                "<br>" +
+                                                "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
+                                                "</div>";
+                                    }
                                 }
                             }
                         }
-                    }
-                },
-                error: function() {
-                    //alert("error in login");
-                },
-                complete: function() { // (Happans whether success or error happaned)
-                    // Hiding the searchbar when no players found
-                    if (m_FilterredChallangeData.length == 0)
-                    {
-                        document.getElementById("challangeSearchBar").style.display = "none";
-                    }
-                    else
-                    {
-                        document.getElementById("challangeSearchBar").style.display = "block";
-                    }
-                    
-                    $.mobile.loading("hide");
-                }   
+                    },
+                    error: function() {
+                        //alert("error in login");
+                    },
+                    complete: function() { // (Happans whether success or error happaned)
+                        // Hiding the searchbar when no players found
+                        if (m_FilterredChallangeData.length == 0)
+                        {
+                            document.getElementById("challangeSearchBar").style.display = "none";
+                        }
+                        else
+                        {
+                            document.getElementById("challangeSearchBar").style.display = "block";
+                        }
+
+                        //$.mobile.loading("hide");
+                    }   
+                });
             });
-        });
+        }
+        catch (error) {
+            console.trace(error);
+            // TODO: trace error to DB
+        }
     } else {
         friendName = ["shai", "hi", "alon lavi", "ben ron", "cs tav", "dss tav", "st", "ben livni", "df asif", "stav mos", "oren stern", "db hi", "shaia", "hia", "aalon lavi", "aben ron", "cs atav", "dss atav", "sta", "ben aalivni", "dfa asif", "stav amos", "oren astern", "barbar", "ssssss", "Assif"];
         friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146, 259746939, 248234613, 2157420811, 244771584, 244771586, 244771586, 244771586, 244771586, 244771587, 244771584, 12323140, 12323140, 999992922, 757317102];
         $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
+            async: false,
             data: {
                 userId: currentPlayerId,
                 facebookFriends: friendIDs,
@@ -1669,7 +1724,7 @@ function refreshChallangePage(toInvite) {
                         }
                         else
                         {
-                            if (!k_IsInInviteState)
+                            if (!m_IsInInviteState)
                             {
                                 document.getElementById("ChallangePlayersTable").innerHTML = 
                                         "<div class=\"no_friends_found_msg\">" +
@@ -1698,10 +1753,12 @@ function refreshChallangePage(toInvite) {
                     document.getElementById("challangeSearchBar").style.display = "block";
                 }
                 
-                $.mobile.loading("hide");
+                //$.mobile.loading("hide");
             }
         });
     }
+    
+    $.mobile.loading("hide");
 }
 
 function loadChallangesPage(isInvite)
@@ -1730,7 +1787,7 @@ function newSearchFriend() {
     var lowerCaseText = text.toLowerCase();
     var currName;
     
-    if (k_IsInInviteState) {
+    if (m_IsInInviteState) {
         console.log("true " + lowerCaseText);
         matchesData = m_PlayersToInviteArray.slice();
     } else {
@@ -1752,7 +1809,7 @@ function newSearchFriend() {
     }
     
     // After filttering the relevant users according to the search box, building the new list
-    newBuildFriendsTable(k_IsInInviteState, 0);
+    newBuildFriendsTable(m_IsInInviteState, 0);
 }
 
 function newBuildFriendsTable(toInvite, start) {
@@ -1770,12 +1827,22 @@ function newBuildFriendsTable(toInvite, start) {
         m_NumberOfFriendsShownInTable = 0;
         document.getElementById("ChallangePlayersTable").innerHTML = "";
     }
-
+    
+    if ((m_IsInInviteState && (m_PlayersToInviteArray.length == 0)) ||
+        ((!m_IsInInviteState) && (m_PlayersToPlayArray.length == 0)))
+    {
+        document.getElementById("challangeSearchBar").style.display = "none";
+    }
+    else
+    {
+        document.getElementById("challangeSearchBar").style.display = "block";
+    }
+    
     // If length = 0, informing the user that list is empty
     if (size == 0)
     {
-        document.getElementById("challangeSearchBar").style.display = "none";
-        if (!k_IsInInviteState)
+        
+        if (!m_IsInInviteState)
         {
             document.getElementById("ChallangePlayersTable").innerHTML = 
                     "<div class=\"no_friends_found_msg\">" +
@@ -1789,10 +1856,7 @@ function newBuildFriendsTable(toInvite, start) {
         
         // TODO: add message for the invite page?
     }
-    else
-    {
-        document.getElementById("challangeSearchBar").style.display = "block";
-    }
+
     // Making sure that we won't get out of bounds
     if (size > start + k_MaxNumberOfFriendsInBulk) {
         size = start + k_MaxNumberOfFriendsInBulk;
@@ -1900,7 +1964,7 @@ jQuery(
         {
             if (m_FilterredChallangeData.length > m_NumberOfFriendsShownInTable) {
                 //alert("load more");
-                newBuildFriendsTable(k_IsInInviteState, m_NumberOfFriendsShownInTable);
+                newBuildFriendsTable(m_IsInInviteState, m_NumberOfFriendsShownInTable);
             }
         }
     });
