@@ -1590,7 +1590,7 @@ function refreshChallangePage(toInvite) {
                         if (toInvite) {
                             //matchesData = jason.toInvite;
                             //m_FilterredChallangeData = matchesData;
-                            newBuildFriendsTable(toInvite, 0);
+                            //newBuildFriendsTable(toInvite, 0);
                             m_FilterredChallangeData = m_PlayersToInviteArray.slice();
                         } else {
                             //matchesData = jason.matches;
@@ -1598,7 +1598,7 @@ function refreshChallangePage(toInvite) {
                             m_FilterredChallangeData = m_PlayersToPlayArray.slice();
                             if (m_FilterredChallangeData.length != 0)
                             {
-                                newBuildFriendsTable(toInvite, 0);
+                                //newBuildFriendsTable(toInvite, 0);
                             }
                             else
                             {
@@ -1657,7 +1657,7 @@ function refreshChallangePage(toInvite) {
                     if (toInvite) {
                         //matchesData = jason.toInvite;
                         //m_FilterredChallangeData = matchesData;
-                        newBuildFriendsTable(toInvite, 0);
+                        //newBuildFriendsTable(toInvite, 0);
                         m_FilterredChallangeData = m_PlayersToInviteArray.slice();
                     } else {
                         //matchesData = jason.matches;
@@ -1665,7 +1665,7 @@ function refreshChallangePage(toInvite) {
                         m_FilterredChallangeData = m_PlayersToPlayArray.slice();
                         if (m_FilterredChallangeData.length != 0)
                         {
-                            newBuildFriendsTable(toInvite, 0);
+                            //newBuildFriendsTable(toInvite, 0);
                         }
                         else
                         {
@@ -1707,15 +1707,15 @@ function refreshChallangePage(toInvite) {
 function loadChallangesPage(isInvite)
 {
     window.location = "#ChallangeFriend";
-//    if (isInvite)
-//    {
-//        ChangePlayersButton_onClick(k_InviteButton);
-//    }
-//    else
-//    {
-//        ChangePlayersButton_onClick(k_PlayButton);
-//    }
     refreshChallangePage(isInvite);
+    if (isInvite)
+    {
+        ChangePlayersButton_onClick(k_InviteButton);
+    }
+    else
+    {
+        ChangePlayersButton_onClick(k_PlayButton);
+    }
 }
 
 // Event when search bar changes
