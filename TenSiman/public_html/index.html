@@ -65,7 +65,7 @@ works with FaceBook
                                 <a href="#about" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
                             </div>
                             <div class="fl header-left">
-                                <a onClick="refreshMatchups()" class="ui-btn" data-rel="back"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                                <a onClick="refreshMatchups()" class="ui-btn"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
                             </div>
 
                         </div>
@@ -381,11 +381,6 @@ works with FaceBook
 
         <!-- Summary Page -->
         <div id="summary" data-role="page">
-            <!--            <header data-role="header">
-                            <h1>תן סימן</h1>
-                            <a href="#settings" data-icon="gear" data-role="button" class="ui-btn-right" data-theme="b">הגדרות</a>
-                        </header>-->
-
             <div id="header">
                 <div class="main-header">
                     <div id='logo'>
@@ -567,13 +562,92 @@ works with FaceBook
                 </div>
             </div>
         </div>
-        
-        <div id="LoadingPage">
-            <div id="LoadImg">
-                <img src="images/ajax-loader.gif" />
+
+
+        <!-- PreGame Page -->
+        <div id="preGamePage" data-role="page">
+
+            <div id="header">
+                <div class="main-header">
+                    <div id='logo'>
+                        <div id="header-top">
+                            <div class="header-center">
+                            </div>
+                            <div class="fr header-right" >
+                                <a href="#about" class="ui-btn"><img src='images/HeaderSettings.png' style="height: 2.5em; border: none;"></a>
+                            </div>
+                            <div class="fl header-left" style="display:inline-block;float: left;">
+                                <a href="#matchups" onlick="refreshMatchups()" class="ui-btn"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                            </div>
+                            <!--<div class="fl header-left" style="display:inline-block;float: left;">
+                                <a onlick="refreshMatchups()"><img src='images/Back.png' style="height: 2.5em; border: none;"></a>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="top-container" >
+                    </div>
+                    <div class="white-container" style="text-align: center">
+
+                        <div class="red-container">
+                            <span id="score3" class="totalScore">
+                            </span>
+                        </div>
+
+                        <div id="level3" class="level" style="
+
+                             ">
+                        </div>
+
+                        <div id="star3" class="star"> 
+
+                            <div id="nextLevel3" class="nextLevel">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div data-role="content" id="preGame_pagecontent">
+
+                <div id="preGame">
+
+                    <div id="MessageBackground" class="MessageBackground">
+                        <div id="MessageHead" class="MessageHead">
+                            <div id="MessageHeadline" class="MessageHeadline">
+                                <div id="DummyMessageHeadline" class="DummyMessageHeadline"></div>
+                                <div id="MessageInnerHeadline" class="MessageInnerHeadline">
+                                    <div class="Shalom">שלום</div>
+                                    <div id="MessageFullName" class="MessageFullName">Test Name</div>
+                                    <div id="MessageProfilePic" class="MessageProfilePic">
+                                        <img class="profile" src="https://graph.facebook.com/assif/picture?width=200&height=200"/>
+                                    </div>
+                                    <div id="DummyMessageInnerHeadline" class="DummyMessageInnerHeadline">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<img src="images/Headline.png" with="100%"/>-->
+                        </div>
+                        <div id="MessageBottom" class="MessageBottom">
+                            <!--<div id="MessageFirst">בלחיצה על 'התחל'  יוצגו בפניך<br>מילים בשפת הסימנים ופירושם.<br>עליך לזכור אותם</div>-->
+                            <div id="MessageFirst">נלמד אותך כעת שתי מילים מתוך החמש שיופיעו במשחק</div>
+                            <div id="MessageSecond"><b>*קריאת שפתיים הינה חלק בלתי נפרד משפת הסימנים*</b>
+                                <br>בחרנו להמנע בסרטונים משימוש בתנועת שפתיים,
+                                <br>לצורך למידת הסימנים ויצירת אתגר במשחק
+                            </div>
+                            <div id="MessageButton" class="MessageButton">
+                                <a href="#game" onclick="document.getElementById('preGame').style.visibility = 'hidden';">
+                                    <img src="images/BlueButton.png" width="100%" />
+                                    <div id="MessageButtonText" class="MessageButtonText">התחל</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
 
     </body>
 </html> 

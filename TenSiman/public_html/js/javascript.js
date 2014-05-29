@@ -171,16 +171,18 @@ function refreshMatchups() {
 
     window.location = "#matchups";
     document.getElementById('preGame').style.visibility = 'hidden';
+
     var htmlCode = "";
-    $.mobile.loading( 'show', {
+    $.mobile.loading('show', {
         text: "מעדכן נתונים",
         textVisible: true
     });
+
     setTimeout(function() {
-    $.mobile.loading( 'show', {
-        text: "מעדכן נתונים",
-        textVisible: true
-    });
+        $.mobile.loading('show', {
+            text: "מעדכן נתונים",
+            textVisible: true
+        });
         ref();
     }, 2000);
     setInterval(checkRefresh, 10000);
@@ -193,7 +195,7 @@ function ref() {
         url: 'http://stavoren.milab.idc.ac.il/public_html/php/getMatchupPageContent_New_DB.php',
         method: 'POST',
         data: {
-            userId: currentPlayerId 
+            userId: currentPlayerId
         },
         success: function(data) {
             var jason = JSON.parse(data);
@@ -241,10 +243,10 @@ function buildPlayerBar(userData) {
 
 function buildMatchesTable(matchesData) {
 // Clean the table
- 
+
     // Copying the array
     var tmpMatchupsCopy = matchesData.slice();
-    
+
     // Generating a matchups array sorted by matchup's type
     var sorted_MatchupArray = new Array();
     sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_YourTurnMatchupType));
@@ -252,7 +254,7 @@ function buildMatchesTable(matchesData) {
     sorted_MatchupArray = sorted_MatchupArray.concat(extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_WaitForRivalMatchupType));
     // TODO: uncomment the next line when we want to enable the experts challange (Also need to allow a game of expert first)
 //    sorted_MatchupArray = extractMatchupsListWithASpecificStatus(tmpMatchupsCopy, k_ExpertChallangeMatchupType).concat(sorted_MatchupArray);
-    
+
     if (checkIfMatchupsArrayChanged(sorted_MatchupArray, m_LastMatchupsArray))
     {
         var table = document.getElementById("matchups_tableNew");
@@ -262,6 +264,7 @@ function buildMatchesTable(matchesData) {
         var index;
 
         for (index = 0; index < sorted_MatchupArray.length; ++index) {
+            var gameDetails = sorted_MatchupArray[index]["lastGameId"];
             var text = ""; // This
             var buttonClass = "";
             //var textValue = "";
@@ -273,6 +276,7 @@ function buildMatchesTable(matchesData) {
                 text = "תן סימן";
                 buttonClass = "newGame";
                 buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
+                gameDetails = sorted_MatchupArray[index]["LiveGameId"];
             }
             else if (sorted_MatchupArray[index]["gameStatus"] === k_YourTurnMatchupType) {
                 text = "תורך";
@@ -293,19 +297,21 @@ function buildMatchesTable(matchesData) {
                 buttonProperty = "onClick=\"playTurn(" + sorted_MatchupArray[index]["LiveGameID"] + ")\"";
             }
             else {
-    // default status
+                // default status
                 text = "תן סימן " + sorted_MatchupArray[index]["gameStatus"];
                 buttonProperty = "onClick=\"createNewGame(" + sorted_MatchupArray[index]["matchupId"] + ")\"";
             }
 
+
+
             $("#matchups_tableNew").append("<tr align=\"center\">" +
                     "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
                     "<td class=\"matchScore\">" + sorted_MatchupArray[index]["userScore"] + "</td>" +
-                    "<td class=\"summary\"><button onClick=\"showGameSummary(" + sorted_MatchupArray[index]["lastGameId"] + ",2" + ")\" class=\"summary\">i</td><td>" +
+                    "<td class=\"summary\"><button onClick=\"showGameSummary(" + gameDetails + ",2" + ")\" class=\"summary\">i</td><td>" +
                     "<td class=\"matchScore\">" + sorted_MatchupArray[index]["rivalScore"] + "</td>" +
                     /*"<td class=\"matchInner\">" +
                      "<table class=\"matchInnerTable\">" +
-
+                     
                      "</table>" +
                      "</td>" +*/
                     "<td class=\"matchRival\">" +
@@ -318,45 +324,45 @@ function buildMatchesTable(matchesData) {
                     "</td></tr>");
         }
     }
-    
+
     // Saving the current sortedArray for the next check
     m_LastMatchupsArray = sorted_MatchupArray;
-    $.mobile.loading( "hide" );
+    $.mobile.loading("hide");
 }
 
 // Checking if there is a need to reload the matchup data
 function checkIfMatchupsArrayChanged(i_NewSortedArray, i_LastSortedArray) {
-    
+
     if (i_NewSortedArray.length != i_LastSortedArray.length) {
         return true;
     }
-    
+
     for (var index = 0; index < i_NewSortedArray.length; ++index) {
         if (!objectsAreSame(i_NewSortedArray[index], i_LastSortedArray[index])) {
             return true;
         }
     }
-    
+
     // If got here, 2 arrays are equal
     return false;
 }
 
 // Checking that the inner array is the same
 function objectsAreSame(i_FirstObject, i_SecondObject) {
-   var objectsAreSame = true;
-   for(var propertyName in i_FirstObject) {
-      if(i_FirstObject[propertyName] !== i_SecondObject[propertyName]) {
-         objectsAreSame = false;
-         break;
-      }
-   }
-   
-   return objectsAreSame;
+    var objectsAreSame = true;
+    for (var propertyName in i_FirstObject) {
+        if (i_FirstObject[propertyName] !== i_SecondObject[propertyName]) {
+            objectsAreSame = false;
+            break;
+        }
+    }
+
+    return objectsAreSame;
 }
 
 /***
-* This function removes a specific type of matchups from the given matchups array and return them in a new array
-
+ * This function removes a specific type of matchups from the given matchups array and return them in a new array
+ 
  * @param {Array} i_MatchupsArray - the matchups array (value type to a reference type)
  * @param {String} i_TypeId - the status the filter out of the given matchuparray
  * @returns specificMatchupsList|Array - a new array of all the matchups of the given type  */
@@ -364,17 +370,17 @@ function extractMatchupsListWithASpecificStatus(i_MatchupsArray, i_TypeId) {
     var specificMatchupsList = new Array();
     var localCopyOfMatchupArray = i_MatchupsArray.slice();
     var numOfMatchups = localCopyOfMatchupArray.length;
-    
+
     for (var index = 0; index < numOfMatchups; ++index) {
         //console.trace(localCopyOfMatchupArray[index]["gameStatus"]);
         if (localCopyOfMatchupArray[index]["gameStatus"] == i_TypeId) {
             specificMatchupsList.push(localCopyOfMatchupArray[index]);
-            
+
             // Removes element from the given array
             i_MatchupsArray.splice(index, 1);
         }
     }
-    
+
     return specificMatchupsList;
 }
 
@@ -662,7 +668,7 @@ function onClick_checkAnswer(object) {
             g_TempRivalScore += +gameFlowData.sections[currVideoId]["scoreP1"];
             document.getElementById("Game_LeftScore").innerHTML = score;
             document.getElementById("left_score_indicator").style.height = (score * 100 / k_MaxScore) + "%";
-            document.getElementById("Game_RightScore").innerHTML = g_TempRivalScore; 
+            document.getElementById("Game_RightScore").innerHTML = g_TempRivalScore;
             document.getElementById("right_score_indicator").style.height = (g_TempRivalScore * 100 / k_MaxScore) + "%";
         }
 
@@ -1187,7 +1193,8 @@ function playTurn(game_id) {
         method: 'POST',
         data: {
             email: email,
-            userFirstName: firstName, userLastName: LastName,
+            userFirstName: firstName,
+            userLastName: LastName,
             userFacebookId: facebookId,
             imgUrl: imgUrl,
             userGender: gender,
@@ -1228,9 +1235,16 @@ function getLoginStatus() {
 //                        alert("connected!");
                         var jason = JSON.parse(data);
                         if (jason.success === 1) {
-                            currentPlayerId = jason.userId;
-                            refreshMatchups();
-//                            alert(currentPlayerId);
+                            if (currentPlayerId != -1) {
+                                currentPlayerId = jason.userId;
+                                refreshMatchups();
+                            } else {
+                                FB.api('/me', function(response) {
+                                    //alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
+                                    var img_link = "http://graph.facebook.com/" + response.id + "/picture";
+                                    signUp(response.email, response.first_name, response.last_name, response.id, img_link, false);
+                                });
+                            }
                         }
                     },
                     error: function() {
@@ -1502,7 +1516,7 @@ function videoPlay(videoNum)
 
 function playVideo() {
     var vid = document.getElementById("myVideo");
-    
+
     if (!vid.paused)
     {
         vid.currentTime = 0;
@@ -1534,8 +1548,8 @@ function markTheRightAnswer() {
 
 function ChangePlayersButton_onClick(i_CllickButtonIndication) {
     // Clearing the search box every time a button is changed
-    $("#ChallangesSearchBar").val(""); 
-    
+    $("#ChallangesSearchBar").val("");
+
     if (i_CllickButtonIndication == k_InviteButton)
     {
         m_IsInInviteState = true;
@@ -1556,7 +1570,7 @@ function ChangePlayersButton_onClick(i_CllickButtonIndication) {
         document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOff";
         m_FilterredChallangeData = m_PlayersToPlayArray.slice();
     }
-    
+
     //refreshChallangePage(m_IsInInviteState);
     newBuildFriendsTable(m_IsInInviteState, 0);
 }
@@ -1600,11 +1614,11 @@ function searchFriend(toInvite) {
 function refreshChallangePage(toInvite) {
     var htmlCode = "";
     //alert("player" + currentPlayerId);
-    $.mobile.loading( 'show', {
-      text: "טוען נתונים",
-      textVisible: true
-      });
-      
+    $.mobile.loading('show', {
+        text: "טוען נתונים",
+        textVisible: true
+    });
+
     var response;
     if (!web) {
         try {
@@ -1654,7 +1668,7 @@ function refreshChallangePage(toInvite) {
                                 {
                                     if (!m_IsInInviteState)
                                     {
-                                        document.getElementById("ChallangePlayersTable").innerHTML = 
+                                        document.getElementById("ChallangePlayersTable").innerHTML =
                                                 "<div class=\"no_friends_found_msg\">" +
                                                 "לא נמצאו חברים למשחק.<br>" +
                                                 "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
@@ -1682,7 +1696,7 @@ function refreshChallangePage(toInvite) {
                         }
 
                         $.mobile.loading("hide");
-                        
+
                         if (m_FilterredChallangeData.length != 0)
                         {
                             //newBuildFriendsTable(toInvite, 0);
@@ -1691,7 +1705,7 @@ function refreshChallangePage(toInvite) {
                         {
                             if (!m_IsInInviteState)
                             {
-                                document.getElementById("ChallangePlayersTable").innerHTML = 
+                                document.getElementById("ChallangePlayersTable").innerHTML =
                                         "<div class=\"no_friends_found_msg\">" +
                                         "לא נמצאו חברים למשחק.<br>" +
                                         "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
@@ -1701,9 +1715,9 @@ function refreshChallangePage(toInvite) {
                                         "</div>";
                             }
                         }
-                        
+
                         newBuildFriendsTable(m_IsInInviteState, 0);
-                    }   
+                    }
                 });
             });
         }
@@ -1748,7 +1762,7 @@ function refreshChallangePage(toInvite) {
                         {
                             if (!m_IsInInviteState)
                             {
-                                document.getElementById("ChallangePlayersTable").innerHTML = 
+                                document.getElementById("ChallangePlayersTable").innerHTML =
                                         "<div class=\"no_friends_found_msg\">" +
                                         "לא נמצאו חברים למשחק.<br>" +
                                         "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
@@ -1774,10 +1788,10 @@ function refreshChallangePage(toInvite) {
                 {
                     document.getElementById("challangeSearchBar").style.display = "block";
                 }
-                
-               $.mobile.loading("hide");
-               
-               if (m_FilterredChallangeData.length != 0)
+
+                $.mobile.loading("hide");
+
+                if (m_FilterredChallangeData.length != 0)
                 {
                     //newBuildFriendsTable(toInvite, 0);
                 }
@@ -1785,7 +1799,7 @@ function refreshChallangePage(toInvite) {
                 {
                     if (!m_IsInInviteState)
                     {
-                        document.getElementById("ChallangePlayersTable").innerHTML = 
+                        document.getElementById("ChallangePlayersTable").innerHTML =
                                 "<div class=\"no_friends_found_msg\">" +
                                 "לא נמצאו חברים למשחק.<br>" +
                                 "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
@@ -1807,13 +1821,13 @@ function refreshChallangePage(toInvite) {
 function loadChallangesPage(isInvite)
 {
     window.location = "#ChallangeFriend";
-    
-    document.getElementById("ChallangePlayersTable").innerHTML = 
+
+    document.getElementById("ChallangePlayersTable").innerHTML =
             "<div class=\"no_friends_found_msg\">" +
             "טוען נתונים...<br>" +
             "<img src=\"images/ajax-loader.gif\" />" +
             "</div>";
-    
+
     refreshChallangePage(isInvite);
     if (isInvite)
     {
@@ -1836,7 +1850,7 @@ function newSearchFriend() {
     var numberOfMatchedUsers = 0;
     var lowerCaseText = text.toLowerCase();
     var currName;
-    
+
     if (m_IsInInviteState) {
         console.log("true " + lowerCaseText);
         matchesData = m_PlayersToInviteArray.slice();
@@ -1851,19 +1865,19 @@ function newSearchFriend() {
         currName = matchesData[index]["name"].toLowerCase();
         if (currName.indexOf(lowerCaseText) >= 0) {
             /*console.trace(currName);
-            console.trace(text);*/
+             console.trace(text);*/
             m_FilterredChallangeData[numberOfMatchedUsers] = matchesData[index];
             //console.trace(m_FilterredChallangeData[numberOfMatchedUsers]["id"] + "----" + matchesData[index]["id"]);
             ++numberOfMatchedUsers;
         }
     }
-    
+
     // After filttering the relevant users according to the search box, building the new list
     newBuildFriendsTable(m_IsInInviteState, 0);
 }
 
 function newBuildFriendsTable(toInvite, start) {
-    
+
     var size = m_FilterredChallangeData.length;
     if (start > size) {
         return;
@@ -1877,9 +1891,9 @@ function newBuildFriendsTable(toInvite, start) {
         m_NumberOfFriendsShownInTable = 0;
         document.getElementById("ChallangePlayersTable").innerHTML = "";
     }
-    
+
     if ((m_IsInInviteState && (m_PlayersToInviteArray.length == 0)) ||
-        ((!m_IsInInviteState) && (m_PlayersToPlayArray.length == 0)))
+            ((!m_IsInInviteState) && (m_PlayersToPlayArray.length == 0)))
     {
         document.getElementById("challangeSearchBar").style.display = "none";
     }
@@ -1887,11 +1901,11 @@ function newBuildFriendsTable(toInvite, start) {
     {
         document.getElementById("challangeSearchBar").style.display = "block";
     }
-    
+
     // If length = 0, informing the user that list is empty
     if (size == 0)
     {
-        
+
 //        if (!m_IsInInviteState)
 //        {
 //            document.getElementById("ChallangePlayersTable").innerHTML = 
@@ -1903,7 +1917,7 @@ function newBuildFriendsTable(toInvite, start) {
 //                    "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
 //                    "</div>";
 //        }
-        
+
         // TODO: add message for the invite page?
     }
 
@@ -1933,66 +1947,66 @@ function newBuildFriendsTable(toInvite, start) {
                 buttonProperty2 = "onClick=\"publishStoryFriend(" + id2 + ")\"";
 
                 $("#ChallangePlayersTable").append(
-                "<div class=\"challange_table_row\">" + 
-                            "<div class=\"left_player_cell\">" +
-                                "<a " + buttonProperty + ">" +
-                                "<img class=\"profile\" src=\"https://graph.facebook.com/" + id + "/picture?width=100&height=100\" />" +
-                                "</a>" +
-                                "<br>" + name + //Oren Assif" +
-                            "</div>" +
-                            "<div class=\"right_player_cell\">" +
-                                "<a " + buttonProperty2 + ">" +
-                                "<img class=\"profile\" src=\"https://graph.facebook.com/" + id2 + "/picture?width=100&height=100\" />" +
-                                "</a>" +
-                                "<br>" + name2 + //Oren Assif" +
-                            "</div>" +
-                        "</div>");
-                $("#ChallangePlayersTable").append(
-                "<div class=\"challange_table_row_seperator\"></div>");
-
-            } else {
-                $("#ChallangePlayersTable").append(
-                "<div class=\"challange_table_row\">" + 
-                    "<div class=\"left_player_cell\">" +
+                        "<div class=\"challange_table_row\">" +
+                        "<div class=\"left_player_cell\">" +
                         "<a " + buttonProperty + ">" +
                         "<img class=\"profile\" src=\"https://graph.facebook.com/" + id + "/picture?width=100&height=100\" />" +
                         "</a>" +
                         "<br>" + name + //Oren Assif" +
-                    "</div>" +
-                "</div>");
+                        "</div>" +
+                        "<div class=\"right_player_cell\">" +
+                        "<a " + buttonProperty2 + ">" +
+                        "<img class=\"profile\" src=\"https://graph.facebook.com/" + id2 + "/picture?width=100&height=100\" />" +
+                        "</a>" +
+                        "<br>" + name2 + //Oren Assif" +
+                        "</div>" +
+                        "</div>");
+                $("#ChallangePlayersTable").append(
+                        "<div class=\"challange_table_row_seperator\"></div>");
+
+            } else {
+                $("#ChallangePlayersTable").append(
+                        "<div class=\"challange_table_row\">" +
+                        "<div class=\"left_player_cell\">" +
+                        "<a " + buttonProperty + ">" +
+                        "<img class=\"profile\" src=\"https://graph.facebook.com/" + id + "/picture?width=100&height=100\" />" +
+                        "</a>" +
+                        "<br>" + name + //Oren Assif" +
+                        "</div>" +
+                        "</div>");
             }
 
         } else {
             if ((index + 1) < size) {
                 buttonProperty2 = "onClick=\"startGameWithNewPlayer(" + m_FilterredChallangeData[index + 1]["rivalId"] + ")\"";
                 $("#ChallangePlayersTable").append(
-                "<div class=\"challange_table_row\">" + 
-                            "<div class=\"left_player_cell\">" +
-                                "<a " + buttonProperty + ">" +
-                                "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index]["rivalImg"] + "?width=100&height=100\" />" +
-                                "</a>" +
-                                "<br>" + m_FilterredChallangeData[index]["rivalName"] + //Oren Assif" +
-                            "</div>" +
-                            "<div class=\"right_player_cell\">" +
-                                "<a " + buttonProperty2 + ">" +
-                                "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index + 1]["rivalImg"] + "?width=100&height=100\" />" +
-                                "</a>" +
-                                "<br>" + m_FilterredChallangeData[index + 1]["rivalName"] + //Oren Assif" +
-                            "</div>" +
+                        "<div class=\"challange_table_row\">" +
+                        "<div class=\"left_player_cell\">" +
+                        "<a " + buttonProperty + ">" +
+                        "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index]["rivalImg"] + "?width=100&height=100\" />" +
+                        "</a>" +
+                        "<br>" + m_FilterredChallangeData[index]["rivalName"] + //Oren Assif" +
+                        "</div>" +
+                        "<div class=\"right_player_cell\">" +
+                        "<a " + buttonProperty2 + ">" +
+                        "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index + 1]["rivalImg"] + "?width=100&height=100\" />" +
+                        "</a>" +
+                        "<br>" + m_FilterredChallangeData[index + 1]["rivalName"] + //Oren Assif" +
+                        "</div>" +
                         "</div>");
                 $("#ChallangePlayersTable").append(
                         "<div class=\"challange_table_row_seperator\"></div>");
                 index++;
             } else {
                 $("#ChallangePlayersTable").append(
-                "<div class=\"challange_table_row\">" + 
-                            "<div class=\"left_player_cell\">" +
-                                "<a " + buttonProperty + ">" +
-                                "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index]["rivalImg"] + "?width=100&height=100\" />" +
-                                "</a>" +
-                                "<br>" + m_FilterredChallangeData[index]["rivalName"] + //Oren Assif" +
-                            "</div>" +
-                    "</div>");
+                        "<div class=\"challange_table_row\">" +
+                        "<div class=\"left_player_cell\">" +
+                        "<a " + buttonProperty + ">" +
+                        "<img class=\"profile\" src=\"" + m_FilterredChallangeData[index]["rivalImg"] + "?width=100&height=100\" />" +
+                        "</a>" +
+                        "<br>" + m_FilterredChallangeData[index]["rivalName"] + //Oren Assif" +
+                        "</div>" +
+                        "</div>");
             }
         }
     }
@@ -2006,16 +2020,16 @@ function newBuildFriendsTable(toInvite, start) {
 
 // Defining a scorlldown event for the challanges that will load new players if scroll down reaches near bottom of list
 jQuery(
-  function($)
-  {
-    $("#ChallangePlayersTable").bind('scroll', function() {
-        // Checking that the scorrbar reached the last 5% of the current list than loads more users if there are any
-        if(($(this).scrollTop() + $(this).innerHeight()) >= ($(this)[0].scrollHeight * 0.95))
+        function($)
         {
-            if (m_FilterredChallangeData.length > m_NumberOfFriendsShownInTable) {
-                //alert("load more");
-                newBuildFriendsTable(m_IsInInviteState, m_NumberOfFriendsShownInTable);
-            }
-        }
-    });
-  });
+            $("#ChallangePlayersTable").bind('scroll', function() {
+                // Checking that the scorrbar reached the last 5% of the current list than loads more users if there are any
+                if (($(this).scrollTop() + $(this).innerHeight()) >= ($(this)[0].scrollHeight * 0.95))
+                {
+                    if (m_FilterredChallangeData.length > m_NumberOfFriendsShownInTable) {
+                        //alert("load more");
+                        newBuildFriendsTable(m_IsInInviteState, m_NumberOfFriendsShownInTable);
+                    }
+                }
+            });
+        });
