@@ -366,7 +366,7 @@ function extractMatchupsListWithASpecificStatus(i_MatchupsArray, i_TypeId) {
     var numOfMatchups = localCopyOfMatchupArray.length;
     
     for (var index = 0; index < numOfMatchups; ++index) {
-        console.trace(localCopyOfMatchupArray[index]["gameStatus"]);
+        //console.trace(localCopyOfMatchupArray[index]["gameStatus"]);
         if (localCopyOfMatchupArray[index]["gameStatus"] == i_TypeId) {
             specificMatchupsList.push(localCopyOfMatchupArray[index]);
             
@@ -1605,6 +1605,7 @@ function refreshChallangePage(toInvite) {
       textVisible: true
       });
       
+    var response;
     if (!web) {
         try {
             FB.api('/me/friends', {fields: 'id, name, picture'}, function(response) {
@@ -1620,7 +1621,7 @@ function refreshChallangePage(toInvite) {
                         friendName[k] = friend.name;
                     }
                 }
-                $.ajax({
+                return  $.ajax({
                     url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
                     method: 'POST',
                     async: false,
@@ -1680,7 +1681,7 @@ function refreshChallangePage(toInvite) {
                             document.getElementById("challangeSearchBar").style.display = "block";
                         }
 
-                        //$.mobile.loading("hide");
+                        $.mobile.loading("hide");
                     }   
                 });
             });
@@ -1692,7 +1693,7 @@ function refreshChallangePage(toInvite) {
     } else {
         friendName = ["shai", "hi", "alon lavi", "ben ron", "cs tav", "dss tav", "st", "ben livni", "df asif", "stav mos", "oren stern", "db hi", "shaia", "hia", "aalon lavi", "aben ron", "cs atav", "dss atav", "sta", "ben aalivni", "dfa asif", "stav amos", "oren astern", "barbar", "ssssss", "Assif"];
         friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146, 259746939, 248234613, 2157420811, 244771584, 244771586, 244771586, 244771586, 244771586, 244771587, 244771584, 12323140, 12323140, 999992922, 757317102];
-        $.ajax({
+        return $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
             async: false,
@@ -1753,12 +1754,12 @@ function refreshChallangePage(toInvite) {
                     document.getElementById("challangeSearchBar").style.display = "block";
                 }
                 
-                //$.mobile.loading("hide");
+               $.mobile.loading("hide");
             }
         });
     }
-    
-    $.mobile.loading("hide");
+    //From here on the function want get here
+    //$.mobile.loading("hide");
 }
 
 function loadChallangesPage(isInvite)
