@@ -171,7 +171,8 @@ function refreshMatchups() {
 
     window.location = "#matchups";
     document.getElementById('preGame').style.visibility = 'hidden';
-
+    
+    m_LastMatchupsArray = new Array(); /* Important! fixed the bug that caused the matchups table to disapear after back button */
     var htmlCode = "";
     $.mobile.loading('show', {
         text: "מעדכן נתונים",
@@ -1635,7 +1636,7 @@ function refreshChallangePage(toInvite) {
                         friendName[k] = friend.name;
                     }
                 }
-                return  $.ajax({
+                response = $.ajax({
                     url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
                     method: 'POST',
                     async: false,
@@ -1728,7 +1729,7 @@ function refreshChallangePage(toInvite) {
     } else {
         friendName = ["shai", "hi", "alon lavi", "ben ron", "cs tav", "dss tav", "st", "ben livni", "df asif", "stav mos", "oren stern", "db hi", "shaia", "hia", "aalon lavi", "aben ron", "cs atav", "dss atav", "sta", "ben aalivni", "dfa asif", "stav amos", "oren astern", "barbar", "ssssss", "Assif"];
         friendIDs = [659746939, 848234613, 1157420811, 644771584, 644771586, 644771586, 644771586, 644771586, 644771587, 644771584, 12323145, 12323146, 259746939, 248234613, 2157420811, 244771584, 244771586, 244771586, 244771586, 244771586, 244771587, 244771584, 12323140, 12323140, 999992922, 757317102];
-        return $.ajax({
+        response = $.ajax({
             url: 'http://stavoren.milab.idc.ac.il/public_html/php/getFriendsInGame.php',
             method: 'POST',
             async: false,
@@ -1814,7 +1815,8 @@ function refreshChallangePage(toInvite) {
             }
         });
     }
-    //From here on the function want get here
+    
+    return response;
     //$.mobile.loading("hide");
 }
 
@@ -1890,6 +1892,18 @@ function newBuildFriendsTable(toInvite, start) {
     if (start == 0) {
         m_NumberOfFriendsShownInTable = 0;
         document.getElementById("ChallangePlayersTable").innerHTML = "";
+        
+        if (!m_IsInInviteState)
+        {
+            document.getElementById("ChallangePlayersTable").innerHTML = 
+                    "<div class=\"no_friends_found_msg\">" +
+                    "לא נמצאו חברים למשחק.<br>" +
+                    "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
+                    "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
+                    "<br>" +
+                    "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
+                    "</div>";
+        }
     }
 
     if ((m_IsInInviteState && (m_PlayersToInviteArray.length == 0)) ||
