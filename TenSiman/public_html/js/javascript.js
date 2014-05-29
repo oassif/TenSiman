@@ -1864,17 +1864,17 @@ function newBuildFriendsTable(toInvite, start) {
     if (size == 0)
     {
         
-//        if (!m_IsInInviteState)
-//        {
-//            document.getElementById("ChallangePlayersTable").innerHTML = 
-//                    "<div class=\"no_friends_found_msg\">" +
-//                    "לא נמצאו חברים למשחק.<br>" +
-//                    "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
-//                    "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
-//                    "<br>" +
-//                    "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
-//                    "</div>";
-//        }
+        if (!m_IsInInviteState)
+        {
+            document.getElementById("ChallangePlayersTable").innerHTML = 
+                    "<div class=\"no_friends_found_msg\">" +
+                    "לא נמצאו חברים למשחק.<br>" +
+                    "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
+                    "או שכבר קיימת לך התמודדות מול כל חבר פייסבוק רשום" +
+                    "<br>" +
+                    "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
+                    "</div>";
+        }
         
         // TODO: add message for the invite page?
     }
