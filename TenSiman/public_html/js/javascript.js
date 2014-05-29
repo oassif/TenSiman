@@ -1786,6 +1786,13 @@ function refreshChallangePage(toInvite) {
 function loadChallangesPage(isInvite)
 {
     window.location = "#ChallangeFriend";
+    
+    document.getElementById("ChallangePlayersTable").innerHTML = 
+            "<div class=\"no_friends_found_msg\">" +
+            "טוען נתונים...<br>" +
+            "<img src=\"images/ajax-loader.gif\" />" +
+            "</div>";
+    
     refreshChallangePage(isInvite);
     if (isInvite)
     {
