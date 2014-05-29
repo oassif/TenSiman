@@ -301,7 +301,7 @@ function buildMatchesTable(matchesData) {
             $("#matchups_tableNew").append("<tr align=\"center\">" +
                     "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
                     "<td class=\"matchScore\">" + sorted_MatchupArray[index]["userScore"] + "</td>" +
-                    "<td class=\"summary\"><button onClick=\"showGameSummary(" + sorted_MatchupArray[index]["lastGameId"] + "," + playerTurn + ")\" class=\"summary\">i</td><td>" +
+                    "<td class=\"summary\"><button onClick=\"showGameSummary(" + sorted_MatchupArray[index]["lastGameId"] + ",2" + ")\" class=\"summary\">i</td><td>" +
                     "<td class=\"matchScore\">" + sorted_MatchupArray[index]["rivalScore"] + "</td>" +
                     /*"<td class=\"matchInner\">" +
                      "<table class=\"matchInnerTable\">" +
