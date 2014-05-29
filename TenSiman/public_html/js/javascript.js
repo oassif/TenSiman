@@ -1226,7 +1226,7 @@ function getLoginStatus() {
             if (response.status == 'connected') {
                 fbId = response.authResponse.userId;
                 $.ajax({
-                    url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
+                    url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserIdV2.php',
                     method: 'POST',
                     data: {
                         facebookId: fbId,
@@ -1235,7 +1235,7 @@ function getLoginStatus() {
 //                        alert("connected!");
                         var jason = JSON.parse(data);
                         if (jason.success === 1) {
-                            if (currentPlayerId != -1) {
+                            if (jason.userId != -1) {
                                 currentPlayerId = jason.userId;
                                 refreshMatchups();
                             } else {
@@ -1309,7 +1309,7 @@ function login() {
                     //alert("user id is " + fbId);
 
                     $.ajax({
-                        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserId.php',
+                        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserIdV2.php',
                         method: 'POST',
                         data: {
                             facebookId: fbId
