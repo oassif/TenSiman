@@ -171,7 +171,7 @@ function refreshMatchups() {
 
     window.location = "#matchups";
     document.getElementById('preGame').style.visibility = 'hidden';
-    
+
     m_LastMatchupsArray = new Array(); /* Important! fixed the bug that caused the matchups table to disapear after back button */
     var htmlCode = "";
     $.mobile.loading('show', {
@@ -1206,7 +1206,10 @@ function playTurn(game_id) {
             var jason = JSON.parse(data);
             if (jason.success === 1) {
                 if (!playToInvite) {
+                    alert("jason userid: " + jason.userId)
                     currentPlayerId = jason.userId;
+                    alert("currentplayerId: " + currentPlayerId)
+
                     window.location = "#matchups";
                     refreshMatchups();
                 } else {
@@ -1321,6 +1324,9 @@ function login() {
                         success: function(data) {
                             var jason = JSON.parse(data);
                             if (jason.success === 1) {
+
+                                alert("jason userid1: " + jason.userId);
+                                alert("currentplayerId1: " + currentPlayerId);
                                 //currentPlayerId = jason.userId;
                                 // New user should signUp first:
                                 if (jason.userId == -1) {
@@ -1333,9 +1339,9 @@ function login() {
                                 else
                                 {
                                     currentPlayerId = jason.userId;
+                                    refreshMatchups();
                                 }
 
-                                refreshMatchups();
                             }
                         },
                         error: function() {
@@ -1585,7 +1591,7 @@ function ChangePlayersButton_onClick(i_ClickButtonIndication) {
 }
 
 function refreshChallangeButton(i_ActiveButton) {
-        // Clearing the search box every time a button is changed
+    // Clearing the search box every time a button is changed
     $("#ChallangesSearchBar").val("");
 
     if (i_ActiveButton == k_InviteButton)
@@ -1849,7 +1855,7 @@ function refreshChallangePage(toInvite) {
             }
         });
     }
-    
+
     return response;
     //$.mobile.loading("hide");
 }
@@ -1934,10 +1940,10 @@ function newBuildFriendsTable(toInvite, start) {
             ((!m_IsInInviteState) && (m_PlayersToPlayArray.length == 0)))
     {
         document.getElementById("challangeSearchBar").style.display = "none";
-        
+
         if (!m_IsInInviteState)
         {
-            document.getElementById("ChallangePlayersTable").innerHTML = 
+            document.getElementById("ChallangePlayersTable").innerHTML =
                     "<div class=\"no_friends_found_msg\">" +
                     "לא נמצאו חברים למשחק.<br>" +
                     "ייתכן שאין לך חברים רשומים בתן סימן<br>" +
