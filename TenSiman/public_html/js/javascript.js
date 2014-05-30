@@ -1190,7 +1190,7 @@ function playTurn(game_id) {
     var gender = "";
     var birthDay = "";
     $.ajax({
-        url: 'http://stavoren.milab.idc.ac.il/public_html/php/signUp.php',
+        url: 'http://stavoren.milab.idc.ac.il/public_html/php/signUp_1.php',
         method: 'POST',
         data: {
             email: email,
