@@ -1547,11 +1547,41 @@ function markTheRightAnswer() {
     }, 200);
 }
 
-function ChangePlayersButton_onClick(i_CllickButtonIndication) {
-    // Clearing the search box every time a button is changed
+function ChangePlayersButton_onClick(i_ClickButtonIndication) {
+//    // Clearing the search box every time a button is changed
+//    $("#ChallangesSearchBar").val("");
+//
+//    if (i_CllickButtonIndication == k_InviteButton)
+//    {
+//        m_IsInInviteState = true;
+//        document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_On.png");
+//        //document.getElementById(k_InviteButton + "_button_img").className = "challange_button_on";
+//        document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOn";
+//        document.getElementById(k_PlayButton + "_button_img").setAttribute("src", "images/Play_Off.png");
+//        //document.getElementById(k_PlayButton + "_button_img").className = "challange_button_off";
+//        document.getElementById(k_PlayButton + "_button_txt").className = "challangeButtonOff";
+//        m_FilterredChallangeData = m_PlayersToInviteArray.slice();
+//    }
+//    else
+//    {
+//        m_IsInInviteState = false;
+//        document.getElementById(k_PlayButton + "_button_img").setAttribute("src", "images/Play_On.png");
+//        document.getElementById(k_PlayButton + "_button_txt").className = "challangeButtonOn";
+//        document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_Off.png");
+//        document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOff";
+//        m_FilterredChallangeData = m_PlayersToPlayArray.slice();
+//    }
+    refreshChallangeButton(i_ClickButtonIndication);
+
+    //refreshChallangePage(m_IsInInviteState);
+    newBuildFriendsTable(m_IsInInviteState, 0);
+}
+
+function refreshChallangeButton(i_ActiveButton) {
+        // Clearing the search box every time a button is changed
     $("#ChallangesSearchBar").val("");
 
-    if (i_CllickButtonIndication == k_InviteButton)
+    if (i_ActiveButton == k_InviteButton)
     {
         m_IsInInviteState = true;
         document.getElementById(k_InviteButton + "_button_img").setAttribute("src", "images/Invite_On.png");
@@ -1571,9 +1601,6 @@ function ChangePlayersButton_onClick(i_CllickButtonIndication) {
         document.getElementById(k_InviteButton + "_button_txt").className = "challangeButtonOff";
         m_FilterredChallangeData = m_PlayersToPlayArray.slice();
     }
-
-    //refreshChallangePage(m_IsInInviteState);
-    newBuildFriendsTable(m_IsInInviteState, 0);
 }
 
 // Irrelevant - was used for the old "InvitePlayer page"
@@ -1833,11 +1860,13 @@ function loadChallangesPage(isInvite)
     refreshChallangePage(isInvite);
     if (isInvite)
     {
-        ChangePlayersButton_onClick(k_InviteButton);
+        //ChangePlayersButton_onClick(k_InviteButton);
+        refreshChallangeButton(k_InviteButton);
     }
     else
     {
-        ChangePlayersButton_onClick(k_PlayButton);
+        //ChangePlayersButton_onClick(k_PlayButton);
+        refreshChallangeButton(k_PlayButton);
     }
 }
 
