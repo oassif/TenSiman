@@ -1206,9 +1206,9 @@ function playTurn(game_id) {
             var jason = JSON.parse(data);
             if (jason.success === 1) {
                 if (!playToInvite) {
-                    alert("jason userid: " + jason.userId)
+                    alert("jason userid: " + jason.userId);
                     currentPlayerId = jason.userId;
-                    alert("currentplayerId: " + currentPlayerId)
+                    alert("currentplayerId: " + currentPlayerId);
 
                     window.location = "#matchups";
                     refreshMatchups();
