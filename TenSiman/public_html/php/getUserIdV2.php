@@ -28,25 +28,19 @@ if (isset($_REQUEST["facebookId"])) {
     $facebookId = $_REQUEST["facebookId"];
     $response = array();
 
-      $resultFa = mysql_query("SELECT * FROM Users WHERE facebookId=$facebookId");
-
-
-    // to insert in the new update of go
-//    $resultFa = mysql_query("SELECT * FROM Users WHERE facebookId=$facebookId And PlayerToInvite=0");
+    $resultFa = mysql_query("SELECT * FROM Users WHERE facebookId=$facebookId And PlayerToInvite=0");
     $userId = -1;
     if (mysql_num_rows($resultFa) > 0) {
         $row = mysql_fetch_array($resultFa);
-        $userId = $row['Id'] ;
-     }
-     
-    
+        $userId = $row['Id'];
+    }
+
+
 //// check if row inserted or not
     if ($resultFa) {
         $response["success"] = 1;
         $response["userId"] = $userId;
         echo json_encode($response);
-    
-        
     } else {
 //error
         $response["success"] = 0;
