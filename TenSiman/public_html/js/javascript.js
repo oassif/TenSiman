@@ -1204,8 +1204,9 @@ function playTurn(game_id) {
         },
         success: function(data) {
             var jason = JSON.parse(data);
+            alert("success to get here");
             if (jason.success === 1) {
-                if (!playToInvite) {
+                if (playToInvite != "false") {
                     alert("jason userid: " + jason.userId);
                     currentPlayerId = jason.userId;
                     alert("currentplayerId: " + currentPlayerId);
@@ -1213,6 +1214,7 @@ function playTurn(game_id) {
                     window.location = "#matchups";
                     refreshMatchups();
                 } else {
+                    alert("mistake");
                     startGameWithNewPlayer(jason.userId);
                 }
             }
