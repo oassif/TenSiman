@@ -1187,6 +1187,7 @@ function playTurn(game_id) {
  * @param {type} email
  * @returns {undefined}
  */ function signUp(email, firstName, LastName, facebookId, imgUrl, playToInvite) {
+    alert(email + "" + firstName + "" + LastName + "" + facebookId + "" + imgUrl + "" + playToInvite);
     var gender = "";
     var birthDay = "";
     $.ajax({
