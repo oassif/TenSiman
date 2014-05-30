@@ -1204,12 +1204,12 @@ function playTurn(game_id) {
         },
         success: function(data) {
             var jason = JSON.parse(data);
-            alert("success to get here");
+//            alert("success to get here");
             if (jason.success === 1) {
                 if (playToInvite != "false") {
-                    alert("jason userid: " + jason.userId);
+//                    alert("jason userid: " + jason.userId);
                     currentPlayerId = jason.userId;
-                    alert("currentplayerId: " + currentPlayerId);
+//                    alert("currentplayerId: " + currentPlayerId);
 
                     window.location = "#matchups";
                     refreshMatchups();
@@ -1220,7 +1220,7 @@ function playTurn(game_id) {
             }
         },
         error: function() {
-            //alert("error in signup");
+            alert("error in signup");
         }
     });
 }
@@ -1254,7 +1254,7 @@ function getLoginStatus() {
                         }
                     },
                     error: function() {
-                        alert("error in login");
+                       // alert("error in login");
                     }
                 });
             } else {
@@ -1327,14 +1327,15 @@ function login() {
                             var jason = JSON.parse(data);
                             if (jason.success === 1) {
 
-                                alert("jason userid1: " + jason.userId);
-                                alert("currentplayerId1: " + currentPlayerId);
+//                                alert("jason userid1: " + jason.userId);
+//                                alert("currentplayerId1: " + currentPlayerId);
                                 //currentPlayerId = jason.userId;
                                 // New user should signUp first:
                                 if (jason.userId == -1) {
                                     FB.api('/me', function(response) {
                                         //alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
                                         var img_link = "http://graph.facebook.com/" + response.id + "/picture";
+                                       alert(response.email + response.first_name + response.last_name);
                                         signUp(response.email, response.first_name, response.last_name, response.id, img_link, false);
                                     });
                                 }
