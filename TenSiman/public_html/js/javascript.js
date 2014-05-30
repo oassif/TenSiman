@@ -1321,14 +1321,18 @@ function login() {
                         success: function(data) {
                             var jason = JSON.parse(data);
                             if (jason.success === 1) {
-                                currentPlayerId = jason.userId;
+                                //currentPlayerId = jason.userId;
                                 // New user should signUp first:
-                                if (currentPlayerId == -1) {
+                                if (jason.userId == -1) {
                                     FB.api('/me', function(response) {
                                         //alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
                                         var img_link = "http://graph.facebook.com/" + response.id + "/picture";
                                         signUp(response.email, response.first_name, response.last_name, response.id, img_link, false);
                                     });
+                                }
+                                else
+                                {
+                                    currentPlayerId = jason.userId;
                                 }
 
                                 refreshMatchups();
