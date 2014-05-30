@@ -1214,7 +1214,7 @@ function playTurn(game_id) {
                     window.location = "#matchups";
                     refreshMatchups();
                 } else {
-                    alert("mistake");
+//                    alert("mistake");
                     startGameWithNewPlayer(jason.userId);
                 }
             }
