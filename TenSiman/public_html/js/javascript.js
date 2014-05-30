@@ -1921,6 +1921,12 @@ function newBuildFriendsTable(toInvite, start) {
     if (start == 0) {
         m_NumberOfFriendsShownInTable = 0;
         document.getElementById("ChallangePlayersTable").innerHTML = "";
+    }
+
+    if ((m_IsInInviteState && (m_PlayersToInviteArray.length == 0)) ||
+            ((!m_IsInInviteState) && (m_PlayersToPlayArray.length == 0)))
+    {
+        document.getElementById("challangeSearchBar").style.display = "none";
         
         if (!m_IsInInviteState)
         {
@@ -1933,12 +1939,6 @@ function newBuildFriendsTable(toInvite, start) {
                     "<br>לך ל'הזמן' וצור משחק מול חבר שעדיין לא נרשם לאפליקציה ותגדיל את מספר האנשים שתוכל לשחק מולם." +
                     "</div>";
         }
-    }
-
-    if ((m_IsInInviteState && (m_PlayersToInviteArray.length == 0)) ||
-            ((!m_IsInInviteState) && (m_PlayersToPlayArray.length == 0)))
-    {
-        document.getElementById("challangeSearchBar").style.display = "none";
     }
     else
     {
