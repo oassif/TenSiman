@@ -1187,7 +1187,6 @@ function playTurn(game_id) {
  * @param {type} email
  * @returns {undefined}
  */ function signUp(email, firstName, LastName, facebookId, imgUrl, playToInvite) {
-    alert(email + "" + firstName + "" + LastName + "" + facebookId + "" + imgUrl + "" + playToInvite);
     var gender = "";
     var birthDay = "";
     $.ajax({
@@ -1223,12 +1222,9 @@ function playTurn(game_id) {
 
 function getLoginStatus() {
     console.trace("Attempting to connect via facebook login");
-    alert("1");
     try {
         FB.getLoginStatus(function(response) {
-            alert("2");
             if (response.status == 'connected') {
-                alert("3");
                 fbId = response.authResponse.userId;
                 $.ajax({
                     url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserIdV2.php',
@@ -1238,22 +1234,16 @@ function getLoginStatus() {
                     },
                     success: function(data) {
 //                        alert("connected!");
-alert("4");
                         var jason = JSON.parse(data);
                         if (jason.success === 1) {
-                            alert("5");
                             if (jason.userId != -1) {
                                 currentPlayerId = jason.userId;
                                 refreshMatchups();
                             } else {
-                                alert("6");
                                 FB.api('/me', function(response) {
-                                    alert("7");
                                     //alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
                                     var img_link = "http://graph.facebook.com/" + response.id + "/picture";
-                                    alert("8");
                                     signUp(response.email, response.first_name, response.last_name, response.id, img_link, false);
-                                    alert("9");
                                 });
                             }
                         }
