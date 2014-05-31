@@ -53,7 +53,10 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["userFirstName"]) && isset($_RE
         if (mysql_num_rows($result1) > 0) {
             $row = mysql_fetch_array($result1);
             $idUser = $row["Id"];
-            $resultMatchup = mysql_query("UPDATE `Users` SET playerToInvite = '0' WHERE facebookId=$userFacebookId");
+       //    $resultMatchup = mysql_query("UPDATE `Users` SET playerToInvite = '0' WHERE facebookId=$userFacebookId");
+            
+           $resultMatchup = mysql_query("UPDATE `Users` SET Email='$email', FirstName='$userFirstName', LastName='$userLastName', playerToInvite='0' WHERE facebookId=$userFacebookId");
+
             //mysql_fetch_array($resultMatchup);
         } else {
             $sql = "INSERT INTO `Users` (`Email`, `FirstName`, `LastName`, `Level`, `Score`, `facebookId`, `imgURL`, `gender`, `birthday`, `playerToinvite`) "
