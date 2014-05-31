@@ -1384,11 +1384,11 @@ function publishStoryFriend(friendID) {
             var params = {
                 method: 'feed',
                 to: friendID.toString(),
-                name: 'Ten Siman',
-                link: 'https://www.facebook.com/tensiman',
+                name: 'תן סימן',
+                link: 'https://play.google.com/store/apps/details?id=com.milab.idc.TenSiman',
                 picture: 'http://stavoren.milab.idc.ac.il/public_html/img/logo.png',
-                caption: 'TEN SIMAN',
-                description: 'I want to invite you to play with me and learn sign language'
+                caption: 'משחק ללימוד שפת הסימנים הישראלית',
+                description: 'התחלתי מולך משחק ב"תן סימן". מזמין אותך להתקין את האפליקצייה וללמוד איתי את שפת הסימנים הישראלית'
             };
             FB.ui(params, function(obj) {
                 console.log(obj);
