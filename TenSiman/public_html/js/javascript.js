@@ -1206,7 +1206,7 @@ function playTurn(game_id) {
             var jason = JSON.parse(data);
 //            alert("success to get here");
             if (jason.success === 1) {
-                if (playToInvite != "false") {
+                if (!playToInvite) {
 //                    alert("jason userid: " + jason.userId);
                     currentPlayerId = jason.userId;
 //                    alert("currentplayerId: " + currentPlayerId);
