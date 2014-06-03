@@ -229,8 +229,10 @@ function buildPlayerBar(userData) {
     document.getElementById("nextLevel").innerHTML = level + 1;
     document.getElementById("nextLevel2").innerHTML = level + 1;
 
-    document.getElementById("level").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
-    document.getElementById("level2").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
+    /*document.getElementById("level").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
+    document.getElementById("level2").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";*/
+    document.getElementById("level").innerHTML = "" + "" + leftToNextLevel + " " + " נק' לשלב הבא" + " ";
+    document.getElementById("level2").innerHTML = "" + "" + leftToNextLevel + " " + " נק' לשלב הבא" + " ";
 
     // document.getElementById("nextLevel").innerHTML = userData["level"];
 
@@ -539,6 +541,7 @@ function show4possibleAnswers(videoNum) {
     // First, generates Random number for the first answer
     var firstAnswerId = Math.floor((Math.random() * 4));
     document.getElementById("gameAnswer1").innerHTML = //"<font size=\"5\">" +
+    /*document.getElementById("gameAnswer1Div").innerHTML =*/
             answerArray[videoNum][firstAnswerId]; //+
     //"</font>";
     document.getElementById("gameAnswer2").innerHTML = //"<font size=\"5\">" +
@@ -1896,19 +1899,22 @@ function newSearchFriend() {
     var numberOfMatchedUsers = 0;
     var lowerCaseText = text.toLowerCase();
     var currName;
+    var nameFieldName;
 
     if (m_IsInInviteState) {
         console.log("true " + lowerCaseText);
         matchesData = m_PlayersToInviteArray.slice();
+        nameFieldName = "name";
     } else {
         console.log("false " + lowerCaseText);
         matchesData = m_PlayersToPlayArray.slice();
+        nameFieldName = "rivalName";
     }
 
     m_FilterredChallangeData = new Array();
     document.getElementById("ChallangePlayersTable").innerHTML = "";
     for (index = 0; index < matchesData.length; ++index) {
-        currName = matchesData[index]["name"].toLowerCase();
+        currName = matchesData[index][nameFieldName].toLowerCase();
         if (currName.indexOf(lowerCaseText) >= 0) {
             /*console.trace(currName);
              console.trace(text);*/

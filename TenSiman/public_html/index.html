@@ -131,10 +131,16 @@ works with FaceBook
                     </div>
                     <div id="MessageBottom" class="MessageBottom">
                         <!--<div id="MessageFirst">בלחיצה על 'התחל'  יוצגו בפניך<br>מילים בשפת הסימנים ופירושם.<br>עליך לזכור אותם</div>-->
-                        <div id="MessageFirst">נלמד אותך כעת שתי מילים מתוך החמש שיופיעו במשחק</div>
+                        <!--<div id="MessageFirst">נלמד אותך כעת שתי מילים מתוך החמש שיופיעו במשחק</div>
                         <div id="MessageSecond"><b>*קריאת שפתיים הינה חלק בלתי נפרד משפת הסימנים*</b>
                             <br>בחרנו להמנע בסרטונים משימוש בתנועת שפתיים,
                             <br>לצורך למידת הסימנים ויצירת אתגר במשחק
+                        </div>-->
+                        <!-- TODO: Make the first message dynamic and based on the level of the player -->
+                        <div id="MessageFirst">במהלך המשחק יופיעו חמש מילים. נלמד אותך כעת שתיים מהן.</div>
+                        <div id="MessageSecond"><br><b>חשוב לזכור</b> - קריאת שפתיים היא חלק בלתי נפרד משפת הסימנים,
+                            אך לשם יצירת אתגר במשחק החלטנו להמנע מכך בסרטונים.
+                            בהצלחה.
                         </div>
                         <div id="MessageButton" class="MessageButton">
                             <a href="#game" onclick="document.getElementById('preGame').style.visibility = 'hidden';">
@@ -307,9 +313,9 @@ works with FaceBook
 
                 <div id="GameAnswers">
 
-                    <div id="TopLeftAnswer" class="GameAnswerContainer">
-                        <!--<a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>-->
+                    <div id="TopLeftAnswer" class="GameAnswerContainer"><!-- style="display: table;">-->
                         <a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>
+                        <!--<a data-role="button" id="gameAnswer1" class="GameAnswer" onclick="onClick_checkAnswer(this);"><div id="gameAnswer1Div" style="display: table-cell; vertical-align: middle; left: 0; right: 0; margin-left: auto; margin-right: auto; width: 100%;">Answer1</div></a>-->
                     </div>
                     <div id="TopRightAnswer" class="GameAnswerContainer">
                         <a data-role="button" id="gameAnswer2" class="GameAnswer" onclick="onClick_checkAnswer(this);">Answer1</a>
