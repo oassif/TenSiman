@@ -992,6 +992,16 @@ td.scoreP1 div.sec {
     alignment-adjust: central;
 }
 
+/*.trainingSkip {
+    width: 50%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    bottom: 0;
+}*/
+
 #GameAnswers {
     position: absolute;
     top: 72%;

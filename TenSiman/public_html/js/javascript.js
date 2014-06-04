@@ -600,6 +600,7 @@ function startPlay(demo) {
 //    document.getElementById("repeat").style.display = "none";
     document.getElementById("play").style.display = "none";
     document.getElementById("play").innerHTML = "דלג על לימוד";
+    document.getElementById("MessageTraining").style.display = "none";
 // call for the first video
     order = generateOrder();
     setTimeout(function() {
