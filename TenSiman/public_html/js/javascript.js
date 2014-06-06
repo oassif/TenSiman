@@ -750,7 +750,7 @@ function endGame() {
         console.trace("Game Ended");
         $.ajax({
             //url: 'http://stavoren.milab.idc.ac.il/public_html/php/updateStatus.php',
-            url: 'http://stavoren.milab.idc.ac.il/public_html/php/endTurn.php',
+            url: 'http://stavoren.milab.idc.ac.il/public_html/php/endTurnV2.php',
             method: 'POST',
             data: {
                 gameId: currentGameId,
