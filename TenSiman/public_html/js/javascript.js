@@ -45,6 +45,7 @@ var m_NumberOfFriendsShownInTable = 0;
 var m_IsInInviteState = false;
 var videoNumber = 0;
 var web = 0;
+var version = "1.3.2";
 var friendName = new Array();
 var isLastDemo = false;
 
@@ -67,7 +68,23 @@ function pageY(elem) {
 
 $(document).ready(function()
 {
-
+/*    //This part of code should verify the version of the user and tell him if there's a newer version
+       // it's not working
+      $.ajax({
+      url:'http://stavoren.milab.idc.ac.il/public_html/php/getVersionInProd.php',
+      method: 'GET',
+      complete: function (data) {
+        //var jason = JSON.parse(data);
+        if (data.success == 1) {
+            if (data.version != version) {
+              document.getElementById("informationMessage").innerHTML = "קיים עדכון לאפליקציה<br><a href=\"https://play.google.com/store/apps/details?id=com.milab.idc.TenSiman\" style=\"color: #00c8f8\">לחץ כאן כדי להתקין אותו כעת</a>";
+            }
+        }
+      },
+      error: function () {
+          //$('#output').html('Bummer: there was an error!');
+      }
+  });*/
 
     myVideo.addEventListener("playing", function() {
         if (!isDemo) {
@@ -162,7 +179,6 @@ $(document).ready(function()
 
     }
 
-
     getLoginStatus();
     // Generate Random number
     videoCount = NUMBER_SECTIONS;
@@ -224,11 +240,14 @@ function buildPlayerBar(userData) {
     document.getElementById("score").innerHTML = userData["score"];
     document.getElementById("score2").innerHTML = userData["score"];
     var level = parseInt(userData["level"]);
-    var score = parseInt(userData["score"]);
-    var leftToNextLevel = (level * 100 * 1.5) - score;
-    document.getElementById("nextLevel").innerHTML = level + 1;
-    document.getElementById("nextLevel2").innerHTML = level + 1;
+    var totalScore = parseInt(userData["score"]);
+    var totalPointForNextLevel = parseInt(userData["NextLevelPointsTarget"]);
+    var leftToNextLevel = totalPointForNextLevel - totalScore;//(level * 100 * 1.5) - score;
+    document.getElementById("nextLevel").innerHTML = level;
+    document.getElementById("nextLevel2").innerHTML = level;
 
+    /*document.getElementById("nextLevel").innerHTML = level + 1;
+    document.getElementById("nextLevel2").innerHTML = level + 1;*/
     /*document.getElementById("level").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";
     document.getElementById("level2").innerHTML = "" + "" + leftToNextLevel + " " + "לשלב " + " ";*/
     document.getElementById("level").innerHTML = "" + "" + leftToNextLevel + " " + " נק' לשלב הבא" + " ";

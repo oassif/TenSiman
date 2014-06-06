@@ -740,8 +740,9 @@ img.profile {
     top:30%;
     /*right: 2%;*/
     direction: rtl;
-    font-size: 1.2em;
+    font-size: 1em;
     width: 51%;
+    height: 100%;
     font-family: "Alef Hebrew";
     right: 16%;
 }
@@ -1566,6 +1567,18 @@ img.GameProfile {
     right: 3%;
     background-size: contain;
     background-position: center;
+}
+
+#informationMessage {
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0%;
+    font-family: "Alef Hebrew";
+    font-size: 115%;
+    color: #ff4c65;
 }
 
 .main_shema {

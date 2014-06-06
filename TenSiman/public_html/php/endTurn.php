@@ -33,8 +33,29 @@ if (isset($_REQUEST["gameId"]) && isset($_REQUEST["player"]) && isset($_REQUEST[
     $score = $_REQUEST["score"];
     $playerId = $_REQUEST["playerId"];
 
-
-
+    if ($score > 50)
+    {
+        // Score can't be higher than 50, someone probably tried to send an edited php request
+        $sql = "INSERT INTO `Errors_Log` (`Source`, `Message`) VALUES ('endTurn.php', 'There was an attempt to increase player $playerId score by $score points');";
+        mysql_query($sql);
+        
+        $response["success"] = 0;
+        $response["message"] = "Wrong amount of points";
+        
+        echo json_encode($response);
+        return;
+    }
+    elseif ($score < 0) {
+        // Score can't be higher negative 0, someone probably tried to send an edited php request
+        $sql = "INSERT INTO `Errors_Log` (`Source`, `Message`) VALUES ('endTurn.php', 'There was an attempt to decrease player $playerId score by $score points');";
+        mysql_query($sql);
+        
+        $response["success"] = 0;
+        $response["message"] = "Can't decrease points of user";
+        
+        echo json_encode($response);
+        return;
+    }
 
     $result = mysql_query("SELECT score, level FROM `Users` WHERE id = $playerId");
     $row = mysql_fetch_array($result);

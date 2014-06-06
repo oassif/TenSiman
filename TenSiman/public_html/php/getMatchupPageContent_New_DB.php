@@ -1,5 +1,5 @@
 <?php
-
+include 'TenSimanUtils.php';
 // Allow from any origin
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -76,6 +76,7 @@ if (mysql_num_rows($result) > 0) {
 
     $user["fullName"] = $row["FirstName"]." ".$row["LastName"];
     $user["level"] = $row["Level"];
+    $user["NextLevelPointsTarget"] = calculateNextLevelPoints($row["Level"]);
     $user["score"] = $row["Score"];
     $user["imgURL"] = $row["imgURL"];
 
