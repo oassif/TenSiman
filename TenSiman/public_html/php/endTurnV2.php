@@ -33,12 +33,6 @@ if (isset($_REQUEST["gameId"]) && isset($_REQUEST["player"]) && isset($_REQUEST[
     $score = $_REQUEST["score"];
     $playerId = $_REQUEST["playerId"];
 
-    $response["success"] = 0;
-    $response["message"] = "Wrong amount of points";
-
-    echo json_encode($response);
-    return;
-    
     if ($score > 50)
     {
         // Score can't be higher than 50, someone probably tried to send an edited php request
