@@ -1477,7 +1477,6 @@ function onBackKeyDown() {
     }
     else if (currentAppPage.match("\#main$") || currentAppPage.match("index.html$"))
     {
-        alert("here");
         navigator.app.exitApp();
     }
     else
