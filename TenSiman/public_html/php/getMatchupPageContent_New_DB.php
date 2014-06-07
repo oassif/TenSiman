@@ -17,8 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 }
 
-// TODO: change all $_GET to $_POST
-
 // Save the given LiveGame id
 $facebookId = $_REQUEST['userId'];
 
@@ -33,13 +31,14 @@ if (isset($_REQUEST["userId"])) {
     
     $userId = $_REQUEST["userId"];
         
-     // TODO: try to get the live game (might fail so need to handle error - wrond id or invalid id)
+    // TODO: try to get the live game (might fail so need to handle error - wrond id or invalid id)
     $result = mysql_query("SELECT * FROM Users WHERE id=$userId");
     $result2 = mysql_query("SELECT m.id as matchupId,
                                    scoreP1 AS userScore,
                                    scoreP2 AS rivalScore,
                                    status AS gameStatus,
                                    g.id AS LiveGameId,
+                                   lastGameId as lastGameId,
                                    FirstName AS rivalFirstName,
                                    LastName As rivalLastName,
                                    player2 AS rivalId,
@@ -49,12 +48,13 @@ if (isset($_REQUEST["userId"])) {
                                    WHERE player1=$userId
                                          AND m.player2 = u.id
                                          AND currGameId = g.id");
-             //SELECT  FROM Games WHERE player1Id=$userId");
+     //SELECT FROM Games WHERE player2Id=$userId");
      $result3 = mysql_query("SELECT m.id as matchupId,
                                     scoreP2 AS userScore,
                                     scoreP1 AS rivalScore,
                                     status AS gameStatus,
                                     g.id AS LiveGameId,
+                                    lastGameId as lastGameId,
                                     FirstName AS rivalFirstName,
                                     LastName As rivalLastName,
                                     player1 AS rivalId,
@@ -64,8 +64,6 @@ if (isset($_REQUEST["userId"])) {
                                     WHERE player2=$userId
                                           AND m.player1 = u.id
                                           AND currGameId = g.id");
-             //SELECT * FROM Games WHERE player2Id=$userId");
-     
 }
  
 // Check first query result
@@ -74,7 +72,7 @@ if (mysql_num_rows($result) > 0) {
     $row = mysql_fetch_array($result);
     $user = array();
 
-    $user["fullName"] = $row["FirstName"]." ".$row["LastName"];
+    $user["fullName"] = $row["FirstName"] . " " . $row["LastName"];
     $user["level"] = $row["Level"];
     $user["NextLevelPointsTarget"] = calculateNextLevelPoints($row["Level"]);
     $user["score"] = $row["Score"];
@@ -109,6 +107,7 @@ if (mysql_num_rows($result2) > 0) {
         $match["rivalLevel"] = $row["rivalLevel"];
         $match["LiveGameId"] = $row["LiveGameId"];
         $match["matchupId"] = $row["matchupId"];
+        $match["lastGameId"] = $row["lastGameId"];
 
         // push single users into final response array
         array_push($response["matches"], $match);
@@ -147,6 +146,7 @@ if (mysql_num_rows($result3) > 0) {
         $match["rivalLevel"] = $row["rivalLevel"];
         $match["LiveGameId"] = $row["LiveGameId"];
         $match["matchupId"] = $row["matchupId"];
+        $match["lastGameId"] = $row["lastGameId"];
 
         // push single users into final response array
         array_push($response["matches"], $match);
@@ -155,16 +155,17 @@ if (mysql_num_rows($result3) > 0) {
 
 
 //// check if row inserted or not
-    if ($result) {
-        $response["success"] = 1;
-        $response["message"] = "Sucess"; //TODO: can delete message from here and the error
-        echo json_encode($response);
-    } else {
+if ($result) {
+    $response["success"] = 1;
+    $response["message"] = "Sucess"; //TODO: can delete message from here and the error
+    echo json_encode($response);
+}
+else {
 //error
-        $response["success"] = 0;
-        $response["message"] = "Error!!!!!!";
+    $response["success"] = 0;
+    $response["message"] = "Error!!!!!!";
 
 // echo no users JSON
-        echo json_encode($response);
-    }
+    echo json_encode($response);
+}
 ?>

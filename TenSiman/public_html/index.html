@@ -432,6 +432,54 @@ works with FaceBook
 
             </div>
 
+            <div class="gray_container">
+                <div id="SummaryHeader_container" class="summaryHeaderContainer">
+                    <img src="images/summary/summary_Wait.png" class="summaryHeader"/>
+                    <div id="SummaryLeftSideProfile" class="summary_Profile">
+                        <img src="images/logo.png" class="profile" />
+                        <div class="summary_LeftName">Left</div>
+                    </div>
+                    <div id="SummaryRightSideProfile" class="summary_Profile">
+                        <img src="images/logo.png" class="profile" />
+                        <div class="summary_RightName">ימין</div>
+                    </div>
+                    <div id="SummaryHeadline" class="summary_Headline">ממתין<br>ליריב</div>
+                    <!--<div id="SummaryHeadline" class="summary_Headline">ניצחת</div>-->
+                </div>
+                
+                <div id="SummaryTotalScore" class="summary_TotalScoreContainer">
+                    <div id="SummaryLeftTotalScore" class="summary_TotalScore">38</div>
+                    :
+                    <div id="SummaryRightTotalScore" class="summary_TotalScore">27</div>
+                </div>
+                <div id="SummaryTableContent" class="summary_TableContent">
+                    <div id="Summary1stRow" class="summary_Row">
+                        <div class="summary_Col summary_LeftCol">6<br>שניות</div>
+                        <div class="summary_Word">מילה 1</div>
+                        <div class="summary_Col summary_RightCol">5<br>שניות</div>
+                    </div>
+                    <div id="Summary1stRow" class="summary_Row">
+                        <div class="summary_Col summary_LeftCol">5<br>שניות</div>
+                        <div class="summary_Word">שפה</div>
+                        <div class="summary_Col summary_RightCol">7<br>שניות</div>
+                    </div>
+                    <div id="Summary1stRow" class="summary_Row">
+                        <div class="summary_Col summary_LeftCol">1<br>שניות</div>
+                        <div class="summary_Word">כל אחד</div>
+                        <div class="summary_Col summary_RightCol">7<br>שניות</div>
+                    </div>
+                    <div id="Summary1stRow" class="summary_Row">
+                        <div class="summary_Col summary_LeftCol">0<br>שניות</div>
+                        <div class="summary_Word">כולנו ביחד</div>
+                        <div class="summary_Col summary_RightCol">5<br>שניות</div>
+                    </div>
+                    <div id="Summary1stRow" class="summary_Row">
+                        <div class="summary_Col summary_LeftCol">9<br>שניות</div>
+                        <div class="summary_Word">אבטיח</div>
+                        <div class="summary_Col summary_RightCol">?</div>
+                    </div>
+                </div>
+            </div>
             <div data-role="content" id="matchups_pagecontent">
                 <div id="playerBar" dir="rtl">
 
@@ -457,15 +505,18 @@ works with FaceBook
                     </table>
                     <div class="SoonLeft">בקרוב...</div>
                 </div>
+                <div class="MainFooterCenterBorder"></div>
                 <div class="MainFooterCenterBackground"></div>
                 <div class="MainFooterCenterDiv"></div>
                 <div class="MainFooterCenter">
                     <button class="NewGameZone" id="inviteFriends" onclick="refreshMatchups();">מסך<br>ראשי</button>
                 </div>
                 <div class="HallOfFameZone">
-                    <table>
-                        <tr><td>היכל<br>התהילה</td><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td></tr>
-                    </table>
+                    <div class="HallOfFameContainer">
+                        <table>
+                            <tr><td><img class="HallOfFameZone" src="css/HallOfFame.png" /></td><td>היכל<br>התהילה</td></tr>
+                        </table>
+                    </div>
                     <div class="SoonRight">בקרוב...</div>
                 </div>
             </div>

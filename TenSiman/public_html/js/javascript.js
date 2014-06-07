@@ -36,7 +36,7 @@ var allreadyPlayed = false;
 var currentGameId = -1;
 var turn = 0;
 var player1or2 = 0;
-var matchesData = new Array(); // Used only for the newSearchFriend function
+var matchesData = new Array();
 var m_PlayersToInviteArray = new Array();
 var m_PlayersToPlayArray = new Array();
 var m_FilterredChallangeData = new Array();
@@ -45,7 +45,7 @@ var m_NumberOfFriendsShownInTable = 0;
 var m_IsInInviteState = false;
 var videoNumber = 0;
 var web = 0;
-var version = "1.3.2";
+var version = "1.4.2";
 var friendName = new Array();
 var isLastDemo = false;
 
@@ -1430,6 +1430,9 @@ function publishStoryFriend(friendID) {
 
 
 document.addEventListener('deviceready', function() {
+    
+    document.addEventListener("backbutton", onBackKeyDown, false);
+    
     try {
 //alert('Device is ready! Make sure you set your app_id below this //alert.');
         FB.init({appId: "609521172430311", nativeInterface: CDV.FB, useCachedDialogs: false});
@@ -1442,6 +1445,45 @@ document.addEventListener('deviceready', function() {
 function loginFromWeb() {
     currentPlayerId = 1;
     refreshMatchups();
+}
+
+function onBackKeyDown() {
+    // Getting the current page active in the app (lowercased)
+    var currentAppPage = window.location.toString().toLowerCase();
+    
+    if (currentAppPage.match("\#matchups$"))
+    {
+        refreshMatchups();
+    }
+    else if (currentAppPage.match("\#summary$"))
+    {
+        refreshMatchups();
+    }
+    else if (currentAppPage.match("\#pregame"))
+    {
+        refreshMatchups();
+    }
+    else if (currentAppPage.match("\#challangefriend$"))
+    {
+        refreshMatchups();
+    }
+    else if (currentAppPage.match("\#about$"))
+    {
+        window.history.back();
+    }
+    else if (currentAppPage.match("\#game$"))
+    {
+        /* Do Nothing - "Blocks" back button in that case */
+    }
+    else if (currentAppPage.match("\#main$"))
+    {
+        navigator.app.exitApp();
+    }
+    else
+    {
+        // Default - do nothing
+    }
+    
 }
 
 /**

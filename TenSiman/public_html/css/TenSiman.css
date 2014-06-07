@@ -1844,3 +1844,174 @@ img.GameProfile {
     display: table-cell;
     vertical-align: middle;
 }
+
+/***** NEW SUMMARY : START ******/
+
+#summary .gray_container {
+    position: absolute;
+    border: black 1px solid;
+    background-color: #d2d2d2;
+    height: 75%;
+    top: 9%;
+    width: 95%;
+    left: 2.5%;
+    right: 2.5%;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 3;
+    border-bottom-left-radius: 7.5% 5.5%;
+    border-bottom-right-radius: 7.5% 5.5%;
+    border-top-left-radius: 7.5% 5.5%;
+    border-top-right-radius: 7.5% 5.5%;
+}
+
+#summary .summaryHeaderContainer
+{
+    position: relative;
+    border: 0;
+    height: 29%;
+    width: 103.5%;
+    top: 1%;
+    left: -2%;
+    right: -1.5%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.summaryHeader {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#SummaryLeftSideProfile {
+    position: absolute;
+    left: -4%;
+    /*top: 10%;*/
+}
+
+#SummaryRightSideProfile {
+    position: absolute;
+    right: -4%;
+    /*top: 10%;*/
+}
+
+.summary_Profile {
+    text-align: center;
+    top: 15%;
+    width: 32%;
+    font-family: 'Asap', 'Alef Hebrew';/*sans-serif;*/
+    font-size: large;
+    
+/*    -webkit-text-stroke-width: 1px;     
+    -webkit-text-stroke-color: black;
+    -webkit-text-fill-color: white;   */
+}
+
+.summary_Headline {
+    position: absolute;
+    text-align: center;
+    direction: rtl;
+    width: 80%;
+    top: 5%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Asap', 'Alef Hebrew';/*sans-serif;*/
+    font-size: 400%;
+    line-height: 80%;
+    -webkit-text-stroke-width: 1px;     
+    -webkit-text-stroke-color: black;
+    -webkit-text-fill-color: white;   
+}
+
+#summary .summary_TotalScoreContainer {
+    position: relative;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    width: 98%;
+    height: 5%;
+    font-family: 'Asap', 'Alef Hebrew';
+    font-size: 150%;
+}
+
+#SummaryLeftTotalScore {
+    left: 36%;
+    text-align: left;
+}
+
+#SummaryRightTotalScore {
+    right: 36%;
+    text-align: right;
+}
+
+.summary_TotalScore {
+    position: absolute;
+    font-family: 'Asap', 'Alef Hebrew';
+    height: 100%;
+    width: 10%;
+    font-weight: bold;
+    top: 0%;
+}
+
+#summary .summary_TableContent {
+    position: relative;
+    border: 0;
+    height: 67%;
+    width: 98%;
+    top: 0%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.summary_Row {
+    position: relative;
+    width: 100%;
+    height: 18%;
+    top: 4.5%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.summary_Col {
+    position: absolute;
+    font-family: 'Asap', 'Alef Hebrew';
+    top: 0;
+    width: 10%;
+    text-align: center;
+}
+
+.summary_LeftCol {
+    left: 5%;
+}
+
+.summary_RightCol {
+    right: 5%;
+}
+
+.summary_Word {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+    font-family: 'Asap', 'Alef Hebrew';
+    font-size: 205%;
+    font-weight: bold;
+    text-align: center;
+    -webkit-text-stroke-width: 1px;     
+    -webkit-text-stroke-color: black;
+    -webkit-text-fill-color: white;  
+}
