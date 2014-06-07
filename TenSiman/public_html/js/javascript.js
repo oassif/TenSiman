@@ -1479,15 +1479,11 @@ function onBackKeyDown() {
     {
         alert("here");
         navigator.app.exitApp();
-        alert("does nothing");
-        finish();
     }
     else
     {
         // Default - do nothing
     }
-    
-    alert(currentAppPage);
 }
 
 /**
