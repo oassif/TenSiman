@@ -1475,7 +1475,7 @@ function onBackKeyDown() {
     {
         /* Do Nothing - "Blocks" back button in that case */
     }
-    else if (currentAppPage.match("\#main$"))
+    else if (currentAppPage.match("\#main$") || currentAppPage.match("index.html&"))
     {
         navigator.app.exitApp();
     }
@@ -1484,6 +1484,7 @@ function onBackKeyDown() {
         // Default - do nothing
     }
     
+    alert(currentAppPage);
 }
 
 /**
