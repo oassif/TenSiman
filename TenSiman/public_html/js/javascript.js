@@ -1439,7 +1439,7 @@ document.addEventListener('deviceready', function() {
     try {
 //alert('Device is ready! Make sure you set your app_id below this //alert.');
         FB.init({appId: "609521172430311", nativeInterface: CDV.FB, useCachedDialogs: false});
-        document.getElementById('data').innerHTML = "";
+        //document.getElementById('data').innerHTML = "";
         getLoginStatus();
     } catch (e) {
         alert(e);
