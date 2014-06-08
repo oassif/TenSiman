@@ -434,25 +434,33 @@ works with FaceBook
 
             <div class="gray_container">
                 <div id="SummaryHeader_container" class="summaryHeaderContainer">
-                    <img src="images/summary/summary_Wait.png" class="summaryHeader"/>
+                    <img src="images/summary/summary_Wait.png" id="summary_HeaderImg" class="summaryHeader"/>
                     <div id="SummaryLeftSideProfile" class="summary_Profile">
-                        <img src="images/logo.png" class="profile" />
-                        <div class="summary_LeftName">Left</div>
+                        <img src="images/logo.png" id="summary_LeftImage" class="profile" />
+                        <div id="SummaryLeftName" class="summary_LeftName"></div>
                     </div>
                     <div id="SummaryRightSideProfile" class="summary_Profile">
-                        <img src="images/logo.png" class="profile" />
-                        <div class="summary_RightName">ימין</div>
+                        <img src="images/logo.png" id="summary_RightImage" class="profile" />
+                        <div id="SummaryRightName" class="summary_RightName"></div>
                     </div>
-                    <div id="SummaryHeadline" class="summary_Headline">ממתין<br>ליריב</div>
-                    <!--<div id="SummaryHeadline" class="summary_Headline">ניצחת</div>-->
+                    <!--<div id="SummaryHeadline" class="summary_Headline">ממתין<br>ליריב</div>-->
+                    <div id="SummaryHeadline" class="summary_Headline">ניצחת</div>
+                    <div id="SummaryReplay" class="summary_ReplayBtn">
+<!--                        
+                        <a onclick="createNewGame(matchupid);">
+                            <img src="images/summary/summary_PlayAgain.png" height="100%" />
+                        </a>
+-->
+                    </div>
                 </div>
                 
                 <div id="SummaryTotalScore" class="summary_TotalScoreContainer">
-                    <div id="SummaryLeftTotalScore" class="summary_TotalScore">38</div>
+                    <div id="SummaryLeftTotalScore" class="summary_TotalScore">0</div>
                     :
-                    <div id="SummaryRightTotalScore" class="summary_TotalScore">27</div>
+                    <div id="SummaryRightTotalScore" class="summary_TotalScore">0</div>
                 </div>
                 <div id="SummaryTableContent" class="summary_TableContent">
+<!--                
                     <div id="Summary1stRow" class="summary_Row">
                         <div class="summary_Col summary_LeftCol">6<br>שניות</div>
                         <div class="summary_Word">מילה 1</div>
@@ -478,6 +486,7 @@ works with FaceBook
                         <div class="summary_Word">אבטיח</div>
                         <div class="summary_Col summary_RightCol">?</div>
                     </div>
+-->
                 </div>
             </div>
             <div data-role="content" id="matchups_pagecontent">

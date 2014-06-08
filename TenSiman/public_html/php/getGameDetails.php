@@ -38,6 +38,7 @@ if (isset($_REQUEST["gameId"])) {
         $matchupId = $row["matchupId"];
         $status = $row["status"];
         $response["status"] = $status;
+        $response["matchupId"] = $matchupId;
         $initiator = $row["initiator"];
 
 
@@ -92,26 +93,31 @@ if (isset($_REQUEST["gameId"])) {
         $response["player1"] = array();
         $row = mysql_fetch_array($player1det);
         $players = array();
+        $players["id"] = $row["Id"];
         $players["name"] = $row["FirstName"];
         $players["pic"] = $row["imgURL"];
         $players["score"] = $sumScoreP1;
         array_push($response["player1"], $players);
+        $initiatorId = $row["Id"];
 
 
         $response["player2"] = array();
         $row = mysql_fetch_array($player2det);
         $players = array();
+        $players["id"] = $row["Id"];
         $players["name"] = $row["FirstName"];
         $players["pic"] = $row["imgURL"];
         $players["score"] = $sumScoreP2;
-
+        
         array_push($response["player2"], $players);
     }
 
     if ($game) {
+        $response["initiatorId"] = $initiatorId;
         $response["success"] = 1;
         $response["message"] = "Sucess";
         echo json_encode($response);
+        
     } else {
         $response["success"] = 0;
         $response["message"] = "Error!!!!!!";

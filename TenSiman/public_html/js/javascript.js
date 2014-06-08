@@ -329,7 +329,7 @@ function buildMatchesTable(matchesData) {
             $("#matchups_tableNew").append("<tr align=\"center\">" +
                     "<td class=\"matchButton\"><button " + buttonProperty + " class=\"" + buttonClass + "\">" + text + "</button></td>" +
                     "<td class=\"matchScore\">" + sorted_MatchupArray[index]["userScore"] + "</td>" +
-                    "<td class=\"summary\"><button onClick=\"showGameSummary(" + gameDetails + ",2" + ")\" class=\"summary\">i</td><td>" +
+                    "<td class=\"summary\"><button onClick=\"showGameSummary(" + gameDetails + ",3" + ")\" class=\"summary\">i</td><td>" +
                     "<td class=\"matchScore\">" + sorted_MatchupArray[index]["rivalScore"] + "</td>" +
                     /*"<td class=\"matchInner\">" +
                      "<table class=\"matchInnerTable\">" +
@@ -1485,9 +1485,11 @@ function onBackKeyDown() {
     }
 }
 
-/**
- * At the end of each turn - present a game summary.
- 
+/***
+* 
+    Getting the game details
+ * @param {type} gameId
+ * @param {type} turn : 1 - if 1st turn, 2 - if 2nd turn, 3 - if got here from the "i" in the matchups screen
  * @returns {undefined} */
 function getSummary(gameId, turn) {
     $.ajax({
@@ -1509,22 +1511,100 @@ function getSummary(gameId, turn) {
 }
 
 
+/***
+* 
+    Building the summary table
+ * @param {type} matchesData
+ * @param {type} turn : 1 - if 1st turn, 2 - if 2nd turn, 3 - if got here from the "i" in the matchups screen
+ * @returns {undefined} */
 function buildSummaryTable(matchesData, turn) {
 
 //    var table = document.getElementById("summary_table");
 //    table.innerHTML = "";
     $("#summary_table").html("");
     $("#summary_bar_table").html("");
+    $("#SummaryTableContent").html("");
     var numOfWords = 5;
     var index;
     var player1array = matchesData["player1"];
     var player2array = matchesData["player2"];
     var sections = matchesData["sections"];
     var player2score = player2array[0]["score"];
+    
+    // Init data
+    document.getElementById("summary_HeaderImg").setAttribute("src", "images/summary/summary_Wait.png");
+    document.getElementById("SummaryLeftTotalScore").style.color = "black";
+    document.getElementById("SummaryRightTotalScore").style.color = "black";
+    var summaryReplay = document.getElementById("SummaryReplay");
+    summaryReplay.innerHTML = 
+            "<a onclick=\"ReplayNewGame(" + matchesData["matchupId"] + ");\">" +
+                "<img src=\"images/summary/summary_PlayAgain.png\" height=\"100%\" />" +
+            "</a>";
+    // Checking if summaryReplay needs to be shown
+    if (turn == 2) {
+        summaryReplay.style.display = "block";
+    }
+    else {
+        summaryReplay.style.display = "none";
+    }
+    
     if (turn == 1) {
         player2score = "?";
+        document.getElementById("SummaryHeadline").innerHTML = "ממתין<br>ליריב";
+    }
+    else {
+        if (player1array[0]["score"] > player2array[0]["score"]) {
+            // If the current player is player1 - he won
+            if (player1array[0]["id"] == currentPlayerId) {
+                document.getElementById("summary_HeaderImg").setAttribute("src", "images/summary/summary_Won.png");
+                document.getElementById("SummaryHeadline").innerHTML = "ניצחת";
+                document.getElementById("SummaryLeftTotalScore").style.color = "#ff4c65";
+                document.getElementById("SummaryRightTotalScore").style.color = "#3abe8b";
+            }
+            else
+            {
+                document.getElementById("summary_HeaderImg").setAttribute("src", "images/summary/summary_Lost.png");
+                document.getElementById("SummaryHeadline").innerHTML = "הפסדת";
+                document.getElementById("SummaryLeftTotalScore").style.color = "#3abe8b";
+                document.getElementById("SummaryRightTotalScore").style.color = "#ff4c65";
+            }
+        }
+        else if (player1array[0]["score"] < player2array[0]["score"]) {
+            // If the current player is player1 - he lost
+            if (player1array[0]["id"] == currentPlayerId) {
+                document.getElementById("summary_HeaderImg").setAttribute("src", "images/summary/summary_Lost.png");
+                document.getElementById("SummaryHeadline").innerHTML = "הפסדת";
+                document.getElementById("SummaryLeftTotalScore").style.color = "#3abe8b";
+                document.getElementById("SummaryRightTotalScore").style.color = "#ff4c65";
+            }
+            else
+            {
+                document.getElementById("summary_HeaderImg").setAttribute("src", "images/summary/summary_Won.png");
+                document.getElementById("SummaryHeadline").innerHTML = "ניצחת";
+                document.getElementById("SummaryLeftTotalScore").style.color = "#ff4c65";
+                document.getElementById("SummaryRightTotalScore").style.color = "#3abe8b";
+            }
+        }
+        else
+        {
+            // It's a TIE!
+            document.getElementById("summary_HeaderImg").setAttribute("src", "images/summary/summary_Wait.png");
+            document.getElementById("SummaryHeadline").innerHTML = "תיקו";
+        }
     }
 
+    // Continue init headline
+    // TODO: flip sides?
+    document.getElementById("summary_LeftImage").setAttribute("src", player1array[0]["pic"] + "?width=100&height=100");
+    document.getElementById("SummaryLeftName").innerHTML =  player1array[0]["name"];
+    document.getElementById("summary_RightImage").setAttribute("src", player2array[0]["pic"] + "?width=100&height=100");
+    document.getElementById("SummaryRightName").innerHTML =  player2array[0]["name"];
+    
+    // Init total score
+    document.getElementById("SummaryLeftTotalScore").innerHTML = player1array[0]["score"];
+    document.getElementById("SummaryRightTotalScore").innerHTML = player2score;
+    
+    /*
     $("#summary_bar_table").append("<tr align=\"center\">" +
             "<td class=\"playerPic\"><img class=\"pic \" src=\"" + player2array[0]["pic"] + "?width=100&height=100\">" +
             "<div class=\"playerName\">" + player2array[0]["name"] + "</div></td>" +
@@ -1535,17 +1615,47 @@ function buildSummaryTable(matchesData, turn) {
             "<div class=\"playerName\">" + player1array[0]["name"] + "</div></td>" +
             "</tr>"
             );
+     */
+    
     for (index = 0; index < numOfWords; ++index) {
 
         if (turn != 1) {
             player2score = sections[index]["scoreP2"];
         }
 
+        /*
         $("#summary_table").append("<tr align=\"center\">" +
                 "<td class=\"scoreP1\">" + player2score + "<div class=sec> שניות</div></td>" +
                 "<td class=\"word\">" + sections[index]["word"] + "</td>" +
                 "<td class=\"scoreP1\">" + sections[index]["scoreP1"] + "<div class=sec> שניות</div></td>" + "</tr>");
+         */
+        
+        $("#SummaryTableContent").append(
+                "<div id=\"SummaryRow" + index + "\" class=\"summary_Row\">" +
+                    "<div id=\"SummaryLeftCol" + index + "\" class=\"summary_Col summary_LeftCol\">" + sections[index]["scoreP1"] + "<br>נקודות</div>" +
+                    "<div class=\"summary_Word\">" + sections[index]["word"] + "</div>" +
+                    "<div id=\"SummaryRightCol" + index + "\" class=\"summary_Col summary_RightCol\">" + player2score + "<br>נקודות</div>" +
+                "</div>");
+        
+        if (turn != 1) {
+            var scoreP1Int = parseInt(sections[index]["scoreP1"])
+            var scoreP2Int = parseInt(player2score)
+            if (scoreP1Int > scoreP2Int) {
+                document.getElementById("SummaryLeftCol" + index).style.color = "#3abe8b";
+                document.getElementById("SummaryRightCol" + index).style.color = "#ff4c65";
+            }
+            else if (scoreP2Int > scoreP1Int) {
+                document.getElementById("SummaryLeftCol" + index).style.color = "#ff4c65";
+                document.getElementById("SummaryRightCol" + index).style.color = "#3abe8b";
+            }
+        }
     }
+}
+
+function ReplayNewGame(i_MatchupId)
+{
+    createNewGame(i_MatchupId);
+    window.location = "#matchups";
 }
 
 function showGameSummary(gameId, turn) {

@@ -1850,7 +1850,7 @@ img.GameProfile {
 #summary .gray_container {
     position: absolute;
     border: black 1px solid;
-    background-color: #d2d2d2;
+    background-color: #e2e2e2;
     height: 75%;
     top: 9%;
     width: 95%;
@@ -1863,6 +1863,7 @@ img.GameProfile {
     border-bottom-right-radius: 7.5% 5.5%;
     border-top-left-radius: 7.5% 5.5%;
     border-top-right-radius: 7.5% 5.5%;
+    /* visibility: hidden; */
 }
 
 #summary .summaryHeaderContainer
@@ -1905,6 +1906,7 @@ img.GameProfile {
     width: 32%;
     font-family: 'Asap', 'Alef Hebrew';/*sans-serif;*/
     font-size: large;
+    font-weight: bold;
     
 /*    -webkit-text-stroke-width: 1px;     
     -webkit-text-stroke-color: black;
@@ -1927,6 +1929,18 @@ img.GameProfile {
     -webkit-text-stroke-width: 1px;     
     -webkit-text-stroke-color: black;
     -webkit-text-fill-color: white;   
+}
+
+.summary_ReplayBtn {
+    position: absolute;
+    text-align: center;
+    width: 33%;
+    height: 35%;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #summary .summary_TotalScoreContainer {
@@ -1964,13 +1978,14 @@ img.GameProfile {
 #summary .summary_TableContent {
     position: relative;
     border: 0;
-    height: 67%;
+    height: 66%;
     width: 98%;
     top: 0%;
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
+    overflow: auto;
 }
 
 .summary_Row {
