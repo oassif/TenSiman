@@ -1527,7 +1527,7 @@ img.GameProfile {
     left: 0;
     right: 0;
     /* top: 100%; */
-    bottom: -25%;
+    /* bottom: -25%; */
     margin-left: auto;
     margin-right: auto;
     text-align: center;

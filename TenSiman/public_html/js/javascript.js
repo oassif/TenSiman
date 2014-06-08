@@ -1291,7 +1291,7 @@ function getLoginStatus() {
     }
     catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
-        document.getElementById("informationMessage").innerHTML = "שגיאה בהתחברות לפייסבוק.<br> נא וודא חיבור לאינטרנט"
+        document.getElementById("informationMessage").innerHTML = "שגיאה בהתחברות לפייסבוק.<br> וודא שקיים חיבור לאינטרנט";
         if (web == 1)
         {
             loginFromWeb();
@@ -1337,60 +1337,66 @@ function logout() {
     }
     catch (err) {
         // TODO: logout error log
-        alert(err);
+        //alert(err);
     }
 }
 
 function login() {
-    FB.login(
-            function(response) {
-                if (response.session) {
-                    //alert('logged in!!!');
-                }
+    try {
+        FB.login(
+                function(response) {
+                    if (response.session) {
+                        //alert('logged in!!!');
+                    }
 
-                if (response.authResponse) {
-                    fbId = response.authResponse.userId;
-                    //alert("user id is " + fbId);
+                    if (response.authResponse) {
+                        fbId = response.authResponse.userId;
+                        //alert("user id is " + fbId);
 
-                    $.ajax({
-                        url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserIdV2.php',
-                        method: 'POST',
-                        data: {
-                            facebookId: fbId
-                        },
-                        success: function(data) {
-                            var jason = JSON.parse(data);
-                            if (jason.success === 1) {
+                        $.ajax({
+                            url: 'http://stavoren.milab.idc.ac.il/public_html/php/getUserIdV2.php',
+                            method: 'POST',
+                            data: {
+                                facebookId: fbId
+                            },
+                            success: function(data) {
+                                var jason = JSON.parse(data);
+                                if (jason.success === 1) {
 
-//                                alert("jason userid1: " + jason.userId);
-//                                alert("currentplayerId1: " + currentPlayerId);
-                                //currentPlayerId = jason.userId;
-                                // New user should signUp first:
-                                if (jason.userId == -1) {
-                                    FB.api('/me', function(response) {
-                                        //alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
-                                        var img_link = "http://graph.facebook.com/" + response.id + "/picture";
-                                        signUp(response.email, response.first_name, response.last_name, response.id, img_link, false);
-                                    });
+    //                                alert("jason userid1: " + jason.userId);
+    //                                alert("currentplayerId1: " + currentPlayerId);
+                                    //currentPlayerId = jason.userId;
+                                    // New user should signUp first:
+                                    if (jason.userId == -1) {
+                                        FB.api('/me', function(response) {
+                                            //alert("Name: " + response.last_name + "email: " + response.email + "\nFirst name: " + response.first_name + "ID: " + response.id);
+                                            var img_link = "http://graph.facebook.com/" + response.id + "/picture";
+                                            signUp(response.email, response.first_name, response.last_name, response.id, img_link, false);
+                                        });
+                                    }
+                                    else
+                                    {
+                                        currentPlayerId = jason.userId;
+                                        refreshMatchups();
+                                    }
+
                                 }
-                                else
-                                {
-                                    currentPlayerId = jason.userId;
-                                    refreshMatchups();
-                                }
-
+                            },
+                            error: function() {
+                                // alert("error in login");
                             }
-                        },
-                        error: function() {
-                            // alert("error in login");
-                        }
-                    });
-                } else {
-                    //alert('not logged in');
-                }
-            },
-            {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
-    );
+                        });
+                    } else {
+                        //alert('not logged in');
+                    }
+                },
+                {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
+        );
+    }
+    catch (e) {
+        // TODO: log error
+        document.getElementById("informationMessage").innerHTML = "שגיאה בהתחברות לפייסבוק.<br> וודא שקיים חיבור לאינטרנט";
+    }
 }
 
 
