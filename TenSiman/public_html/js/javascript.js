@@ -1290,6 +1290,7 @@ function getLoginStatus() {
     }
     catch (err) {
         console.trace("Couldn't use facebook login, calling loginFromWeb and loading hardcoded value");
+        document.getElementById("informationMessage").innerHTML = "שגיאה בהתחברות לפייסבוק.<br> נא וודא חיבור לאינטרנט"
         if (web == 1)
         {
             loginFromWeb();
@@ -1433,7 +1434,7 @@ document.addEventListener('deviceready', function() {
     
     document.addEventListener("backbutton", onBackKeyDown, false);
     
-    document.addEventListener("offline", onOffline, false);
+//    document.addEventListener("offline", onOffline, false);
     
     try {
 //alert('Device is ready! Make sure you set your app_id below this //alert.');
@@ -1442,6 +1443,7 @@ document.addEventListener('deviceready', function() {
         getLoginStatus();
     } catch (e) {
 // alert(e);
+        document.getElementById("informationMessage").innerHTML = "שגיאה בהתחברות, וודא חיבור לאינטרנט";
     }
 }, false);
 function loginFromWeb() {
@@ -1487,9 +1489,9 @@ function onBackKeyDown() {
     }
 }
 
-function onOffline() {
-    alert("לא קיים חיבור לרשת\nיש להתחבר לאינטרנט על מנת להשתמש באפליקציה");
-}
+//function onOffline() {
+//    alert("לא קיים חיבור לרשת\nיש להתחבר לאינטרנט על מנת להשתמש באפליקציה");
+//}
 
 /***
 * 
