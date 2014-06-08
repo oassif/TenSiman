@@ -96,6 +96,7 @@ $(document).ready(function()
 //            }
         }
     }, false);
+   
     myVideo.addEventListener("ended", function() {
         if (isDemo) {
             if (isLastDemo)
@@ -179,7 +180,7 @@ $(document).ready(function()
 
     }
 
-    getLoginStatus();
+    //getLoginStatus();
     // Generate Random number
     videoCount = NUMBER_SECTIONS;
 });
@@ -1281,9 +1282,9 @@ function getLoginStatus() {
                        // alert("error in login");
                     }
                 });
-            }/*else {
+            } else {
                 login();
-            }*/
+            }
         }
         , {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
 
