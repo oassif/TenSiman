@@ -1923,7 +1923,7 @@ img.GameProfile {
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Asap', 'Alef Hebrew';/*sans-serif;*/
+    font-family: 'Alef Hebrew';
     font-size: 400%;
     line-height: 80%;
     -webkit-text-stroke-width: 1px;     
@@ -2022,7 +2022,7 @@ img.GameProfile {
     margin-left: auto;
     margin-right: auto;
     top: 0;
-    font-family: 'Asap', 'Alef Hebrew';
+    font-family: 'Alef Hebrew';
     font-size: 205%;
     font-weight: bold;
     text-align: center;
