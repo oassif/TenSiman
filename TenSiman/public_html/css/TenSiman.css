@@ -1522,6 +1522,43 @@ img.GameProfile {
     width: 97%;
 }
 
+#SettingsLogout {
+    position: absolute;
+    left: 0;
+    right: 0;
+    /* top: 100%; */
+    bottom: -25%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 25%;
+    height: 10%;
+    z-index: 2;
+}
+
+.settings_LogoutButton {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.settings_LogoutImg {
+    position: relative;
+    width: 100%;
+}
+
+.settings_LogoutTxt {
+    position: absolute;
+    
+    display: inline-block;
+    top: 18%;
+    left: 0;
+    right: 0;
+    color: black;
+    font-family: "Alef Hebrew";
+}
+
 .About_Logos {
     display: inline-block;
     position: absolute;
