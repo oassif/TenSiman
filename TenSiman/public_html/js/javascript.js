@@ -1442,7 +1442,7 @@ document.addEventListener('deviceready', function() {
         document.getElementById('data').innerHTML = "";
         getLoginStatus();
     } catch (e) {
-// alert(e);
+        alert(e);
         document.getElementById("informationMessage").innerHTML = "שגיאה בהתחברות, וודא חיבור לאינטרנט";
     }
 }, false);
