@@ -1281,9 +1281,9 @@ function getLoginStatus() {
                        // alert("error in login");
                     }
                 });
-            } else {
+            }/*else {
                 login();
-            }
+            }*/
         }
         , {scope: 'basic_info, email, public_profile, user_about_me, user_birthday, user_friends'}
 
