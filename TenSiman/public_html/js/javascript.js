@@ -45,7 +45,7 @@ var m_NumberOfFriendsShownInTable = 0;
 var m_IsInInviteState = false;
 var videoNumber = 0;
 var web = 0;
-var version = "1.4.2";
+var version = "1.4.3";
 var friendName = new Array();
 var isLastDemo = false;
 
