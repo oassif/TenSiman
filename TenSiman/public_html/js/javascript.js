@@ -1250,6 +1250,7 @@ function playTurn(game_id) {
 
 function getLoginStatus() {
     console.trace("Attempting to connect via facebook login");
+    document.getElementById("informationMessage").innerHTML = "";
     try {
         FB.getLoginStatus(function(response) {
             if (response.status == 'connected') {
@@ -1327,7 +1328,17 @@ function me() {
 }
 
 function logout() {
-
+    try {
+        FB.logout(function(response) {
+            
+        });
+        
+        window.location = "#main";
+    }
+    catch (err) {
+        // TODO: logout error log
+        alert(err);
+    }
 }
 
 function login() {
@@ -1439,11 +1450,10 @@ document.addEventListener('deviceready', function() {
     try {
 //alert('Device is ready! Make sure you set your app_id below this //alert.');
         FB.init({appId: "609521172430311", nativeInterface: CDV.FB, useCachedDialogs: false});
-        //document.getElementById('data').innerHTML = "";
         getLoginStatus();
     } catch (e) {
-        alert(e);
-        document.getElementById("informationMessage").innerHTML = "שגיאה בהתחברות, וודא חיבור לאינטרנט";
+        //alert(e);
+        //document.getElementById("informationMessage").innerHTML = "שגיאה בהתחברות, וודא חיבור לאינטרנט";
     }
 }, false);
 function loginFromWeb() {
