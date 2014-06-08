@@ -1433,6 +1433,8 @@ document.addEventListener('deviceready', function() {
     
     document.addEventListener("backbutton", onBackKeyDown, false);
     
+    document.addEventListener("offline", onOffline, false);
+    
     try {
 //alert('Device is ready! Make sure you set your app_id below this //alert.');
         FB.init({appId: "609521172430311", nativeInterface: CDV.FB, useCachedDialogs: false});
@@ -1483,6 +1485,10 @@ function onBackKeyDown() {
     {
         // Default - do nothing
     }
+}
+
+function onOffline() {
+    alert("לא קיים חיבור לרשת\nיש להתחבר לאינטרנט על מנת להשתמש באפליקציה");
 }
 
 /***
